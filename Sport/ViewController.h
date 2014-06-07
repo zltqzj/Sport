@@ -16,6 +16,7 @@
 #import "WGS84TOGCJ02.h"
 #import "Activity.h"
 #import "Mantle.h"
+#import "ProgressHUD.h"
 //#import "CSqlite.h"
 @interface ViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate,TSMessageViewProtocol>
 {

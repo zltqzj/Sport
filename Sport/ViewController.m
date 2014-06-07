@@ -64,7 +64,7 @@ const double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self test];
+ //   [self test];
     _timer = [NSTimer scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
         
     } repeats:YES];
@@ -198,8 +198,8 @@ const double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
 {
     NSLog(@"%@ ----- %@", self, NSStringFromSelector(_cmd));
     CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(userLocation.coordinate.latitude, userLocation.coordinate.longitude);
- 
-    [_mapView setCenterCoordinate:coordinate zoomLevel:15 animated:YES];
+    [_mapView setCenterCoordinate:coordinate animated:YES];
+   // [_mapView setCenterCoordinate:coordinate zoomLevel:13 animated:YES];
  
 }
 - (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error{
@@ -215,7 +215,7 @@ const double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations{
     CLLocation *location = [locations lastObject];
-      _currentLocation = location;
+    
     
     NSLog(@"我的高度%f",location.altitude);
     NSLog(@"我的速度%f",location.speed);
@@ -225,16 +225,18 @@ const double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
         return;
     
     // check the move distance
+   
+ 
     if (_points.count > 0) {
         CLLocationDistance distance = [location distanceFromLocation:_currentLocation];
         if (distance < 5)
             return;
     }
-    
+     _currentLocation = location;
     if (nil == _points) {
         _points = [[NSMutableArray alloc] init];
     }
-    
+      NSLog(@"%d",_points.count);
     [_points addObject:location];
     
     
@@ -276,7 +278,7 @@ const double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
                  NSLog(@"dic SubLocality= %@", [placemark.addressDictionary objectForKey:@"SubLocality"]);
                  NSLog(@"dic SubThoroughfare= %@", [placemark.addressDictionary objectForKey:@"SubThoroughfare"]);
                  NSLog(@"dic Thoroughfare = %@", [placemark.addressDictionary objectForKey:@"Thoroughfare"]);
-                 _displayLocation.text = [NSString stringWithFormat:@"%@,%@",[placemark.addressDictionary objectForKey:@"State"],[placemark.addressDictionary objectForKey:@"Street"]];
+                 _displayLocation.text = [placemark.addressDictionary objectForKey:@"Name"];
                  
              }
              else if (error == nil &&
