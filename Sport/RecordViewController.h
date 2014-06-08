@@ -1,0 +1,23 @@
+//
+//  RecordViewController.h
+//  Sport
+//
+//  Created by ZKR on 6/8/14.
+//  Copyright (c) 2014 ZKR. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "StatsViewController.h"
+#import "SplitsViewController.h"
+#import "MapViewController.h"
+#import "SUNSlideSwitchView.h"
+@interface RecordViewController : UIViewController<SUNSlideSwitchViewDelegate>
+ 
+
+@property(strong,nonatomic) IBOutlet SUNSlideSwitchView* slideSwitchView;
+
+@property(strong,nonatomic) UIViewController* stats_vc1;
+@property(strong,nonatomic) UIViewController* split_vc2;
+@property(strong,nonatomic) UIViewController* map_vc3;
+
+@end

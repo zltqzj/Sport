@@ -30,11 +30,30 @@
 {
      
     _netUtil = [[NetUtils alloc] init];
+    
+    TabbarViewController* tab  = viewOnSb(@"tabbar");
+    [tab.tabBar setBackgroundColor:[UIColor blackColor]];
+    self.window.rootViewController = tab;
+    [tab.tabBar setSelectedImageTintColor:[UIColor orangeColor]];
+    if ( SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        [[UITabBar appearance] setBarStyle:UIBarStyleBlack];
+
+    }else{
+        
+    }
+    
+    
+  
+    
+ 
+    /*
     ViewController* view = viewOnSb(@"view");
     self.window.rootViewController = view;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
     _hostReach = [Reachability reachabilityWithHostname:@"www.baidu.com"];
     [_hostReach startNotifier];
+     */
+     
     
     /*
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"name"]) {
@@ -60,7 +79,24 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    
+    UIApplication*   app = [UIApplication sharedApplication];
+    __block    UIBackgroundTaskIdentifier bgTask;
+    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (bgTask != UIBackgroundTaskInvalid)
+            {
+                bgTask = UIBackgroundTaskInvalid;
+            }
+        });
+    }];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (bgTask != UIBackgroundTaskInvalid)
+            {
+                bgTask = UIBackgroundTaskInvalid;
+            }
+        });
+    });
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

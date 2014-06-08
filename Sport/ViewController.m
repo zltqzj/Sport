@@ -57,6 +57,14 @@ const double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
     NSDictionary *dicee = [MTLJSONAdapter JSONDictionaryFromModel:person];
     
     NSLog(@"dicee : %@", dicee);
+    
+    NSString *Path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filePath = [Path stringByAppendingPathComponent:@"test"];
+    NSMutableData *data1 = [[NSMutableData alloc] init];
+    NSKeyedArchiver *vdArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data1];
+    [vdArchiver encodeObject:dicee forKey:@"activity"];
+    [vdArchiver finishEncoding];
+    [data writeToFile:filePath atomically:YES];
  
 }
 
@@ -64,7 +72,7 @@ const double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
- //   [self test];
+    [self test];
     _timer = [NSTimer scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
         
     } repeats:YES];
@@ -203,12 +211,14 @@ const double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
  
 }
 - (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error{
-    [ProgressHUD showError:@"定位失败"];
+   
+     [TSMessage showNotificationWithTitle:NSLocalizedString(@"定位失败", nil) subtitle:NSLocalizedString(@"定位失败", nil) type:TSMessageNotificationTypeWarning];
 }
 #pragma mark - CLLocationManagerDelegate
 
 -(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
     NSLog(@"改变权限");
+    [TSMessage showNotificationWithTitle:NSLocalizedString(@"定位失败", nil) subtitle:NSLocalizedString(@"没有开启定位", nil) type:TSMessageNotificationTypeWarning];
 }
 
 
@@ -295,10 +305,11 @@ const double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
 
 - (BOOL)locationServicesEnabled {
     if (([CLLocationManager locationServicesEnabled]) && ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)) {
-        NSLog(@"手机gps定位已经开启");
+        debugLog(@"手机gps定位已经开启");
         return YES;
     } else {
-        NSLog(@"手机gps定位未开启");
+        
+        debugLog(@"手机gps定位未开启");
         return NO;
     }
 }

@@ -21,4 +21,5 @@
 #import "NetUtils.h"
 #import "AFNetworking.h"
 #import <CoreLocation/CoreLocation.h>
+#import "BlockUI.h"
 #endif
