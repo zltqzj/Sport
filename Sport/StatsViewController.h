@@ -11,4 +11,9 @@
 
 @interface StatsViewController : UIViewController <PSLocationManagerDelegate>
 
+@property(nonatomic,strong) IBOutlet UILabel* strength;
+
+
+-(IBAction)begin:(id)sender;
+
 @end

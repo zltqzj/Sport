@@ -13,6 +13,13 @@
 @end
 
 @implementation StatsViewController
+@synthesize strength = _strength;
+
+-(IBAction)begin:(id)sender{
+    //   [TSMessage showNotificationWithTitle:NSLocalizedString(@"定位失败", nil) subtitle:NSLocalizedString(@"手机GPS定位未开启", nil) type:TSMessageNotificationTypeWarning];
+   // [TSMessage showNotificationInViewController:self title:@"" subtitle:@"" image:nil type:TSMessageNotificationTypeWarning duration:15 callback:nil buttonTitle:nil buttonCallback:nil atPosition:TSMessageNotificationPositionTop canBeDismisedByUser:YES];
+    [TSMessage showNotificationInViewController:self title:@"定位失败" subtitle:@"定位失败" type:TSMessageNotificationTypeWarning];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -52,15 +59,14 @@
     
    // self.strengthLabel.text = strengthText;
     debugLog(strengthText);
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"强度" message:strengthText delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-    [alert show];
+     _strength.text = strengthText;
+     
 }
 
 - (void)locationManagerSignalConsistentlyWeak:(PSLocationManager *)locationManager {
     //self.strengthLabel.text = NSLocalizedString(@"Consistently Weak", @"");
     debugLog(NSLocalizedString(@"Consistently Weak", @""));
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"强度" message:NSLocalizedString(@"Consistently Weak", @"") delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-    [alert show];
+    _strength.text = @"Consistently Weak";
 }
 
 - (void)locationManager:(PSLocationManager *)locationManager distanceUpdated:(CLLocationDistance)distance {

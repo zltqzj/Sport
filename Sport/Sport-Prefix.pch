@@ -22,4 +22,6 @@
 #import "AFNetworking.h"
 #import <CoreLocation/CoreLocation.h>
 #import "BlockUI.h"
+#import "TSMessageView.h"
+
 #endif

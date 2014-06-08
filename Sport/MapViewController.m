@@ -62,6 +62,7 @@
     if (IS_IPHONE5) {
         [_mapView setFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     }
+    
     self.mapView.delegate = self;
     self.mapView.showsUserLocation = YES;
     self.mapView.userInteractionEnabled = YES;
@@ -284,9 +285,13 @@
 
 
 - (void)locationManager:(CLLocationManager *)manager
-     didUpdateLocations:(NSArray *)locations{
-    CLLocation *location = [locations lastObject];
+didUpdateLocations:(NSArray *)locations{
     
+  //  CLLocation *location = [locations lastObject];
+    CLLocation *location1 = [locations lastObject];
+    
+    CLLocationCoordinate2D cood = [WGS84TOGCJ02 transformFromWGSToGCJ:[location1 coordinate]];
+    CLLocation* location = [[CLLocation alloc] initWithCoordinate:cood altitude:location1.altitude horizontalAccuracy:location1.horizontalAccuracy verticalAccuracy:location1.verticalAccuracy course:location1.course speed:location1.speed timestamp:[NSDate date]];
     
     NSLog(@"我的高度%f",location.altitude);
     NSLog(@"我的速度%f",location.speed);
@@ -324,7 +329,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager
        didFailWithError:(NSError *)error{
-    //[TSMessage showNotificationWithTitle:NSLocalizedString(@"定位失败", nil) subtitle:NSLocalizedString(@"定位失败", nil) type:TSMessageNotificationTypeWarning];
+    // [TSMessage showNotificationInViewController:self title:@"定位失败" subtitle:@"定位失败" type:TSMessageNotificationTypeWarning];
     
 }
 
@@ -376,7 +381,7 @@
     } else {
         
         debugLog(@"手机gps定位未开启");
-        [TSMessage showNotificationWithTitle:NSLocalizedString(@"定位失败", nil) subtitle:NSLocalizedString(@"手机GPS定位未开启", nil) type:TSMessageNotificationTypeWarning];
+         [TSMessage showNotificationInViewController:self title:@"定位失败" subtitle:@"手机定位未开启" type:TSMessageNotificationTypeWarning];
         return NO;
     }
 }

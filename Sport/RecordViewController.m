@@ -33,24 +33,25 @@
     [super viewDidLoad];
     self.title = @"Record";
     
-    if (IS_IPHONE5) {
+    if (  SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
         _slideSwitchView = [[SUNSlideSwitchView alloc] initWithFrame:CGRectMake(0, 60, 320, 480)];
 
     }
+ 
     else{
         _slideSwitchView = [[SUNSlideSwitchView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
-
     }
+    
     
     self.slideSwitchView.tabItemNormalColor = [SUNSlideSwitchView colorFromHexRGB:@"868686"];
     self.slideSwitchView.tabItemSelectedColor = [SUNSlideSwitchView colorFromHexRGB:@"bb0b15"];
     self.slideSwitchView.shadowImage = [[UIImage imageNamed:@"red_line_and_shadow.png"]
                                         stretchableImageWithLeftCapWidth:109.0f topCapHeight:0.0f];
     
-    _stats_vc1 = [[StatsViewController alloc] init];
+    _stats_vc1 = viewOnSb(@"stats");
     _stats_vc1.title = @"STATS";
     
-    _split_vc2 = [[SplitsViewController alloc] init];
+    _split_vc2 = viewOnSb(@"splits");
     _split_vc2.title = @"SPLITS";
     
     _map_vc3 = viewOnSb(@"map");
