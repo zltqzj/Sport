@@ -12,6 +12,7 @@
 //  起点标注，终点，公里标注，点击标注callout
 
 #import "MapViewController.h"
+static BOOL beginCollect = NO;
 
 @interface MapViewController ()
 
@@ -43,6 +44,7 @@
 
 -(IBAction)pause:(id)sender{
     [self gecode];
+   
 }
 
 
@@ -57,7 +59,15 @@
     return self;
 }
 
+-(void)collectPoint{
+    beginCollect = YES;
+    [self configureRoutes];
+}
+
 -(void)initMap{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(collectPoint) name:@"collectPoint" object:nil];
+    
+    
     self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height-50)];
     if (IS_IPHONE5) {
         [_mapView setFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
@@ -117,7 +127,7 @@
     // define minimum, maximum points
 	MKMapPoint northEastPoint = MKMapPointMake(0.f, 0.f);
 	MKMapPoint southWestPoint = MKMapPointMake(0.f, 0.f);
-	
+	NSLog(@"%@",_points);
 	// create a c array of points.
 	MKMapPoint* pointArray = malloc(sizeof(CLLocationCoordinate2D) * _points.count);
     if (_points.count ==0) {
@@ -169,9 +179,65 @@
         // clear the memory allocated earlier for the points
         free(pointArray);
     }
+   /*
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:@"赵健",@"name", nil];
+   // NSMutableDictionary* dic = [self activityDictWithID:@"1" user_id:@"2" flag:@"1" start_date:[DayManagement stringFromDate:[NSDate date]] start_date_local:[DayManagement stringFromDate:[NSDate date]] time_zone:@"8" location_city:@"beijing" location_province:@"beijing" location_country:@"china" start_latitude:@"1" start_longitude:@"1" moving_time:@"" elapsed_time:@"" name:@"" description:@"" tag:@"" type:@"" total_elevation_gain:@"" total_distance:@"" manual:@"" private_flag:@"" average_speed:@"" average_pace:@"" max_speed:@"" average_heartrate:@"'" max_heartrate:@"" calories:@"" brocast:@"" like_count:@"" comments_count:@"" awards_count:@"" device:@"" lastsynctime:@""];
+    Activity *person = [MTLJSONAdapter modelOfClass:[Activity class] fromJSONDictionary:dic error:nil];
+    
+    NSLog(@"person: %@", person);
+    NSString *Path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filename = [Path stringByAppendingPathComponent:@"activity.rtf"];
+    [NSKeyedArchiver archiveRootObject:person toFile:filename];
+    
+    Activity* d = [NSKeyedUnarchiver unarchiveObjectWithFile:filename];
+    NSLog(@"%@",d);
+    */
+ 
 }
 
+-(NSMutableDictionary*)activityDictWithID:(NSString*)ID user_id:(NSString*)user_id flag:(NSString*)flag start_date:(NSString*)start_date start_date_local:(NSString*)start_date_local time_zone:(NSString*)time_zone location_city:(NSString*)location_city location_province:(NSString*)location_province location_country:(NSString*)location_country start_latitude:(NSString*)start_latitude start_longitude:(NSString*)start_longitude moving_time:(NSString*)moving_time elapsed_time:(NSString*)elapsed_time name:(NSString*)name description:(NSString*)description tag:(NSString*)tag type:(NSString*)type total_elevation_gain:(NSString*)total_elevation_gain total_distance:(NSString*)total_distance manual:(NSString*)manual private_flag:(NSString*)private_flag average_speed:(NSString*)average_speed average_pace:(NSString*)average_pace max_speed:(NSString*)max_speed average_heartrate:(NSString*)average_heartrate max_heartrate:(NSString*)max_heartrate calories:(NSString*)calories brocast:(NSString*)brocast like_count:(NSString*)like_count comments_count:(NSString*)comments_count awards_count:(NSString*)awards_count device:(NSString*)device lastsynctime:(NSString*)lastsynctime{
+   
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc] initWithCapacity:10];
+     [dict setValue:name  forKeyPath:@"name"];
+    /*
+    [dict setValue:ID forKey:@"ID"];
+    [dict setValue:user_id  forKey:@"user_id"];
+    [dict setValue:flag forKey:@"flag"];
+    [dict setValue:start_date forKey:@"start_date"];
+    [dict setValue:start_date_local forKey:@"start_date_local"];
+    [dict setValue:time_zone forKey:@"time_zone"];
+    [dict setValue:location_city forKey:@"location_city"];
+    [dict setValue:location_province forKey:@"location_province"];
+    [dict setValue:location_country forKey:@"location_country"];
+    [dict setValue:start_latitude forKey:@"start_latitude"];
+    [dict setValue:start_longitude forKey:@"start_longitude"];
+    [dict setValue:moving_time forKey:@"moving_time"];
+    [dict setValue:elapsed_time  forKeyPath:@"elapsed_time"];
+    
+    [dict setValue:description  forKeyPath:@"description"];
+    [dict setValue:tag  forKeyPath:@"tag"];
+    [dict setValue:type  forKeyPath:@"type"];
+    [dict setValue:total_elevation_gain  forKeyPath:@"total_elevation_gain"];
+    [dict setValue:total_distance  forKeyPath:@"total_distance"];
+    [dict setValue:manual  forKeyPath:@"manual"];
+    [dict setValue:private_flag  forKeyPath:@"private_flag"];
+    [dict setValue:average_speed  forKeyPath:@"average_speed"];
+    [dict setValue:average_pace  forKeyPath:@"average_pace"];
+    [dict setValue:max_speed  forKeyPath:@"max_speed"];
+    [dict setValue:average_heartrate  forKeyPath:@"average_heartrate"];
+    [dict setValue:max_heartrate  forKeyPath:@"max_heartrate"];
+    [dict setValue:calories  forKeyPath:@"calories"];
+    [dict setValue:brocast  forKeyPath:@"brocast"];
+    [dict setValue:like_count  forKeyPath:@"like_count"];
+    [dict setValue:comments_count  forKeyPath:@"comments_count"];
+    [dict setValue:awards_count  forKeyPath:@"awards_count"];
 
+    [dict setValue:device  forKeyPath:@"device"];
+
+    [dict setValue:lastsynctime  forKeyPath:@"lastsynctime"];
+*/
+    return dict;
+}
 
 #pragma mark MKMapViewDelegate
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation{
@@ -286,11 +352,10 @@
 - (void)locationManager:(CLLocationManager *)manager
 didUpdateLocations:(NSArray *)locations{
     
-  //  CLLocation *location = [locations lastObject];
-    CLLocation *location1 = [locations lastObject];
+    CLLocation *location = [locations lastObject];
     
-    CLLocationCoordinate2D cood = [WGS84TOGCJ02 transformFromWGSToGCJ:[location1 coordinate]];
-    CLLocation* location = [[CLLocation alloc] initWithCoordinate:cood altitude:location1.altitude horizontalAccuracy:location1.horizontalAccuracy verticalAccuracy:location1.verticalAccuracy course:location1.course speed:location1.speed timestamp:[NSDate date]];
+//    CLLocationCoordinate2D cood = [WGS84TOGCJ02 transformFromWGSToGCJ:[location1 coordinate]];
+//    CLLocation* location = [[CLLocation alloc] initWithCoordinate:cood altitude:location1.altitude horizontalAccuracy:location1.horizontalAccuracy verticalAccuracy:location1.verticalAccuracy course:location1.course speed:location1.speed timestamp:[NSDate date]];
     
     NSLog(@"我的高度%f",location.altitude);
     NSLog(@"我的速度%f",location.speed);
@@ -300,7 +365,9 @@ didUpdateLocations:(NSArray *)locations{
         return;
     
     // check the move distance
-    
+    if (beginCollect ==NO) {
+        
+    }else{
     
     if (_points.count > 0) {
         CLLocationDistance distance = [location distanceFromLocation:_currentLocation];
@@ -313,14 +380,15 @@ didUpdateLocations:(NSArray *)locations{
     }
     NSLog(@"%d",_points.count);
     [_points addObject:location];
-    
-    
     NSLog(@"points: %@", _points);
+        if (beginCollect ==YES) {
+            [self configureRoutes];
+        }
     // 起点画坐标
 //    MapPoint* map  = [[MapPoint alloc] initWithCoordinate:_centerPoint.coordinate title:@"起点" subTitle:@""];
 //    [_mapView addAnnotation:map];
-    
-    [self configureRoutes]; // 划线
+    }
+   // [self configureRoutes]; // 划线
     
 }
 
@@ -389,9 +457,14 @@ didUpdateLocations:(NSArray *)locations{
     // Dispose of any resources that can be recreated.
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"first"];
-}
+//-(void)viewWillAppear:(BOOL)animated{
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"first"];
+//    [self configureRoutes];
+//}
+//-(void)viewDidAppear:(BOOL)animated
+//{
+//    [self configureRoutes];
+//}
 
 /*
 #pragma mark - Navigation

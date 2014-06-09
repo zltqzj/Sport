@@ -49,6 +49,9 @@
 		164D67E31941A36600F660E4 /* TSBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D67CD1941A36600F660E4 /* TSBlurView.m */; };
 		164D67E41941A36600F660E4 /* TSMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D67CF1941A36600F660E4 /* TSMessageView.m */; };
 		164D67E71941A8BC00F660E4 /* MMLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D67E61941A8BC00F660E4 /* MMLocationManager.m */; };
+		1652D02119456F300000E917 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1652D02019456F300000E917 /* TTTAttributedLabel.m */; };
+		1652D02419456F510000E917 /* TTCounterLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1652D02319456F510000E917 /* TTCounterLabel.m */; };
+		1652D0281945B7320000E917 /* DayManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 1652D0271945B7320000E917 /* DayManagement.m */; };
 		1C7A5CE11943FD2E00E96C22 /* RecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A5CE01943FD2E00E96C22 /* RecordViewController.m */; };
 		1C7A5CE41943FD3600E96C22 /* FeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A5CE31943FD3600E96C22 /* FeedViewController.m */; };
 		1C7A5CE71943FD3F00E96C22 /* ChallengeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A5CE61943FD3F00E96C22 /* ChallengeViewController.m */; };
@@ -584,6 +587,12 @@
 		164D67CF1941A36600F660E4 /* TSMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMessageView.m; sourceTree = "<group>"; };
 		164D67E51941A8BC00F660E4 /* MMLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMLocationManager.h; sourceTree = "<group>"; };
 		164D67E61941A8BC00F660E4 /* MMLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMLocationManager.m; sourceTree = "<group>"; };
+		1652D01F19456F300000E917 /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
+		1652D02019456F300000E917 /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
+		1652D02219456F510000E917 /* TTCounterLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTCounterLabel.h; sourceTree = "<group>"; };
+		1652D02319456F510000E917 /* TTCounterLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCounterLabel.m; sourceTree = "<group>"; };
+		1652D0261945B7320000E917 /* DayManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayManagement.h; sourceTree = "<group>"; };
+		1652D0271945B7320000E917 /* DayManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayManagement.m; sourceTree = "<group>"; };
 		1C7A5CDF1943FD2E00E96C22 /* RecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordViewController.h; sourceTree = "<group>"; };
 		1C7A5CE01943FD2E00E96C22 /* RecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordViewController.m; sourceTree = "<group>"; };
 		1C7A5CE21943FD3600E96C22 /* FeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedViewController.h; sourceTree = "<group>"; };
@@ -1300,6 +1309,26 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		1652D01E19456F230000E917 /* TimerLabel */ = {
+			isa = PBXGroup;
+			children = (
+				1652D01F19456F300000E917 /* TTTAttributedLabel.h */,
+				1652D02019456F300000E917 /* TTTAttributedLabel.m */,
+				1652D02219456F510000E917 /* TTCounterLabel.h */,
+				1652D02319456F510000E917 /* TTCounterLabel.m */,
+			);
+			path = TimerLabel;
+			sourceTree = "<group>";
+		};
+		1652D0251945B7320000E917 /* DateManage */ = {
+			isa = PBXGroup;
+			children = (
+				1652D0261945B7320000E917 /* DayManagement.h */,
+				1652D0271945B7320000E917 /* DayManagement.m */,
+			);
+			path = DateManage;
+			sourceTree = "<group>";
+		};
 		1C7A5CDE1943FCEE00E96C22 /* FiveMainController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1538,6 +1567,7 @@
 		1CB9E299193DCF4B00A90B58 /* CustomUi */ = {
 			isa = PBXGroup;
 			children = (
+				1652D01E19456F230000E917 /* TimerLabel */,
 				1C7A5CEE1943FF4100E96C22 /* CustomTabbar */,
 				164D67B21941A36600F660E4 /* TSMessage */,
 				1CB9E29A193DCF4B00A90B58 /* CustomCheckBox */,
@@ -1698,6 +1728,7 @@
 		1CB9E2F1193DCF4B00A90B58 /* OtherTools */ = {
 			isa = PBXGroup;
 			children = (
+				1652D0251945B7320000E917 /* DateManage */,
 				164D676F194179F700F660E4 /* NSTimer */,
 				1CB9E2F2193DCF4B00A90B58 /* chinese4pinyin */,
 				1CB9E301193DCF4B00A90B58 /* RegularExpressions */,
@@ -2636,6 +2667,7 @@
 				1CB9E33C193DCF4B00A90B58 /* PinyinHelper.m in Sources */,
 				1CB9E329193DCF4B00A90B58 /* ASIDataDecompressor.m in Sources */,
 				1CB9E31D193DCF4B00A90B58 /* MMExampleSideDrawerViewController.m in Sources */,
+				1652D0281945B7320000E917 /* DayManagement.m in Sources */,
 				1CB9E323193DCF4B00A90B58 /* KGModal.m in Sources */,
 				164D67E71941A8BC00F660E4 /* MMLocationManager.m in Sources */,
 				164D6797194194F900F660E4 /* MTLManagedObjectAdapter.m in Sources */,
@@ -2696,6 +2728,7 @@
 				1CB9E330193DCF4B00A90B58 /* NetUtils.m in Sources */,
 				1C7A5CED1943FD5000E96C22 /* MoreViewController.m in Sources */,
 				1CB9E327193DCF4B00A90B58 /* ASIAuthenticationDialog.m in Sources */,
+				1652D02119456F300000E917 /* TTTAttributedLabel.m in Sources */,
 				164D6795194194F900F660E4 /* EXTScope.m in Sources */,
 				1CB9E326193DCF4B00A90B58 /* ZJSwitch.m in Sources */,
 				1CB9E31F193DCF4B00A90B58 /* MMSideDrawerSectionHeaderView.m in Sources */,
@@ -2718,6 +2751,7 @@
 				1CB9E36E193E22DC00A90B58 /* KMLParser.m in Sources */,
 				1CB9E30D193DCF4B00A90B58 /* UIAlertView+Block.m in Sources */,
 				1CB9E312193DCF4B00A90B58 /* QCheckBox.m in Sources */,
+				1652D02419456F510000E917 /* TTCounterLabel.m in Sources */,
 				1CB9E306193DCF4B00A90B58 /* CLLocationManager+Block.m in Sources */,
 				164D679B194194F900F660E4 /* MTLValueTransformer.m in Sources */,
 				1CB9E30A193DCF4B00A90B58 /* MTBlockTableView.m in Sources */,

@@ -100,10 +100,14 @@
     if (number == 0) {
         
         vc = _stats_vc1;
+        [_map_vc3 viewDidAppear:YES];
     } else if (number == 1) {
         vc =_split_vc2;
+        [_map_vc3 viewDidAppear:YES];
+
     } else if (number == 2) {
         vc = _map_vc3;
+        
     }
     // [vc viewDidCurrentView];
 }

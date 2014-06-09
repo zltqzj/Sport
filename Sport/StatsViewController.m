@@ -7,32 +7,47 @@
 //
 
 #import "StatsViewController.h"
-
+static int a = 1;
+typedef NS_ENUM(NSInteger, kTTCounter){
+    kTTCounterRunning = 0,
+    kTTCounterStopped,
+    kTTCounterReset,
+    kTTCounterEnded
+};
 @interface StatsViewController ()
 
 @end
 
 @implementation StatsViewController
 @synthesize strength = _strength;
+@synthesize counterLabel = _counterLabel;
 @synthesize timer = _timer;
+@synthesize lblHour = _lblHour;
+@synthesize lblMinite = _lblMinite;
+@synthesize lblSeconds = _lblSeconds;
 
 -(IBAction)begin:(id)sender{
+    _timer =  [NSTimer scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
+        
+    } repeats:YES];
+    //每1秒运行一次function方法。
     
    // [TSMessage showNotificationInViewController:self title:@"定位失败" subtitle:@"定位失败" type:TSMessageNotificationTypeWarning];
     
-  
-    _timer = [NSTimer scheduledTimerWithTimeInterval:5 block:^(NSTimer *timer) {
-        NSLog(@"timeInterval%f",timer.timeInterval);
-    } repeats:YES];
+ 
 }
+
 
 -(IBAction)end:(id)sender{
     NSLog(@"暂停");
-    [_timer pauseTimer];
+    [_timer setFireDate:[NSDate distantFuture]];
+   // [_timer pauseTimer];
 }
 -(IBAction)resume:(id)sender{
     NSLog(@"恢复");
-    [_timer resumeTimer];
+    [_timer setFireDate:[NSDate distantPast]];
+  //  [_timer resumeTimer];
+    
 }
 
 
@@ -48,6 +63,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+     [self customiseAppearance];
     [PSLocationManager sharedLocationManager].delegate = self;
     [[PSLocationManager sharedLocationManager] prepLocationUpdates];
     [[PSLocationManager sharedLocationManager] startLocationUpdates];
@@ -59,6 +75,84 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Actions
+
+- (IBAction)startStopTapped:(id)sender {
+    NSLog(@"currentValue：%lu",self.counterLabel.currentValue);
+    NSLog(@"startValue：%lu",self.counterLabel.startValue);
+    NSLog(@"countDirection：%lu",(long)self.counterLabel.countDirection);
+    if (self.counterLabel.isRunning) {
+        [self.counterLabel stop];
+        
+        [self updateUIForState:kTTCounterStopped];
+    } else {
+        [self.counterLabel start];
+        
+        [self updateUIForState:kTTCounterRunning];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"collectPoint" object:self userInfo:nil];
+    }
+}
+
+- (IBAction)resetTapped:(id)sender {
+    [self.counterLabel reset];
+    
+    [self updateUIForState:kTTCounterReset];
+}
+
+#pragma mark - Private
+
+- (void)customiseAppearance {
+    [self.counterLabel setBoldFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:55]];
+    // _counterLabel.boldFont = [UIFont  fontWithName:@"HelveticaNeue-Medium" size:55];
+
+    [self.counterLabel setRegularFont:[UIFont fontWithName:@"HelveticaNeue-UltraLight" size:55]];
+    
+    // The font property of the label is used as the font for H,M,S and MS
+    [self.counterLabel setFont:[UIFont fontWithName:@"HelveticaNeue-UltraLight" size:25]];
+    
+    // Default label properties
+    self.counterLabel.textColor = [UIColor darkGrayColor];
+    
+    // After making any changes we need to call update appearance
+    [self.counterLabel updateApperance];
+}
+
+- (void)updateUIForState:(NSInteger)state {
+    switch (state) {
+        case kTTCounterRunning:
+            [self.startStopButton setTitle:@"Stop" forState:UIControlStateNormal];
+            self.resetButton.hidden = YES;
+            break;
+            
+        case kTTCounterStopped:
+            [self.startStopButton setTitle:@"Start" forState:UIControlStateNormal];
+            self.resetButton.hidden = NO;
+            break;
+            
+        case kTTCounterReset:
+            [self.startStopButton setTitle:@"Start" forState:UIControlStateNormal];
+            self.resetButton.hidden = YES;
+            self.startStopButton.hidden = NO;
+            break;
+            
+        case kTTCounterEnded:
+            self.startStopButton.hidden = YES;
+            self.resetButton.hidden = NO;
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - TTCounterLabelDelegate
+
+- (void)countdownDidEnd {
+    [self updateUIForState:kTTCounterEnded];
+    
+}
+
 
 #pragma mark --- PSLocationManagerDelegate GPS强度
 

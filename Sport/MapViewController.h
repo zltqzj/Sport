@@ -17,6 +17,9 @@
 #import "Activity.h"
 #import "Mantle.h"
 #import "ProgressHUD.h"
+#import "Activity.h"
+#import "EMPerson.h"
+#import "DayManagement.h"
 @interface MapViewController : UIViewController<MKMapViewDelegate, CLLocationManagerDelegate,TSMessageViewProtocol>
 {
 	// the map view
@@ -54,7 +57,7 @@
 
 @property(strong,nonatomic) NSTimer* timer;
 
--(void) configureRoutes;
+-(void)configureRoutes;
 
 -(IBAction)go:(id)sender;
 -(IBAction)end:(id)sender;
