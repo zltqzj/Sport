@@ -14,12 +14,27 @@
 
 @implementation StatsViewController
 @synthesize strength = _strength;
+@synthesize timer = _timer;
 
 -(IBAction)begin:(id)sender{
-    //   [TSMessage showNotificationWithTitle:NSLocalizedString(@"定位失败", nil) subtitle:NSLocalizedString(@"手机GPS定位未开启", nil) type:TSMessageNotificationTypeWarning];
-   // [TSMessage showNotificationInViewController:self title:@"" subtitle:@"" image:nil type:TSMessageNotificationTypeWarning duration:15 callback:nil buttonTitle:nil buttonCallback:nil atPosition:TSMessageNotificationPositionTop canBeDismisedByUser:YES];
-    [TSMessage showNotificationInViewController:self title:@"定位失败" subtitle:@"定位失败" type:TSMessageNotificationTypeWarning];
+    
+   // [TSMessage showNotificationInViewController:self title:@"定位失败" subtitle:@"定位失败" type:TSMessageNotificationTypeWarning];
+    
+  
+    _timer = [NSTimer scheduledTimerWithTimeInterval:5 block:^(NSTimer *timer) {
+        NSLog(@"timeInterval%f",timer.timeInterval);
+    } repeats:YES];
 }
+
+-(IBAction)end:(id)sender{
+    NSLog(@"暂停");
+    [_timer pauseTimer];
+}
+-(IBAction)resume:(id)sender{
+    NSLog(@"恢复");
+    [_timer resumeTimer];
+}
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

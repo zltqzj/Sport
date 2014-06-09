@@ -23,5 +23,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import "BlockUI.h"
 #import "TSMessageView.h"
+#import "iOSBlocks.h"
 
 #endif

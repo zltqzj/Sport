@@ -99,10 +99,9 @@
 {
     [super viewDidLoad];
    
-    _timer = [NSTimer scheduledTimerWithTimeInterval:5 block:^(NSTimer *timer) {
-        debugLog(@"定时器");
-        [self locationServicesEnabled];
-    } repeats:YES];
+//    _timer = [NSTimer scheduledTimerWithTimeInterval:5 block:^(NSTimer *timer){
+//        [self locationServicesEnabled];
+//    } repeats:YES];
     
     [self initMap];
 }
@@ -374,13 +373,9 @@ didUpdateLocations:(NSArray *)locations{
 
 - (BOOL)locationServicesEnabled {
     NSLog(@"定时器");
-    debugLog(@"定时器");
     if (([CLLocationManager locationServicesEnabled]) && ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)) {
-        debugLog(@"手机gps定位已经开启");
         return YES;
     } else {
-        
-        debugLog(@"手机gps定位未开启");
          [TSMessage showNotificationInViewController:self title:@"定位失败" subtitle:@"手机定位未开启" type:TSMessageNotificationTypeWarning];
         return NO;
     }
