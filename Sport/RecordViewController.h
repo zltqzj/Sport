@@ -11,6 +11,7 @@
 #import "SplitsViewController.h"
 #import "MapViewController.h"
 #import "SUNSlideSwitchView.h"
+#import "MyManager.h"
 @interface RecordViewController : UIViewController<SUNSlideSwitchViewDelegate>
  
 

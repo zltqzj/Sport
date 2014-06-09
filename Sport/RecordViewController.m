@@ -82,11 +82,19 @@
 - (UIViewController *)slideSwitchView:(SUNSlideSwitchView *)view viewOfTab:(NSUInteger)number
 {
     if (number == 0) {
+         [[MyManager sharedManager] setIfDrawLine:NO];
         return _stats_vc1;
+       
     } else if (number == 1) {
+        [[MyManager sharedManager] setIfDrawLine:NO];
+
         return _split_vc2;
+        
     } else if (number == 2) {
+         [[MyManager sharedManager] setIfDrawLine:YES];
         return _map_vc3;
+       
+
     }   else {
         return nil;
     }

@@ -20,6 +20,7 @@
 #import "Activity.h"
 #import "EMPerson.h"
 #import "DayManagement.h"
+#import "MyManager.h"
 @interface MapViewController : UIViewController<MKMapViewDelegate, CLLocationManagerDelegate,TSMessageViewProtocol>
 {
 	// the map view

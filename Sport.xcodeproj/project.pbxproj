@@ -65,6 +65,7 @@
 		1C7A5D061944006A00E96C22 /* SplitsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A5D051944006A00E96C22 /* SplitsViewController.m */; };
 		1C7A5D091944007600E96C22 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A5D081944007600E96C22 /* MapViewController.m */; };
 		1C7A5D0F1944224C00E96C22 /* PSLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A5D0E1944224C00E96C22 /* PSLocationManager.m */; };
+		1CB1DC271945FFB6008FBF0B /* MyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB1DC261945FFB6008FBF0B /* MyManager.m */; };
 		1CB9E23D193DCEC900A90B58 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB9E23C193DCEC900A90B58 /* Foundation.framework */; };
 		1CB9E23F193DCEC900A90B58 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB9E23E193DCEC900A90B58 /* CoreGraphics.framework */; };
 		1CB9E241193DCEC900A90B58 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB9E240193DCEC900A90B58 /* UIKit.framework */; };
@@ -616,6 +617,8 @@
 		1C7A5D081944007600E96C22 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		1C7A5D0D1944224C00E96C22 /* PSLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSLocationManager.h; sourceTree = "<group>"; };
 		1C7A5D0E1944224C00E96C22 /* PSLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSLocationManager.m; sourceTree = "<group>"; };
+		1CB1DC251945FFB5008FBF0B /* MyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyManager.h; sourceTree = "<group>"; };
+		1CB1DC261945FFB6008FBF0B /* MyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyManager.m; sourceTree = "<group>"; };
 		1CB9E239193DCEC900A90B58 /* Sport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sport.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CB9E23C193DCEC900A90B58 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1CB9E23E193DCEC900A90B58 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1241,6 +1244,8 @@
 				164D67AB1941A09600F660E4 /* EMPerson.m */,
 				164D67A71941A00500F660E4 /* Activity.h */,
 				164D67A81941A00500F660E4 /* Activity.m */,
+				1CB1DC251945FFB5008FBF0B /* MyManager.h */,
+				1CB1DC261945FFB6008FBF0B /* MyManager.m */,
 			);
 			path = modle;
 			sourceTree = "<group>";
@@ -2754,6 +2759,7 @@
 				1652D02419456F510000E917 /* TTCounterLabel.m in Sources */,
 				1CB9E306193DCF4B00A90B58 /* CLLocationManager+Block.m in Sources */,
 				164D679B194194F900F660E4 /* MTLValueTransformer.m in Sources */,
+				1CB1DC271945FFB6008FBF0B /* MyManager.m in Sources */,
 				1CB9E30A193DCF4B00A90B58 /* MTBlockTableView.m in Sources */,
 				1CB9E337193DCF4B00A90B58 /* ChineseToPinyinResource.m in Sources */,
 				164D67D01941A36600F660E4 /* TSMessage.m in Sources */,
