@@ -23,6 +23,8 @@
 #import "MyManager.h"
 #import "CSPausibleTimer.h"
 
+double main_total_distance;
+
 @interface MapViewController : UIViewController<MKMapViewDelegate, CLLocationManagerDelegate,TSMessageViewProtocol>
 {
 	// the map view
@@ -45,6 +47,7 @@
     
     // current location
     CLLocation* _currentLocation;
+
     
     
 }
@@ -56,10 +59,14 @@
 @property (nonatomic, retain) CLLocationManager* locationManager;
 @property (strong,nonatomic) CLGeocoder* myGeocoder;
 @property (strong,nonatomic) IBOutlet UILabel* displayLocation;
-@property(strong,nonatomic) MKUserLocation* centerPoint;
-@property(strong,nonatomic)NSMutableArray* annoArray;
-
+@property (strong,nonatomic) MKUserLocation* centerPoint;
+@property (strong,nonatomic) NSMutableArray* annoArray;
+@property (nonatomic, retain) Activity* activities;
 @property(strong,nonatomic) CSPausibleTimer* timer;
+@property(assign,nonatomic) NSString* total_distance;
+
+
+
 -(void)configureRoutes;
 
  

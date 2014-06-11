@@ -83,17 +83,17 @@
 {
     if (number == 0) {
         
-      
+       
         return _stats_vc1;
        
     } else if (number == 1) {
      
-        
+       
         return _split_vc2;
         
     } else if (number == 2) {
        
-       
+      
         return _map_vc3;
        
 
@@ -109,14 +109,17 @@
     UIViewController *vc = nil;
     if (number == 0) {
         [[MyManager sharedManager] setIfDrawLine:@"NO"];
+         [_map_vc3.timer pause];
         vc = _stats_vc1;
-        [_map_vc3 viewDidAppear:YES];
+       // [_map_vc3 viewDidAppear:YES];
     } else if (number == 1) {
+         [_map_vc3.timer pause];
         [[MyManager sharedManager] setIfDrawLine:@"NO"];
         vc =_split_vc2;
-        [_map_vc3 viewDidAppear:YES];
+        //[_map_vc3 viewDidAppear:YES];
 
     } else if (number == 2) {
+          [_map_vc3.timer start];
          [[MyManager sharedManager] setIfDrawLine:@"YES"];
         vc = _map_vc3;
         

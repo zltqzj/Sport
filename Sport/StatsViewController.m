@@ -26,6 +26,8 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 @synthesize lblHour = _lblHour;
 @synthesize lblMinite = _lblMinite;
 @synthesize lblSeconds = _lblSeconds;
+@synthesize lblTotalDistance = _lblTotalDistance;
+
 @synthesize cs_timer = _cs_timer;
 @synthesize whole_second = _whole_second;
 
@@ -35,15 +37,38 @@ typedef NS_ENUM(NSInteger, kTTCounter){
         NSLog(@"cs定时器走没走%@",[NSString stringWithFormat:@"%d",b]);
         _whole_second =[NSString stringWithFormat:@"%d",++b];
         [self calculate_h_m_s:_whole_second];
+    
         if (_cs_timer.isPaused) {
             
         }else{
+            
+            
+            [self calculate_distance:1.2];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"collectPoint" object:self userInfo:nil];
         }
     
     
     
+    
 }
+
+-(void)calculate_distance:(double)dis{
+    
+    
+            
+            
+        
+//            //设置SecondViewController中的值
+//            mapView. = userEntity;
+            
+         
+      //  _lblTotalDistance.text = [NSString stringWithFormat:@"%.1f",dis];
+        
+ 
+    
+    
+}
+
 
 -(void)calculate_h_m_s:(NSString*)wholeSecond{
     
@@ -77,39 +102,37 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 }
 
 
--(void)viewDidAppear:(BOOL)animated{
-    NSLog(@"111");
-}
--(void)viewWillAppear:(BOOL)animated{
-    NSLog(@"111");
-    // self.view.frame = CGRectMake(0.0f, -100, self.view.frame.size.width, self.view.frame.size.height);
-
-}
 -(IBAction)end:(id)sender{
-    NSLog(@"暂停");
-    [_cs_timer pause];
-    SaveViewController* save = viewOnSb(@"save");
-     
-    [self presentViewController:save animated:YES completion:^{
-        
-    }];
+    NSLog(@"完成");
+    [[MyManager sharedManager] setSection:0];
+    
+  //  [_cs_timer pause];
+//    SaveViewController* save = viewOnSb(@"save");
+//     
+//    [self presentViewController:save animated:YES completion:^{
+//        
+//    }];
    
 }
 -(IBAction)resume:(id)sender{
-    //  后台执行：
-   // dispatch_async(dispatch_get_global_queue(0, 0), ^{
+   
         if (b == 0) {
             _cs_timer = [CSPausibleTimer timerWithTimeInterval:1 target:self selector:@selector(beginActivity) userInfo:nil repeats:YES];
-            NSLog(@"恢复");
+            NSLog(@"第一次启动");
+            [[MyManager sharedManager] setSection:[[MyManager sharedManager] section]+1];
             [_cs_timer start];
         }
         else if (b!=0 && [_cs_timer isPaused]){
             [_cs_timer start];
+            [[MyManager sharedManager] setSection:[[MyManager sharedManager] section]+1];
+               NSLog(@"恢复");
         }
         else{
-            [ProgressHUD showError:@"已经开始计时"];
+            [_cs_timer pause];
+               NSLog(@"暂停");
+            [[MyManager sharedManager] setIfDrawLine:NO];
         }
-   // });
+ 
     
     
    
@@ -125,10 +148,18 @@ typedef NS_ENUM(NSInteger, kTTCounter){
     }
     return self;
 }
+-(void)show_total_distance:(NSNotification*)info{
+    NSLog(@"----%@",info);
+    NSString* str = [info.userInfo objectForKey:@"_total_distance"];
+    NSLog(@"%@",str);
+     _lblTotalDistance.text = str;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(show_total_distance:) name:@"_total_distance" object:nil];
+   
      [self customiseAppearance];
    
         [PSLocationManager sharedLocationManager].delegate = self;
@@ -138,6 +169,7 @@ typedef NS_ENUM(NSInteger, kTTCounter){
     
     
 }
+
 
 - (void)didReceiveMemoryWarning
 {

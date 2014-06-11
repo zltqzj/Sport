@@ -74,12 +74,15 @@
 							
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-    
+     
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     [[MyManager sharedManager] setIfDrawLine:@"NO"];
+    MapViewController* map = viewOnSb(@"map");
+    
+    [map.timer pause];
     UIApplication*   app = [UIApplication sharedApplication];
     __block    UIBackgroundTaskIdentifier bgTask;
     bgTask = [app beginBackgroundTaskWithExpirationHandler:^{

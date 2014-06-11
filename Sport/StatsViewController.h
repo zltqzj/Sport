@@ -15,12 +15,15 @@
 #import "config.h"
 #import "SaveViewController.h"
 #import "RecordViewController.h"
+#import "MyManager.h"
 @interface StatsViewController : UIViewController <PSLocationManagerDelegate,TTCounterLabelDelegate>
 
 @property(strong,nonatomic) IBOutlet UILabel* lblHour;
 @property(strong,nonatomic) IBOutlet UILabel* lblMinite;
 
 @property(strong,nonatomic) IBOutlet UILabel* lblSeconds;
+@property(strong,nonatomic) IBOutlet UILabel* lblTotalDistance;
+
 
 
 

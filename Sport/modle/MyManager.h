@@ -7,10 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "CSPausibleTimer.h"
 @interface MyManager : NSObject
 
 @property (nonatomic, strong) NSString* ifDrawLine;
+@property(nonatomic,strong) CSPausibleTimer* timer_in_map;
+@property(nonatomic,assign) NSInteger section;
+
 
 + (id)sharedManager;
 

@@ -12,6 +12,7 @@
 #import "ViewController.h"
 #import "Reachability.h"
 #import "MyManager.h"
+#import "MapViewController.h"
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

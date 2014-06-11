@@ -33,6 +33,8 @@ static BOOL beginCollect = NO;
 @synthesize locationManager = _locationManager;
 @synthesize displayLocation = _displayLocation;
 @synthesize annoArray = _annoArray;
+@synthesize activities= _activities;
+@synthesize total_distance = _total_distance;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -98,12 +100,14 @@ static BOOL beginCollect = NO;
     [super viewDidLoad];
    
   
-  
+   
     [self initMap];
+    [self initActivityObject];
+    main_total_distance = 0;
+    _total_distance = 0;
     _timer = [CSPausibleTimer timerWithTimeInterval:5 target:self selector:@selector(goToDrawLine) userInfo:nil repeats:YES];
     [_timer start];
-//    _timer = [NSTimer scheduledTimerWithTimeInterval:5 block:^(NSTimer *timer){
-//        //[self locationServicesEnabled];
+    
 
    
 }
@@ -115,11 +119,7 @@ static BOOL beginCollect = NO;
         }
     
 }
--(void)viewWillDisappear:(BOOL)animated{
-   // [_timer invalidate];
-    NSLog(@"暂停");
-    [_timer pause];
-}
+
 
 
 // 划线方法
@@ -133,16 +133,20 @@ static BOOL beginCollect = NO;
     CLLocation* lo = [[CLLocation alloc] init];
 	// create a c array of points.
 	MKMapPoint* pointArray = malloc(sizeof(CLLocationCoordinate2D) * _points.count);
+    CLLocationDegrees latitude = 0;
+    CLLocationDegrees longitude = 0;
     if (_points.count ==0) {
         
     }
     else{
-        // for(int idx = 0; idx < pointStrings.count; idx++)
+        int nIndex = 0;
         for(int idx = 0; idx < _points.count; idx++)
         {
-            CLLocation *location = [_points objectAtIndex:idx];
-            CLLocationDegrees latitude  = location.coordinate.latitude;
-            CLLocationDegrees longitude = location.coordinate.longitude;
+            NSLog(@"------%d",idx);
+            NSDictionary* d = [_points objectAtIndex:idx];
+           // CLLocation *location = [_points objectAtIndex:idx];
+              latitude  = [[d objectForKey:@"latitude"] doubleValue];
+              longitude = [[d objectForKey:@"longitude"] doubleValue];
             
             // create our coordinate and add it to the correct spot in the array
             CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
@@ -152,6 +156,7 @@ static BOOL beginCollect = NO;
             if (idx == 0) {
                 northEastPoint = point;
                 southWestPoint = point;
+                
             } else {
                 if (point.x > northEastPoint.x)
                     northEastPoint.x = point.x;
@@ -162,15 +167,35 @@ static BOOL beginCollect = NO;
                 if (point.y < southWestPoint.y)
                     southWestPoint.y = point.y;
             }
-            
-            pointArray[idx] = point;
-            NSLog(@"%d",idx);
-           lo = [_points objectAtIndex:idx];
+             if (idx>0){
+                 NSLog(@"%@,%@",[[_points objectAtIndex:idx] objectForKey:@"section"],[[_points objectAtIndex:idx-1] objectForKey:@"section"]);
+                 NSString* a =[[_points objectAtIndex:idx] objectForKey:@"section"];
+                 NSString* b =[[_points objectAtIndex:idx-1] objectForKey:@"section"];
+                 if ( ![a isEqualToString:b]) {
+                     NSLog(@"不同section");
+                    if (self.routeLine) {
+                        [self.mapView removeOverlay:self.routeLine];
+                    }
+                    
+                    self.routeLine = [MKPolyline polylineWithPoints:pointArray count:_points.count];
+                    if (nil != self.routeLine) {
+                        [self.mapView addOverlay:self.routeLine]; // add the overlay to the map
+                        NSLog(@"划线");
+                    }
+                    free(pointArray);
+                    pointArray = malloc(sizeof(CLLocationCoordinate2D) * _points.count);
+                    nIndex = 0;
+                 }
+             }
+            pointArray[nIndex] = point;
+            NSLog(@"%d",nIndex);
+           
+            nIndex ++ ;
         
         }
         //
-         NSLog(@"---------%f,%f",lo.coordinate.latitude,lo.coordinate.longitude );
-        CLLocationCoordinate2D lo1 = CLLocationCoordinate2DMake(lo.coordinate.latitude,lo.coordinate.longitude);
+      //   NSLog(@"---------%f,%f",lo.coordinate.latitude,lo.coordinate.longitude );
+        CLLocationCoordinate2D lo1 = CLLocationCoordinate2DMake(latitude,longitude);
         MapPoint* mmp = [[MapPoint alloc] initWithCoordinate:lo1 title:@"当前位置" subTitle:@""];
        [ _mapView addAnnotation:mmp];
         [_annoArray addObject:mmp];
@@ -183,18 +208,18 @@ static BOOL beginCollect = NO;
             [self.mapView addOverlay:self.routeLine]; // add the overlay to the map
             NSLog(@"划线");
         }
-//        CLLocation* lo = [_points objectAtIndex:[_points.count]];
-//        NSLog(@"---------%f,%f",lo.coordinate.latitude,lo.coordinate.longitude );
         free(pointArray);
+        nIndex = 0;
     }
 }
 
--(void)recordJsonObject{
-    NSMutableDictionary* dic = [self activityDictWithID:@"1" user_id:@"2" flag:@"1" start_date:[DayManagement stringFromDate:[NSDate date]] start_date_local:[DayManagement stringFromDate:[NSDate date]] time_zone:@"8" location_city:@"beijing" location_province:@"beijing" location_country:@"china" start_latitude:@"1" start_longitude:@"1" moving_time:@"" elapsed_time:@"1" name:@"run" description:@"1" tag:@"2" type:@"1" total_elevation_gain:@"1" total_distance:@"1" manual:@"1" private_flag:@"1" average_speed:@"1" average_pace:@"1" max_speed:@"1" average_heartrate:@"1" max_heartrate:@"1" calories:@"1" brocast:@"1" like_count:@"1" comments_count:@"1" awards_count:@"1" device:@"1" lastsynctime:@"" list:_points];
-    
-    Activity *person = [MTLJSONAdapter modelOfClass:[Activity class] fromJSONDictionary:dic error:nil];
-    
-    NSLog(@"person: %@", person);
+
+-(void)initActivityObject{
+    NSMutableDictionary* dic = [self activityDictWithID:@"1" user_id:@"1" flag:@"1" start_date:[DayManagement stringFromDate:[NSDate date]] start_date_local:[DayManagement stringFromDate:[NSDate date]] time_zone:@"8" location_city:@"beijing" location_province:@"beijing" location_country:@"china" start_latitude:@"1" start_longitude:@"1" moving_time:@"" elapsed_time:@"1" name:@"run" description:@"1" tag:@"2" type:@"1" total_elevation_gain:@"1" total_distance:@"1" manual:@"1" private_flag:@"1" average_speed:@"1" average_pace:@"1" max_speed:@"1" average_heartrate:@"1" max_heartrate:@"1" calories:@"1" brocast:@"1" like_count:@"1" comments_count:@"1" awards_count:@"1" device:@"1" lastsynctime:@"" list:_points];
+    //Activity *person = [MTLJSONAdapter modelOfClass:[Activity class] fromJSONDictionary:dic error:nil];
+    _activities = [MTLJSONAdapter modelOfClass:[Activity class] fromJSONDictionary:dic error:nil];
+     
+    NSLog(@"_activities: %@", _activities);
     
     // save to disk
     //    NSString *Path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -366,53 +391,71 @@ static BOOL beginCollect = NO;
 - (void)locationManager:(CLLocationManager *)manager
 didUpdateLocations:(NSArray *)locations{
     
-    CLLocation *location = [locations lastObject];
     
-//    CLLocationCoordinate2D cood = [WGS84TOGCJ02 transformFromWGSToGCJ:[location1 coordinate]];
-//    CLLocation* location = [[CLLocation alloc] initWithCoordinate:cood altitude:location1.altitude horizontalAccuracy:location1.horizontalAccuracy verticalAccuracy:location1.verticalAccuracy course:location1.course speed:location1.speed timestamp:[NSDate date]];
-    NSLog(@"角度%f",location.course);
-    NSLog(@"我的高度%f",location.altitude);
-    NSLog(@"我的速度%f",location.speed);
-    // check the zero point
-    if  (location.coordinate.latitude == 0.0f ||
-         location.coordinate.longitude == 0.0f)
-        return;
-    
-    
-    
-    if (_points.count > 0) {
-        CLLocationDistance distance = [location distanceFromLocation:_currentLocation];
-        NSLog(@"距离%f",distance);
-    }
-    _currentLocation = location;
-    if (nil == _points) {
-        _points = [[NSMutableArray alloc] init];
-    }
-    NSLog(@"%d",_points.count);
     if (beginCollect == YES) {
-        [_points addObject:location];
+        
+        NSMutableDictionary* loc_meta_data = [[NSMutableDictionary alloc] initWithCapacity:10];
+        
+        CLLocation *location = [locations lastObject];
+        
+        //    CLLocationCoordinate2D cood = [WGS84TOGCJ02 transformFromWGSToGCJ:[location1 coordinate]];
+        //    CLLocation* location = [[CLLocation alloc] initWithCoordinate:cood altitude:location1.altitude horizontalAccuracy:location1.horizontalAccuracy verticalAccuracy:location1.verticalAccuracy course:location1.course speed:location1.speed timestamp:[NSDate date]];
+        NSLog(@"角度%f",location.course);
+        NSLog(@"我的高度%f",location.altitude);
+        NSLog(@"我的速度%f",location.speed);
+        NSLog(@"时间戳%@",location.timestamp);
+        // check the zero point
+        if  (location.coordinate.latitude == 0.0f ||
+             location.coordinate.longitude == 0.0f)
+            return;
+        
+        
+        [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.coordinate.latitude] forKey:@"latitude"];//1
+        [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.coordinate.longitude] forKey:@"logitude"];//2
+        [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.speed] forKey:@"speed"];//3
+        [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.altitude] forKey:@"altitude"];//4
+        [loc_meta_data setValue:[NSString stringWithFormat:@"%@",location.timestamp] forKey:@"timestamp"];//5
+        [loc_meta_data setValue:[NSString stringWithFormat:@"%ld",(long)[[MyManager sharedManager] section]] forKey:@"section"];
+        
+        if (_points.count > 0) {
+            CLLocationDistance distance = [location distanceFromLocation:_currentLocation];
+            NSLog(@"距离%f",distance);
+            main_total_distance = main_total_distance+distance;
+            _total_distance = [NSString stringWithFormat:@"%.2f",main_total_distance];
+            
+            NSDictionary* dict_total_distance = [NSDictionary dictionaryWithObjectsAndKeys:_total_distance,@"_total_distance", nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"_total_distance" object:nil userInfo:dict_total_distance];
+            [loc_meta_data setValue:_total_distance forKey:@"distance"];//6
+            
+            
+        }
+        
+        _currentLocation = location;
+        if (nil == _points) {
+            _points = [[NSMutableArray alloc] init];
+        }
+        NSLog(@"%d",_points.count);
+
+        
+        [_points addObject:loc_meta_data];
         NSLog(@"points: %@", _points);
+        
+        
+        _activities.list = _points;
+        NSLog(@"_activities: %@", _activities);
+       
     }
- 
-//    NSLog(@"是否划线%@",[[MyManager sharedManager] ifDrawLine]);
-//    if ([[[MyManager sharedManager] ifDrawLine] isEqualToString:@"YES"] && beginCollect ==YES) {
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self configureRoutes];
-//        });
-//        
-//    }
     
-//        if (beginCollect ==YES) {
-//            [self configureRoutes];
-//        }
-    // 起点画坐标
-//    MapPoint* map  = [[MapPoint alloc] initWithCoordinate:_centerPoint.coordinate title:@"起点" subTitle:@""];
-//    [_mapView addAnnotation:map];
     
-   // [self configureRoutes]; // 划线
+
     
 }
-
+//NSString *testPath = [documentsPath stringByAppendingPathComponent:@"test.txt"];
+//NSString *content=@"测试12123123121写入内容！";
+//NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:testPath];
+//[myHandle seekToEndOfFile];
+//
+//[myHandle writeData:[content dataUsingEncoding:NSUTF8StringEncoding]];
 
 
 - (void)locationManager:(CLLocationManager *)manager
