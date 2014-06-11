@@ -49,13 +49,13 @@
                                         stretchableImageWithLeftCapWidth:109.0f topCapHeight:0.0f];
     
     _stats_vc1 = viewOnSb(@"stats");
-    _stats_vc1.title = @"STATS";
+    _stats_vc1.title = @"统计";
     
     _split_vc2 = viewOnSb(@"splits");
-    _split_vc2.title = @"SPLITS";
+    _split_vc2.title = @"分段";
     
     _map_vc3 = viewOnSb(@"map");
-    _map_vc3.title = @"MAP";
+    _map_vc3.title = @"地图";
     
  
     
@@ -82,16 +82,18 @@
 - (UIViewController *)slideSwitchView:(SUNSlideSwitchView *)view viewOfTab:(NSUInteger)number
 {
     if (number == 0) {
-         [[MyManager sharedManager] setIfDrawLine:NO];
+        
+      
         return _stats_vc1;
        
     } else if (number == 1) {
-        [[MyManager sharedManager] setIfDrawLine:NO];
-
+     
+        
         return _split_vc2;
         
     } else if (number == 2) {
-         [[MyManager sharedManager] setIfDrawLine:YES];
+       
+       
         return _map_vc3;
        
 
@@ -106,14 +108,16 @@
 {
     UIViewController *vc = nil;
     if (number == 0) {
-        
+        [[MyManager sharedManager] setIfDrawLine:@"NO"];
         vc = _stats_vc1;
         [_map_vc3 viewDidAppear:YES];
     } else if (number == 1) {
+        [[MyManager sharedManager] setIfDrawLine:@"NO"];
         vc =_split_vc2;
         [_map_vc3 viewDidAppear:YES];
 
     } else if (number == 2) {
+         [[MyManager sharedManager] setIfDrawLine:@"YES"];
         vc = _map_vc3;
         
     }

@@ -10,4 +10,6 @@
 
 @interface SaveViewController : UIViewController
 
+-(IBAction)save:(id)sender;
+
 @end

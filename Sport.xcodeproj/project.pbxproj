@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		163C0FA1193EF61100529BA3 /* WGS84TOGCJ02.m in Sources */ = {isa = PBXBuildFile; fileRef = 163C0FA0193EF61100529BA3 /* WGS84TOGCJ02.m */; };
+		1645C0B21946A4110042AA06 /* CSPausibleTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1645C0B11946A4110042AA06 /* CSPausibleTimer.m */; };
 		164D6772194179F700F660E4 /* NSTimer+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D6771194179F700F660E4 /* NSTimer+Extension.m */; };
 		164D6794194194F900F660E4 /* EXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D6777194194F900F660E4 /* EXTRuntimeExtensions.m */; };
 		164D6795194194F900F660E4 /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D6779194194F900F660E4 /* EXTScope.m */; };
@@ -52,6 +53,7 @@
 		1652D02119456F300000E917 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1652D02019456F300000E917 /* TTTAttributedLabel.m */; };
 		1652D02419456F510000E917 /* TTCounterLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1652D02319456F510000E917 /* TTCounterLabel.m */; };
 		1652D0281945B7320000E917 /* DayManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 1652D0271945B7320000E917 /* DayManagement.m */; };
+		16D76D4F1946F562009C8492 /* SaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D76D4E1946F562009C8492 /* SaveViewController.m */; };
 		1C7A5CE11943FD2E00E96C22 /* RecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A5CE01943FD2E00E96C22 /* RecordViewController.m */; };
 		1C7A5CE41943FD3600E96C22 /* FeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A5CE31943FD3600E96C22 /* FeedViewController.m */; };
 		1C7A5CE71943FD3F00E96C22 /* ChallengeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A5CE61943FD3F00E96C22 /* ChallengeViewController.m */; };
@@ -521,6 +523,8 @@
 /* Begin PBXFileReference section */
 		163C0F9F193EF61100529BA3 /* WGS84TOGCJ02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WGS84TOGCJ02.h; path = ../../WGS84TOGCJ02.h; sourceTree = "<group>"; };
 		163C0FA0193EF61100529BA3 /* WGS84TOGCJ02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WGS84TOGCJ02.m; path = ../../WGS84TOGCJ02.m; sourceTree = "<group>"; };
+		1645C0B01946A4110042AA06 /* CSPausibleTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSPausibleTimer.h; sourceTree = "<group>"; };
+		1645C0B11946A4110042AA06 /* CSPausibleTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSPausibleTimer.m; sourceTree = "<group>"; };
 		164D6770194179F700F660E4 /* NSTimer+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Extension.h"; sourceTree = "<group>"; };
 		164D6771194179F700F660E4 /* NSTimer+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Extension.m"; sourceTree = "<group>"; };
 		164D6775194194F900F660E4 /* EXTKeyPathCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTKeyPathCoding.h; sourceTree = "<group>"; };
@@ -594,6 +598,8 @@
 		1652D02319456F510000E917 /* TTCounterLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCounterLabel.m; sourceTree = "<group>"; };
 		1652D0261945B7320000E917 /* DayManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayManagement.h; sourceTree = "<group>"; };
 		1652D0271945B7320000E917 /* DayManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayManagement.m; sourceTree = "<group>"; };
+		16D76D4D1946F562009C8492 /* SaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveViewController.h; sourceTree = "<group>"; };
+		16D76D4E1946F562009C8492 /* SaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveViewController.m; sourceTree = "<group>"; };
 		1C7A5CDF1943FD2E00E96C22 /* RecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordViewController.h; sourceTree = "<group>"; };
 		1C7A5CE01943FD2E00E96C22 /* RecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordViewController.m; sourceTree = "<group>"; };
 		1C7A5CE21943FD3600E96C22 /* FeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedViewController.h; sourceTree = "<group>"; };
@@ -1184,6 +1190,8 @@
 			children = (
 				164D6770194179F700F660E4 /* NSTimer+Extension.h */,
 				164D6771194179F700F660E4 /* NSTimer+Extension.m */,
+				1645C0B01946A4110042AA06 /* CSPausibleTimer.h */,
+				1645C0B11946A4110042AA06 /* CSPausibleTimer.m */,
 			);
 			path = NSTimer;
 			sourceTree = "<group>";
@@ -1388,6 +1396,8 @@
 				1C7A5D051944006A00E96C22 /* SplitsViewController.m */,
 				1C7A5D071944007600E96C22 /* MapViewController.h */,
 				1C7A5D081944007600E96C22 /* MapViewController.m */,
+				16D76D4D1946F562009C8492 /* SaveViewController.h */,
+				16D76D4E1946F562009C8492 /* SaveViewController.m */,
 			);
 			name = Record4ViewController;
 			sourceTree = "<group>";
@@ -2209,7 +2219,7 @@
 				ORGANIZATIONNAME = ZKR;
 				TargetAttributes = {
 					1CB9E238193DCEC900A90B58 = {
-						DevelopmentTeam = SQ5LJTFH45;
+						DevelopmentTeam = 246A9D29DN;
 					};
 					1CB9E25C193DCEC900A90B58 = {
 						TestTargetID = 1CB9E238193DCEC900A90B58;
@@ -2702,6 +2712,7 @@
 				164D6798194194F900F660E4 /* MTLModel+NSCoding.m in Sources */,
 				1C7A5CEA1943FD4700E96C22 /* ProfileViewController.m in Sources */,
 				1CB9E307193DCF4B00A90B58 /* NSURLConnection+Block.m in Sources */,
+				1645C0B21946A4110042AA06 /* CSPausibleTimer.m in Sources */,
 				1CB9E316193DCF4B00A90B58 /* MJRefreshFooterView.m in Sources */,
 				164D679F194194F900F660E4 /* NSObject+MTLComparisonAdditions.m in Sources */,
 				164D6794194194F900F660E4 /* EXTRuntimeExtensions.m in Sources */,
@@ -2740,6 +2751,7 @@
 				1C7A5D061944006A00E96C22 /* SplitsViewController.m in Sources */,
 				1CB9E31A193DCF4B00A90B58 /* MMDrawerController.m in Sources */,
 				1CB9E310193DCF4B00A90B58 /* UIPopoverController+Block.m in Sources */,
+				16D76D4F1946F562009C8492 /* SaveViewController.m in Sources */,
 				1CB9E35F193DF93900A90B58 /* FirstViewController.m in Sources */,
 				164D6796194194F900F660E4 /* MTLJSONAdapter.m in Sources */,
 				1C7A5CFC1943FFD600E96C22 /* SUNSlideSwitchView.m in Sources */,
@@ -2843,8 +2855,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Dongguan Chanda Sports Media Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Dongguan Chanda Sports Media Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 健 赵 (9DZ32DAM53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 健 赵 (9DZ32DAM53)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2862,7 +2874,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "977E1B13-0392-418B-A99D-E1B31556EA38";
+				PROVISIONING_PROFILE = "3DB49EA4-9F89-4BFB-BF60-4DFABCE58098";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2884,8 +2896,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Dongguan Chanda Sports Media Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Dongguan Chanda Sports Media Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 健 赵 (9DZ32DAM53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 健 赵 (9DZ32DAM53)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2896,7 +2908,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PROVISIONING_PROFILE = "977E1B13-0392-418B-A99D-E1B31556EA38";
+				PROVISIONING_PROFILE = "3DB49EA4-9F89-4BFB-BF60-4DFABCE58098";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2909,14 +2921,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Dongguan Chanda Sports Media Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Dongguan Chanda Sports Media Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 健 赵 (9DZ32DAM53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 健 赵 (9DZ32DAM53)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sport/Sport-Prefix.pch";
 				INFOPLIST_FILE = "Sport/Sport-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "977E1B13-0392-418B-A99D-E1B31556EA38";
+				PROVISIONING_PROFILE = "3DB49EA4-9F89-4BFB-BF60-4DFABCE58098";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2927,14 +2939,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Dongguan Chanda Sports Media Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Dongguan Chanda Sports Media Co., Ltd.";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 健 赵 (9DZ32DAM53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 健 赵 (9DZ32DAM53)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sport/Sport-Prefix.pch";
 				INFOPLIST_FILE = "Sport/Sport-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "977E1B13-0392-418B-A99D-E1B31556EA38";
+				PROVISIONING_PROFILE = "3DB49EA4-9F89-4BFB-BF60-4DFABCE58098";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

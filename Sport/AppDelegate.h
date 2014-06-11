@@ -11,6 +11,7 @@
 #import "TabbarViewController.h"
 #import "ViewController.h"
 #import "Reachability.h"
+#import "MyManager.h"
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

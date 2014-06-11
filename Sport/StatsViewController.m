@@ -4,10 +4,11 @@
 //
 //  Created by ZKR on 6/8/14.
 //  Copyright (c) 2014 ZKR. All rights reserved.
-//
+//  待解决问题：异步，地图界面右滑按钮。定时判断是否开启。 
 
 #import "StatsViewController.h"
 static int a = 1;
+static int b = 0;
 typedef NS_ENUM(NSInteger, kTTCounter){
     kTTCounterRunning = 0,
     kTTCounterStopped,
@@ -25,28 +26,93 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 @synthesize lblHour = _lblHour;
 @synthesize lblMinite = _lblMinite;
 @synthesize lblSeconds = _lblSeconds;
+@synthesize cs_timer = _cs_timer;
+@synthesize whole_second = _whole_second;
 
--(IBAction)begin:(id)sender{
-    _timer =  [NSTimer scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
+
+-(void)beginActivity{
+    
+        NSLog(@"cs定时器走没走%@",[NSString stringWithFormat:@"%d",b]);
+        _whole_second =[NSString stringWithFormat:@"%d",++b];
+        [self calculate_h_m_s:_whole_second];
+        if (_cs_timer.isPaused) {
+            
+        }else{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"collectPoint" object:self userInfo:nil];
+        }
+    
+    
+    
+}
+
+-(void)calculate_h_m_s:(NSString*)wholeSecond{
+    
+    int  w_second = [wholeSecond doubleValue];
+    int hour = w_second / 3600;
+    int minute = w_second % 3600 /60;
+    int second = w_second %3600 %60;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (hour<10) {
+            _lblHour.text = [NSString stringWithFormat:@"0%d",hour];
+        }else{
+            _lblHour.text = [NSString stringWithFormat:@"%d",hour];
+        }
         
-    } repeats:YES];
-    //每1秒运行一次function方法。
+        if (minute<10) {
+            _lblMinite.text = [NSString stringWithFormat:@"0%d",minute];
+        }else{
+            _lblMinite.text = [NSString stringWithFormat:@"%d",minute];
+            
+        }
+        
+        if (second<10) {
+            _lblSeconds.text = [NSString stringWithFormat:@"0%d",second];
+        }else{
+            _lblSeconds.text = [NSString stringWithFormat:@"%d",second];
+        }
+
+    });
     
-   // [TSMessage showNotificationInViewController:self title:@"定位失败" subtitle:@"定位失败" type:TSMessageNotificationTypeWarning];
     
- 
 }
 
 
+-(void)viewDidAppear:(BOOL)animated{
+    NSLog(@"111");
+}
+-(void)viewWillAppear:(BOOL)animated{
+    NSLog(@"111");
+    // self.view.frame = CGRectMake(0.0f, -100, self.view.frame.size.width, self.view.frame.size.height);
+
+}
 -(IBAction)end:(id)sender{
     NSLog(@"暂停");
-    [_timer setFireDate:[NSDate distantFuture]];
-   // [_timer pauseTimer];
+    [_cs_timer pause];
+    SaveViewController* save = viewOnSb(@"save");
+     
+    [self presentViewController:save animated:YES completion:^{
+        
+    }];
+   
 }
 -(IBAction)resume:(id)sender{
-    NSLog(@"恢复");
-    [_timer setFireDate:[NSDate distantPast]];
-  //  [_timer resumeTimer];
+    //  后台执行：
+   // dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        if (b == 0) {
+            _cs_timer = [CSPausibleTimer timerWithTimeInterval:1 target:self selector:@selector(beginActivity) userInfo:nil repeats:YES];
+            NSLog(@"恢复");
+            [_cs_timer start];
+        }
+        else if (b!=0 && [_cs_timer isPaused]){
+            [_cs_timer start];
+        }
+        else{
+            [ProgressHUD showError:@"已经开始计时"];
+        }
+   // });
+    
+    
+   
     
 }
 
@@ -64,9 +130,12 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 {
     [super viewDidLoad];
      [self customiseAppearance];
-    [PSLocationManager sharedLocationManager].delegate = self;
-    [[PSLocationManager sharedLocationManager] prepLocationUpdates];
-    [[PSLocationManager sharedLocationManager] startLocationUpdates];
+   
+        [PSLocationManager sharedLocationManager].delegate = self;
+        [[PSLocationManager sharedLocationManager] prepLocationUpdates];
+        [[PSLocationManager sharedLocationManager] startLocationUpdates];
+    
+    
     
 }
 
@@ -76,29 +145,6 @@ typedef NS_ENUM(NSInteger, kTTCounter){
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Actions
-
-- (IBAction)startStopTapped:(id)sender {
-    NSLog(@"currentValue：%lu",self.counterLabel.currentValue);
-    NSLog(@"startValue：%lu",self.counterLabel.startValue);
-    NSLog(@"countDirection：%lu",(long)self.counterLabel.countDirection);
-    if (self.counterLabel.isRunning) {
-        [self.counterLabel stop];
-        
-        [self updateUIForState:kTTCounterStopped];
-    } else {
-        [self.counterLabel start];
-        
-        [self updateUIForState:kTTCounterRunning];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"collectPoint" object:self userInfo:nil];
-    }
-}
-
-- (IBAction)resetTapped:(id)sender {
-    [self.counterLabel reset];
-    
-    [self updateUIForState:kTTCounterReset];
-}
 
 #pragma mark - Private
 

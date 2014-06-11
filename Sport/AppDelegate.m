@@ -79,6 +79,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
+    [[MyManager sharedManager] setIfDrawLine:@"NO"];
     UIApplication*   app = [UIApplication sharedApplication];
     __block    UIBackgroundTaskIdentifier bgTask;
     bgTask = [app beginBackgroundTaskWithExpirationHandler:^{

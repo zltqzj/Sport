@@ -22,10 +22,18 @@
     }
     return self;
 }
+-(IBAction)save:(id)sender{
+    NSLog(@"11");
+    [self dismissViewControllerAnimated:YES completion:nil];
+   // [self.view removeFromSuperview];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+   
+    
+    
     // Do any additional setup after loading the view.
 }
 

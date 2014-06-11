@@ -10,7 +10,7 @@
 
 @interface MyManager : NSObject
 
-@property (nonatomic, assign) BOOL ifDrawLine;
+@property (nonatomic, strong) NSString* ifDrawLine;
 
 + (id)sharedManager;
 

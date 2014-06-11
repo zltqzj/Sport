@@ -11,6 +11,10 @@
 #import "NSTimer+Blocks.h"
 #import "NSTimer+Extension.h"
 #import "TTCounterLabel.h"
+#import "CSPausibleTimer.h"
+#import "config.h"
+#import "SaveViewController.h"
+#import "RecordViewController.h"
 @interface StatsViewController : UIViewController <PSLocationManagerDelegate,TTCounterLabelDelegate>
 
 @property(strong,nonatomic) IBOutlet UILabel* lblHour;
@@ -25,12 +29,13 @@
 @property (strong, nonatomic) IBOutlet UIButton *startStopButton;
 @property (strong, nonatomic) IBOutlet UIButton *resetButton;
 @property(strong,nonatomic) NSTimer *timer;
-
--(IBAction)begin:(id)sender;
+@property(strong,nonatomic) CSPausibleTimer* cs_timer;
+@property(strong,nonatomic) NSString* whole_second;
+ 
 -(IBAction)end:(id)sender;
 -(IBAction)resume:(id)sender;
 //
 
-- (IBAction)startStopTapped:(id)sender;
-- (IBAction)resetTapped:(id)sender;
+
+
 @end

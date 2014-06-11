@@ -21,6 +21,8 @@
 #import "EMPerson.h"
 #import "DayManagement.h"
 #import "MyManager.h"
+#import "CSPausibleTimer.h"
+
 @interface MapViewController : UIViewController<MKMapViewDelegate, CLLocationManagerDelegate,TSMessageViewProtocol>
 {
 	// the map view
@@ -55,14 +57,12 @@
 @property (strong,nonatomic) CLGeocoder* myGeocoder;
 @property (strong,nonatomic) IBOutlet UILabel* displayLocation;
 @property(strong,nonatomic) MKUserLocation* centerPoint;
+@property(strong,nonatomic)NSMutableArray* annoArray;
 
-@property(strong,nonatomic) NSTimer* timer;
-
+@property(strong,nonatomic) CSPausibleTimer* timer;
 -(void)configureRoutes;
 
--(IBAction)go:(id)sender;
--(IBAction)end:(id)sender;
--(IBAction)pause:(id)sender;
+ 
 
 
 @end
