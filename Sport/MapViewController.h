@@ -47,6 +47,7 @@ double main_total_distance;
     
     // current location
     CLLocation* _currentLocation;
+    
 
     
     
@@ -65,6 +66,8 @@ double main_total_distance;
 @property(strong,nonatomic) CSPausibleTimer* timer;
 @property(assign,nonatomic) NSString* total_distance;
 
+@property (strong,nonatomic) NSDictionary* lastlocal_meta_data;
+@property(strong,nonatomic) NSMutableArray* pointsToDraw;
 
 
 -(void)configureRoutes;

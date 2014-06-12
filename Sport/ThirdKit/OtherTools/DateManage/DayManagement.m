@@ -78,7 +78,10 @@
 +(NSDate*)dateFromeStringWithTime:(NSString*)dateString
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss"];
+    NSTimeZone *timeZone = [NSTimeZone localTimeZone];
+    
+    [dateFormatter setTimeZone:timeZone];
+    [dateFormatter setDateFormat: @"yyyy-MM-dd HH:mm:ss zzz"];
     NSDate *destDate = [dateFormatter dateFromString:dateString];
    
     return destDate;

@@ -35,6 +35,8 @@ static BOOL beginCollect = NO;
 @synthesize annoArray = _annoArray;
 @synthesize activities= _activities;
 @synthesize total_distance = _total_distance;
+@synthesize lastlocal_meta_data = _lastlocal_meta_data;
+@synthesize pointsToDraw = _pointsToDraw;
 
 
 #pragma mark - MY FUNCTIONS
@@ -93,12 +95,56 @@ static BOOL beginCollect = NO;
 
 }
 
+-(void)finishActivity{
+    _lastlocal_meta_data = nil;
+    NSMutableArray*   _tempArray = [[NSMutableArray alloc] initWithCapacity:10];
+    _tempArray = [self searchPointFromFile];
+    if (_tempArray.count == 0)
+        _tempArray = [NSMutableArray arrayWithArray:_points];
+    else
+        [_tempArray addObjectsFromArray:_points];
+    
+    NSData* data =  [NSKeyedArchiver archivedDataWithRootObject:_tempArray];
+    [data writeToFile:[self fileName] atomically:YES];
+    __block  double sum_whole = 0;
+    __block  double sum_sport = 0;
+    __block  double sum_disactive = 0;
+    __block  NSString * last_section;
+
+    [_tempArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+      
+        sum_whole +=  [[obj objectForKey:@"time_span"] doubleValue];
+        if (idx > 0)
+        {
+            if ([last_section isEqualToString: [obj objectForKey:@"section"]]) //当section有变化的时候
+            {
+                sum_sport += [[obj objectForKey:@"time_span"] doubleValue];
+            }
+            else
+            {
+                sum_disactive += [[obj objectForKey:@"time_span"] doubleValue];
+            }
+           
+        }
+        last_section = [obj objectForKey:@"section"];
+    }];
+    NSLog(@"*****************'%f'************'%f'****%f",sum_whole,sum_sport,sum_disactive);
+    
+    [_tempArray removeAllObjects];
+    
+    [_points removeAllObjects];
+
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     [self initMap];
     [self initActivityObject];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishActivity) name:@"getData" object:nil];
+    _lastlocal_meta_data = [[NSDictionary alloc] init];
+    _pointsToDraw = [[NSMutableArray alloc] initWithCapacity:10];
+    _points = [[NSMutableArray alloc] initWithCapacity:10];
     main_total_distance = 0;
     _total_distance = 0;
     _timer = [CSPausibleTimer timerWithTimeInterval:5 target:self selector:@selector(goToDrawLine) userInfo:nil repeats:YES];
@@ -111,11 +157,25 @@ static BOOL beginCollect = NO;
 -(void)goToDrawLine{
         NSLog(@"是否划线%@",[[MyManager sharedManager] ifDrawLine]);
         if ([[[MyManager sharedManager] ifDrawLine] isEqualToString:@"YES"] && beginCollect ==YES &&_points.count!=0) {
+           _pointsToDraw = [self searchPointFromFile];
+            if (_pointsToDraw.count == 0)
+                _pointsToDraw = [NSMutableArray arrayWithArray:_points];
+            else
+                [_pointsToDraw addObjectsFromArray:_points];
+            NSLog(@"%@",_pointsToDraw);
             [self configureRoutes];
+            [_pointsToDraw removeAllObjects];
         }
 }
 
-
+-(NSMutableArray*)searchPointFromFile{
+    //NSData* data = [NSKeyedUnarchiver unarchiveObjectWithData:data  ];
+     NSData *data = [NSData dataWithContentsOfFile:[self fileName]];
+    if (data == nil)
+        return nil;
+    NSMutableArray* point_array = [NSKeyedUnarchiver unarchiveObjectWithData:data  ];
+    return point_array;
+}
 
 // 划线方法
 - (void)configureRoutes
@@ -125,14 +185,14 @@ static BOOL beginCollect = NO;
        // define minimum, maximum points
 	MKMapPoint northEastPoint = MKMapPointMake(0.f, 0.f);
 	MKMapPoint southWestPoint = MKMapPointMake(0.f, 0.f);
-	NSLog(@"%@",_points);
+	 
     
 	// create a c array of points.
-	MKMapPoint* pointArray = malloc(sizeof(CLLocationCoordinate2D) * _points.count);
+	MKMapPoint* pointArray = malloc(sizeof(CLLocationCoordinate2D) * _pointsToDraw.count);
     MKMapPoint* pointArray2Draw = nil;
     CLLocationDegrees latitude = 0;
     CLLocationDegrees longitude = 0;
-    if (_points.count ==0) {
+    if (_pointsToDraw.count ==0) {
         
     }
     else{
@@ -141,10 +201,10 @@ static BOOL beginCollect = NO;
         }
 
         int nIndex = 0;
-        for(int idx = 0; idx < _points.count; idx++)
+        for(int idx = 0; idx < _pointsToDraw.count; idx++)
         {
             NSLog(@"------%d",idx);
-            NSDictionary* d = [_points objectAtIndex:idx];
+            NSDictionary* d = [_pointsToDraw objectAtIndex:idx];
            // CLLocation *location = [_points objectAtIndex:idx];
               latitude  = [[d objectForKey:@"latitude"] doubleValue];
             
@@ -170,8 +230,8 @@ static BOOL beginCollect = NO;
                     southWestPoint.y = point.y;
             }
              if (idx>0){
-                 NSString* a =[[_points objectAtIndex:idx] objectForKey:@"section"];
-                 NSString* b =[[_points objectAtIndex:idx-1] objectForKey:@"section"];
+                 NSString* a =[[_pointsToDraw objectAtIndex:idx] objectForKey:@"section"];
+                 NSString* b =[[_pointsToDraw objectAtIndex:idx-1] objectForKey:@"section"];
                  if ( ![a isEqualToString:b]) {
                      NSLog(@"不同section");
                      
@@ -191,7 +251,7 @@ static BOOL beginCollect = NO;
                         pointArray2Draw = nil;
                     }
                     free(pointArray);
-                    pointArray = malloc(sizeof(CLLocationCoordinate2D) * _points.count);
+                    pointArray = malloc(sizeof(CLLocationCoordinate2D) * _pointsToDraw.count);
                     nIndex = 0;
                  }
              }
@@ -321,16 +381,25 @@ didUpdateLocations:(NSArray *)locations{
         if  (location.coordinate.latitude == 0.0f ||
              location.coordinate.longitude == 0.0f)
             return;
+        NSTimeInterval inteval_time = 0;
+         if (nil != _points) { // 计算时间间隔
+             NSDate* time = [_lastlocal_meta_data objectForKey:@"time"];
+             if (time == nil)
+                 inteval_time = 0 ;
+             else
+                 inteval_time = [location.timestamp timeIntervalSinceDate:time];
+             NSLog(@"%@",[NSNumber numberWithDouble:inteval_time]);
+         }
         
         
         [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.coordinate.latitude] forKey:@"latitude"];//1
         [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.coordinate.longitude] forKey:@"logitude"];//2
         [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.speed] forKey:@"speed"];//3
         [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.altitude] forKey:@"altitude"];//4
-        [loc_meta_data setValue:[NSString stringWithFormat:@"%@",location.timestamp] forKey:@"time"];//5
+        [loc_meta_data setValue:location.timestamp forKey:@"time"];//5
         [loc_meta_data setValue:[[MyManager sharedManager] whole_time]  forKey:@"interval"];
         [loc_meta_data setValue:[NSString stringWithFormat:@"%ld",(long)[[MyManager sharedManager] section]] forKey:@"section"];
-        
+        [loc_meta_data setValue:[NSNumber numberWithDouble:inteval_time] forKey:@"time_span"];
         if (_points.count > 0) {
             CLLocationDistance distance = [location distanceFromLocation:_currentLocation];
             NSLog(@"距离%f",distance);
@@ -345,24 +414,41 @@ didUpdateLocations:(NSArray *)locations{
         }
         
         _currentLocation = location;
-        if (nil == _points) {
-            _points = [[NSMutableArray alloc] init];
-        }
+        
         NSLog(@"%d",_points.count);
+        // 判断_points.count 个数
+        if (_points.count ==  MAX_POINT ) {
+            
+         NSMutableArray*   _tempArray = [[NSMutableArray alloc] initWithCapacity:10];
+            _tempArray = [self searchPointFromFile];
+            if (_tempArray.count == 0)
+                _tempArray = [NSMutableArray arrayWithArray:_points];
+            else
+                [_tempArray addObjectsFromArray:_points];
+            
+            NSData* data =  [NSKeyedArchiver archivedDataWithRootObject:_tempArray];
+            [data writeToFile:[self fileName] atomically:YES];
+            [_tempArray removeAllObjects];
+            
+//            NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:[self fileName]];
+//            [myHandle seekToEndOfFile];
+//            [myHandle writeData:data];
+            [_points removeAllObjects];
 
+        }
         
         [_points addObject:loc_meta_data];
-        NSLog(@"points: %@", _points);
-        
-        
-        _activities.list = _points;
-        NSLog(@"_activities: %@", _activities);
+        _lastlocal_meta_data =  loc_meta_data;
+        NSLog(@"-------%@",_lastlocal_meta_data);
        
     }
-    
-    
 
-    
+}
+
+-(NSString*)fileName{
+    NSString *Path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filename = [Path stringByAppendingPathComponent:@"point.rtf"];
+    return filename;
 }
 //NSString *testPath = [documentsPath stringByAppendingPathComponent:@"test.txt"];
 //NSString *content=@"测试12123123121写入内容！";

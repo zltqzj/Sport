@@ -84,6 +84,7 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 -(IBAction)end:(id)sender{
     NSLog(@"完成");
     [[MyManager sharedManager] setSection:0];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"getData" object:nil userInfo:nil];
     
   //  [_cs_timer pause];
 //    SaveViewController* save = viewOnSb(@"save");
@@ -93,11 +94,20 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 //    }];
    
 }
+-(NSString*)fileName{
+    NSString *Path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filename = [Path stringByAppendingPathComponent:@"point.rtf"];
+    return filename;
+}
+
 -(IBAction)resume:(id)sender{
    
         if (b == 0) {
             _cs_timer = [CSPausibleTimer timerWithTimeInterval:1 target:self selector:@selector(beginActivity) userInfo:nil repeats:YES];
             NSLog(@"第一次启动");
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            [fileManager removeItemAtPath:[self fileName]  error:nil];
+            
             [_resume_pause_time_point_array addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSDate date],@"begin", nil]];
             [[MyManager sharedManager] setSection:[[MyManager sharedManager] section]+1];
             [_cs_timer start];

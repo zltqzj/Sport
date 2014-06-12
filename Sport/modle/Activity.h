@@ -7,7 +7,7 @@
 //
 
 #import "MTLModel.h"
-#import "MTLModel.h"
+
 #import "MTLJSONAdapter.h"
 
 @interface Activity : MTLModel <MTLJSONSerializing>

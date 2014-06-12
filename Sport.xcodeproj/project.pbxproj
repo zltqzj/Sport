@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		163C0FA1193EF61100529BA3 /* WGS84TOGCJ02.m in Sources */ = {isa = PBXBuildFile; fileRef = 163C0FA0193EF61100529BA3 /* WGS84TOGCJ02.m */; };
+		163F8C3E19498B4B00B6CBD0 /* MyPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 163F8C3D19498B4B00B6CBD0 /* MyPoint.m */; };
 		1645C0B21946A4110042AA06 /* CSPausibleTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1645C0B11946A4110042AA06 /* CSPausibleTimer.m */; };
 		164D6772194179F700F660E4 /* NSTimer+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D6771194179F700F660E4 /* NSTimer+Extension.m */; };
 		164D6794194194F900F660E4 /* EXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D6777194194F900F660E4 /* EXTRuntimeExtensions.m */; };
@@ -523,6 +524,8 @@
 /* Begin PBXFileReference section */
 		163C0F9F193EF61100529BA3 /* WGS84TOGCJ02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WGS84TOGCJ02.h; path = ../../WGS84TOGCJ02.h; sourceTree = "<group>"; };
 		163C0FA0193EF61100529BA3 /* WGS84TOGCJ02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WGS84TOGCJ02.m; path = ../../WGS84TOGCJ02.m; sourceTree = "<group>"; };
+		163F8C3C19498B4B00B6CBD0 /* MyPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPoint.h; sourceTree = "<group>"; };
+		163F8C3D19498B4B00B6CBD0 /* MyPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPoint.m; sourceTree = "<group>"; };
 		1645C0B01946A4110042AA06 /* CSPausibleTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSPausibleTimer.h; sourceTree = "<group>"; };
 		1645C0B11946A4110042AA06 /* CSPausibleTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSPausibleTimer.m; sourceTree = "<group>"; };
 		164D6770194179F700F660E4 /* NSTimer+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Extension.h"; sourceTree = "<group>"; };
@@ -1254,6 +1257,8 @@
 				164D67A81941A00500F660E4 /* Activity.m */,
 				1CB1DC251945FFB5008FBF0B /* MyManager.h */,
 				1CB1DC261945FFB6008FBF0B /* MyManager.m */,
+				163F8C3C19498B4B00B6CBD0 /* MyPoint.h */,
+				163F8C3D19498B4B00B6CBD0 /* MyPoint.m */,
 			);
 			path = modle;
 			sourceTree = "<group>";
@@ -2769,6 +2774,7 @@
 				1CB9E30D193DCF4B00A90B58 /* UIAlertView+Block.m in Sources */,
 				1CB9E312193DCF4B00A90B58 /* QCheckBox.m in Sources */,
 				1652D02419456F510000E917 /* TTCounterLabel.m in Sources */,
+				163F8C3E19498B4B00B6CBD0 /* MyPoint.m in Sources */,
 				1CB9E306193DCF4B00A90B58 /* CLLocationManager+Block.m in Sources */,
 				164D679B194194F900F660E4 /* MTLValueTransformer.m in Sources */,
 				1CB1DC271945FFB6008FBF0B /* MyManager.m in Sources */,
