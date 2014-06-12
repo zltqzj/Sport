@@ -13,6 +13,7 @@
 #import "Reachability.h"
 #import "MyManager.h"
 #import "MapViewController.h"
+#import "RegistViewController.h"
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

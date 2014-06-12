@@ -9,7 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface RegistViewController : UIViewController
+@property(strong,nonatomic) IBOutlet UITextField* email_textField;
+@property(strong,nonatomic) IBOutlet UITextField* password_textField;
 
+@property(strong,nonatomic) IBOutlet UITextField* username_textField;
+
+@property(strong,nonatomic) NetUtils* netUtils;
+@property(weak,nonatomic) ASIFormDataRequest* request;
 // 注册
 -(IBAction)regist:(id)sender;
 

@@ -192,7 +192,7 @@ NSArray * AFQueryStringPairsFromKeyAndValue(NSString *key, id value) {
     self.HTTPShouldHandleCookies = YES;
     self.HTTPShouldUsePipelining = NO;
     self.networkServiceType = NSURLNetworkServiceTypeDefault;
-    self.timeoutInterval = 60;
+    self.timeoutInterval = 10;
 
     self.mutableHTTPRequestHeaders = [NSMutableDictionary dictionary];
 

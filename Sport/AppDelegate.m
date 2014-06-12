@@ -31,6 +31,7 @@
      
     _netUtil = [[NetUtils alloc] init];
     
+    /*
     TabbarViewController* tab  = viewOnSb(@"tabbar");
     [tab.tabBar setBackgroundColor:[UIColor blackColor]];
     self.window.rootViewController = tab;
@@ -41,8 +42,10 @@
     }else{
         
     }
-    
-    
+    */
+    RegistViewController* regist = viewOnSb(@"regist");
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:regist];
+    self.window.rootViewController  = nav;
   
     
  
