@@ -11,6 +11,8 @@
 @implementation MyManager
 @synthesize ifDrawLine = _ifDrawLine;
 @synthesize timer_in_map = _timer_in_map;
+@synthesize whole_time = _whole_time;
+
 @synthesize section = _section;
 
 + (id)sharedManager {

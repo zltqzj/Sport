@@ -36,19 +36,16 @@ static BOOL beginCollect = NO;
 @synthesize activities= _activities;
 @synthesize total_distance = _total_distance;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
--(void)collectPoint{
+#pragma mark - MY FUNCTIONS
+
+-(void)collectPoint{ // 点击定时器“恢复”按钮监听触发的事件
     beginCollect = YES;
  
     
+}
+-(void)stop_collectPoint{  // 点击定时器“暂停”按钮监听触发的事件
+    beginCollect = NO;
 }
 
 -(void)initGps_btn{
@@ -69,7 +66,8 @@ static BOOL beginCollect = NO;
 
 -(void)initMap{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(collectPoint) name:@"collectPoint" object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stop_collectPoint) name:@"stop_collectPoint" object:nil];
+
     _annoArray= [[NSMutableArray alloc] initWithCapacity:10];
         self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height-50)];
         if (IS_IPHONE5) {
@@ -80,7 +78,7 @@ static BOOL beginCollect = NO;
         self.mapView.showsUserLocation = NO;
         self.mapView.userInteractionEnabled = YES;
         _mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin;
-        self.mapView.userTrackingMode = MKUserTrackingModeNone;
+        self.mapView.userTrackingMode = MKUserTrackingModeFollowWithHeading;
         
         [self.view addSubview:self.mapView];
         
@@ -98,9 +96,7 @@ static BOOL beginCollect = NO;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-   
-  
-   
+
     [self initMap];
     [self initActivityObject];
     main_total_distance = 0;
@@ -117,7 +113,6 @@ static BOOL beginCollect = NO;
         if ([[[MyManager sharedManager] ifDrawLine] isEqualToString:@"YES"] && beginCollect ==YES &&_points.count!=0) {
             [self configureRoutes];
         }
-    
 }
 
 
@@ -125,20 +120,26 @@ static BOOL beginCollect = NO;
 // 划线方法
 - (void)configureRoutes
 {
+    self.mapView.userInteractionEnabled = NO;
     [_mapView removeAnnotations:_annoArray];
-    // define minimum, maximum points
+       // define minimum, maximum points
 	MKMapPoint northEastPoint = MKMapPointMake(0.f, 0.f);
 	MKMapPoint southWestPoint = MKMapPointMake(0.f, 0.f);
 	NSLog(@"%@",_points);
-    CLLocation* lo = [[CLLocation alloc] init];
+    
 	// create a c array of points.
 	MKMapPoint* pointArray = malloc(sizeof(CLLocationCoordinate2D) * _points.count);
+    MKMapPoint* pointArray2Draw = nil;
     CLLocationDegrees latitude = 0;
     CLLocationDegrees longitude = 0;
     if (_points.count ==0) {
         
     }
     else{
+        if (self.routeLine) {
+            [self.mapView removeOverlay:self.routeLine];
+        }
+
         int nIndex = 0;
         for(int idx = 0; idx < _points.count; idx++)
         {
@@ -146,8 +147,9 @@ static BOOL beginCollect = NO;
             NSDictionary* d = [_points objectAtIndex:idx];
            // CLLocation *location = [_points objectAtIndex:idx];
               latitude  = [[d objectForKey:@"latitude"] doubleValue];
-              longitude = [[d objectForKey:@"longitude"] doubleValue];
             
+              longitude = [[d objectForKey:@"logitude"] doubleValue];
+            NSLog(@"%f", longitude);
             // create our coordinate and add it to the correct spot in the array
             CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
             MKMapPoint point = MKMapPointForCoordinate(coordinate);
@@ -168,25 +170,32 @@ static BOOL beginCollect = NO;
                     southWestPoint.y = point.y;
             }
              if (idx>0){
-                 NSLog(@"%@,%@",[[_points objectAtIndex:idx] objectForKey:@"section"],[[_points objectAtIndex:idx-1] objectForKey:@"section"]);
                  NSString* a =[[_points objectAtIndex:idx] objectForKey:@"section"];
                  NSString* b =[[_points objectAtIndex:idx-1] objectForKey:@"section"];
                  if ( ![a isEqualToString:b]) {
                      NSLog(@"不同section");
-                    if (self.routeLine) {
-                        [self.mapView removeOverlay:self.routeLine];
+                     
+                    if (pointArray2Draw==nil)
+                    {
+                        pointArray2Draw = malloc(sizeof(CLLocationCoordinate2D) * nIndex);
+                        memcpy(pointArray2Draw, pointArray, sizeof(CLLocationCoordinate2D) * nIndex);
                     }
-                    
-                    self.routeLine = [MKPolyline polylineWithPoints:pointArray count:_points.count];
+                    self.routeLine = [MKPolyline polylineWithPoints:pointArray2Draw count:nIndex];
                     if (nil != self.routeLine) {
                         [self.mapView addOverlay:self.routeLine]; // add the overlay to the map
                         NSLog(@"划线");
+                    }
+                    if (pointArray2Draw)
+                    {
+                        free(pointArray2Draw);
+                        pointArray2Draw = nil;
                     }
                     free(pointArray);
                     pointArray = malloc(sizeof(CLLocationCoordinate2D) * _points.count);
                     nIndex = 0;
                  }
              }
+            
             pointArray[nIndex] = point;
             NSLog(@"%d",nIndex);
            
@@ -199,14 +208,22 @@ static BOOL beginCollect = NO;
         MapPoint* mmp = [[MapPoint alloc] initWithCoordinate:lo1 title:@"当前位置" subTitle:@""];
        [ _mapView addAnnotation:mmp];
         [_annoArray addObject:mmp];
-        if (self.routeLine) {
-            [self.mapView removeOverlay:self.routeLine];
+      
+        if (pointArray2Draw == nil)
+        {
+            pointArray2Draw = malloc(sizeof(CLLocationCoordinate2D) * nIndex);
+            memcpy(pointArray2Draw, pointArray, sizeof(CLLocationCoordinate2D) * nIndex);
         }
+        self.routeLine = [MKPolyline polylineWithPoints:pointArray2Draw count:nIndex];
         
-        self.routeLine = [MKPolyline polylineWithPoints:pointArray count:_points.count];
         if (nil != self.routeLine) {
             [self.mapView addOverlay:self.routeLine]; // add the overlay to the map
             NSLog(@"划线");
+        }
+        if (pointArray2Draw)
+        {
+            free(pointArray2Draw);
+            pointArray2Draw = nil;
         }
         free(pointArray);
         nIndex = 0;
@@ -282,105 +299,6 @@ static BOOL beginCollect = NO;
 
  
  
-#pragma mark MKMapViewDelegate
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation{
-    
-    if ([annotation isKindOfClass:[MKUserLocation class]] ){
-        
-        ((MKUserLocation *)annotation).title = @"我的位置";
-        //  ((MKUserLocation *)annotation).subtitle = @"中关村东路66号";
-        return nil;
-    }
-    
-    if ([annotation isKindOfClass:[MapPoint class]]) {
-        static NSString* MapPointAnnoationIdentifer = @"mapPointAnnoationIdentifer";
-        MKPinAnnotationView* pinView = (MKPinAnnotationView *)
-        [mapView dequeueReusableAnnotationViewWithIdentifier:MapPointAnnoationIdentifer];
-        if (!pinView)
-        {
-            // if an existing pin view was not available, create one
-            MKPinAnnotationView* customPinView = [[MKPinAnnotationView alloc]
-                                                  initWithAnnotation:annotation reuseIdentifier:MapPointAnnoationIdentifer];
-            if ([[annotation title] isEqualToString:@"起点"]) {
-                customPinView.image = [UIImage imageNamed:@"track_start_marker.png"];
-
-            }
-            else{
-                customPinView.pinColor = MKPinAnnotationColorPurple;
-            }
-          //  customPinView.pinColor = MKPinAnnotationColorPurple;
-                
-          //  customPinView.animatesDrop = YES;
-          //  customPinView.canShowCallout = YES;
-            // NSLog(@"副标题%@",[annotation subtitle]);
-            
-            return customPinView;
-        }
-        else
-        {
-            pinView.annotation = annotation;
-        }
-        return pinView;
-    }
-    else
-        return nil;
-}
-
-- (void)mapView:(MKMapView *)mapView didAddOverlayViews:(NSArray *)overlayViews
-{
-    NSLog(@"%@ ----- %@", self, NSStringFromSelector(_cmd));
-    NSLog(@"overlayViews: %@", overlayViews);
-}
-
-- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay
-{
-    NSLog(@"%@ ----- %@", self, NSStringFromSelector(_cmd));
-    
-	MKOverlayView* overlayView = nil;
-	
-	if(overlay == self.routeLine)
-	{
-		//if we have not yet created an overlay view for this overlay, create it now.
-        if (self.routeLineView) {
-            [self.routeLineView removeFromSuperview];
-        }
-        
-        self.routeLineView = [[MKPolylineView alloc] initWithPolyline:self.routeLine];
-        self.routeLineView.fillColor = [UIColor redColor];
-        self.routeLineView.strokeColor = [UIColor redColor];
-        self.routeLineView.lineWidth = 5;
-        
-		overlayView = self.routeLineView;
-	}
-	
-	return overlayView;
-}
-
-
-- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
-{
-    NSLog(@"%@ ----- %@", self, NSStringFromSelector(_cmd));
-    NSLog(@"annotation views: %@", views);
-}
-
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
-{
-    NSLog(@"%@ ----- %@", self, NSStringFromSelector(_cmd));
-    _centerPoint = userLocation;
-    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(userLocation.coordinate.latitude, userLocation.coordinate.longitude);
-    NSLog(@"------%d",(int)(userLocation.coordinate.latitude));
-    int a = (int)userLocation.coordinate.latitude;
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"first"] && a!=0 ) {
-        [_mapView setCenterCoordinate:coordinate zoomLevel:15 animated:YES];
-       
-        [[NSUserDefaults standardUserDefaults] setValue:@"fisrt" forKey:@"first"];
-    }
- 
-    
-}
-- (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error{
-    [ProgressHUD showError:@"定位失败"];
-}
 #pragma mark - CLLocationManagerDelegate
 
 -(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
@@ -392,14 +310,9 @@ static BOOL beginCollect = NO;
 didUpdateLocations:(NSArray *)locations{
     
     
-    if (beginCollect == YES) {
-        
+    if (beginCollect == YES) { // 定时器开启就开始收集所有的点
         NSMutableDictionary* loc_meta_data = [[NSMutableDictionary alloc] initWithCapacity:10];
-        
         CLLocation *location = [locations lastObject];
-        
-        //    CLLocationCoordinate2D cood = [WGS84TOGCJ02 transformFromWGSToGCJ:[location1 coordinate]];
-        //    CLLocation* location = [[CLLocation alloc] initWithCoordinate:cood altitude:location1.altitude horizontalAccuracy:location1.horizontalAccuracy verticalAccuracy:location1.verticalAccuracy course:location1.course speed:location1.speed timestamp:[NSDate date]];
         NSLog(@"角度%f",location.course);
         NSLog(@"我的高度%f",location.altitude);
         NSLog(@"我的速度%f",location.speed);
@@ -414,7 +327,8 @@ didUpdateLocations:(NSArray *)locations{
         [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.coordinate.longitude] forKey:@"logitude"];//2
         [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.speed] forKey:@"speed"];//3
         [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.altitude] forKey:@"altitude"];//4
-        [loc_meta_data setValue:[NSString stringWithFormat:@"%@",location.timestamp] forKey:@"timestamp"];//5
+        [loc_meta_data setValue:[NSString stringWithFormat:@"%@",location.timestamp] forKey:@"time"];//5
+        [loc_meta_data setValue:[[MyManager sharedManager] whole_time]  forKey:@"interval"];
         [loc_meta_data setValue:[NSString stringWithFormat:@"%ld",(long)[[MyManager sharedManager] section]] forKey:@"section"];
         
         if (_points.count > 0) {
@@ -515,33 +429,124 @@ didUpdateLocations:(NSArray *)locations{
 
 
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-//-(void)viewWillAppear:(BOOL)animated{
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"first"];
-//    [self configureRoutes];
-//}
-//-(void)viewDidAppear:(BOOL)animated
-//{
-//    [self configureRoutes];
-//}
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+}
+#pragma mark MKMapViewDelegate
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation{
+    
+    if ([annotation isKindOfClass:[MKUserLocation class]] ){
+        
+        ((MKUserLocation *)annotation).title = @"我的位置";
+        //  ((MKUserLocation *)annotation).subtitle = @"中关村东路66号";
+        return nil;
+    }
+    
+    if ([annotation isKindOfClass:[MapPoint class]]) {
+        static NSString* MapPointAnnoationIdentifer = @"mapPointAnnoationIdentifer";
+        MKPinAnnotationView* pinView = (MKPinAnnotationView *)
+        [mapView dequeueReusableAnnotationViewWithIdentifier:MapPointAnnoationIdentifer];
+        if (!pinView)
+        {
+            // if an existing pin view was not available, create one
+            MKPinAnnotationView* customPinView = [[MKPinAnnotationView alloc]
+                                                  initWithAnnotation:annotation reuseIdentifier:MapPointAnnoationIdentifer];
+            if ([[annotation title] isEqualToString:@"起点"]) {
+                customPinView.image = [UIImage imageNamed:@"track_start_marker.png"];
+                
+            }
+            else{
+                customPinView.pinColor = MKPinAnnotationColorPurple;
+            }
+            //  customPinView.pinColor = MKPinAnnotationColorPurple;
+            
+            //  customPinView.animatesDrop = YES;
+            //  customPinView.canShowCallout = YES;
+            // NSLog(@"副标题%@",[annotation subtitle]);
+            
+            return customPinView;
+        }
+        else
+        {
+            pinView.annotation = annotation;
+        }
+        return pinView;
+    }
+    else
+        return nil;
+}
+
+- (void)mapView:(MKMapView *)mapView didAddOverlayViews:(NSArray *)overlayViews
+{
+    NSLog(@"%@ ----- %@", self, NSStringFromSelector(_cmd));
+    NSLog(@"overlayViews: %@", overlayViews);
+}
+
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay
+{
+    NSLog(@"%@ ----- %@", self, NSStringFromSelector(_cmd));
+    
+	MKOverlayView* overlayView = nil;
+	
+	if(overlay == self.routeLine)
+	{
+		//if we have not yet created an overlay view for this overlay, create it now.
+        if (self.routeLineView) {
+            [self.routeLineView removeFromSuperview];
+        }
+        
+        self.routeLineView = [[MKPolylineView alloc] initWithPolyline:self.routeLine];
+        self.routeLineView.fillColor = [UIColor redColor];
+        self.routeLineView.strokeColor = [UIColor redColor];
+        self.routeLineView.lineWidth = 5;
+        
+		overlayView = self.routeLineView;
+	}
+	
+	return overlayView;
+}
+
+
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
+{
+    NSLog(@"%@ ----- %@", self, NSStringFromSelector(_cmd));
+    NSLog(@"annotation views: %@", views);
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    NSLog(@"%@ ----- %@", self, NSStringFromSelector(_cmd));
+    _centerPoint = userLocation;
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(userLocation.coordinate.latitude, userLocation.coordinate.longitude);
+    NSLog(@"------%d",(int)(userLocation.coordinate.latitude));
+    int a = (int)userLocation.coordinate.latitude;
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"first"] && a!=0 ) {
+        [_mapView setCenterCoordinate:coordinate zoomLevel:15 animated:YES];
+        
+        [[NSUserDefaults standardUserDefaults] setValue:@"fisrt" forKey:@"first"];
+    }
+    
+    
+}
+- (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error{
+    [ProgressHUD showError:@"定位失败"];
+}
+
+#pragma mark - Others
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
 }
 @end

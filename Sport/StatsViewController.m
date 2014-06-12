@@ -27,7 +27,7 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 @synthesize lblMinite = _lblMinite;
 @synthesize lblSeconds = _lblSeconds;
 @synthesize lblTotalDistance = _lblTotalDistance;
-
+@synthesize resume_pause_time_point_array = _resume_pause_time_point_array;
 @synthesize cs_timer = _cs_timer;
 @synthesize whole_second = _whole_second;
 
@@ -36,36 +36,15 @@ typedef NS_ENUM(NSInteger, kTTCounter){
     
         NSLog(@"cs定时器走没走%@",[NSString stringWithFormat:@"%d",b]);
         _whole_second =[NSString stringWithFormat:@"%d",++b];
+    [[MyManager sharedManager] setWhole_time:_whole_second];
         [self calculate_h_m_s:_whole_second];
     
         if (_cs_timer.isPaused) {
             
         }else{
             
-            
-            [self calculate_distance:1.2];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"collectPoint" object:self userInfo:nil];
         }
-    
-    
-    
-    
-}
-
--(void)calculate_distance:(double)dis{
-    
-    
-            
-            
-        
-//            //设置SecondViewController中的值
-//            mapView. = userEntity;
-            
-         
-      //  _lblTotalDistance.text = [NSString stringWithFormat:@"%.1f",dis];
-        
- 
-    
     
 }
 
@@ -119,6 +98,7 @@ typedef NS_ENUM(NSInteger, kTTCounter){
         if (b == 0) {
             _cs_timer = [CSPausibleTimer timerWithTimeInterval:1 target:self selector:@selector(beginActivity) userInfo:nil repeats:YES];
             NSLog(@"第一次启动");
+            [_resume_pause_time_point_array addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSDate date],@"begin", nil]];
             [[MyManager sharedManager] setSection:[[MyManager sharedManager] section]+1];
             [_cs_timer start];
         }
@@ -126,16 +106,20 @@ typedef NS_ENUM(NSInteger, kTTCounter){
             [_cs_timer start];
             [[MyManager sharedManager] setSection:[[MyManager sharedManager] section]+1];
                NSLog(@"恢复");
+             [_resume_pause_time_point_array addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSDate date],@"resume", nil]];
         }
         else{
             [_cs_timer pause];
                NSLog(@"暂停");
+             [_resume_pause_time_point_array addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSDate date],@"pause", nil]];
+            // 把5秒那个定时器也关掉
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"stop_collectPoint" object:self userInfo:nil];
             [[MyManager sharedManager] setIfDrawLine:NO];
         }
  
     
     
-   
+    NSLog(@"****%@",_resume_pause_time_point_array);
     
 }
 
@@ -151,15 +135,17 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 -(void)show_total_distance:(NSNotification*)info{
     NSLog(@"----%@",info);
     NSString* str = [info.userInfo objectForKey:@"_total_distance"];
-    NSLog(@"%@",str);
-     _lblTotalDistance.text = str;
+    double  d = [str doubleValue]/1000;
+    
+    NSLog(@"%f",d);
+     _lblTotalDistance.text = [NSString stringWithFormat:@"%.2f",d];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(show_total_distance:) name:@"_total_distance" object:nil];
-   
+    _resume_pause_time_point_array = [[NSMutableArray alloc] initWithCapacity:10];
      [self customiseAppearance];
    
         [PSLocationManager sharedLocationManager].delegate = self;

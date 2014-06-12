@@ -13,7 +13,7 @@
 @property (nonatomic, strong) NSString* ifDrawLine;
 @property(nonatomic,strong) CSPausibleTimer* timer_in_map;
 @property(nonatomic,assign) NSInteger section;
-
+@property(nonatomic,strong) NSString* whole_time;
 
 + (id)sharedManager;
 

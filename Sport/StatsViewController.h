@@ -34,7 +34,8 @@
 @property(strong,nonatomic) NSTimer *timer;
 @property(strong,nonatomic) CSPausibleTimer* cs_timer;
 @property(strong,nonatomic) NSString* whole_second;
- 
+@property(strong,nonatomic) NSMutableArray* resume_pause_time_point_array;
+
 -(IBAction)end:(id)sender;
 -(IBAction)resume:(id)sender;
 //
