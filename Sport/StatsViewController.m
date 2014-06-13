@@ -106,10 +106,7 @@ typedef NS_ENUM(NSInteger, kTTCounter){
            // [self performSelector:@selector(doOtherTask) onThread:(_myThread) withObject:nil waitUntilDone:NO];
              [_myThread performSelector:@selector(startRunLoop) onThread:_myThread withObject:nil waitUntilDone:NO];
         
-            
-            NSFileManager *fileManager = [NSFileManager defaultManager];
-            [fileManager removeItemAtPath:[self fileName]  error:nil];
-            
+                     
             [_resume_pause_time_point_array addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSDate date],@"begin", nil]];
             [[MyManager sharedManager] setSection:[[MyManager sharedManager] section]+1];
             [_cs_timer start];

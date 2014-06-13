@@ -191,7 +191,7 @@ static BOOL beginCollect = NO;
 // 划线方法（点的个数发生变化时才划线）
 - (void)configureRoutes:(NSMutableArray *) _pointsToDraw
 {
-    self.mapView.userInteractionEnabled = NO;
+   // self.mapView.userInteractionEnabled = NO;
     [_mapView removeAnnotations:_annoArray];
        // define minimum, maximum points
 	MKMapPoint northEastPoint = MKMapPointMake(0.f, 0.f);

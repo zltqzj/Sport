@@ -55,6 +55,10 @@
 -(void)startRunLoop{
     NSLog(@"收到start消息");
     _beginCollect = YES;
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager removeItemAtPath:[self fileName]  error:nil];
+
 }
 
 -(void)finishActivity{
