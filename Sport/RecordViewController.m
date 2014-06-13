@@ -57,6 +57,10 @@
     _map_vc3 = viewOnSb(@"map");
     _map_vc3.title = @"地图";
     
+    
+    [(StatsViewController *)_stats_vc1 initSubThread];
+    
+    //[(MapViewController *)_map_vc3 setSubThread:(KAThread *)[(StatsViewController *)_stats_vc1 myThread]];
  
     
     _slideSwitchView.slideSwitchViewDelegate = self;
@@ -124,6 +128,7 @@
         vc = _map_vc3;
         
     }
+    [[(StatsViewController *)_stats_vc1 myThread] performSelector:@selector(switchMainTab) onThread:[(StatsViewController *)_stats_vc1 myThread] withObject:nil waitUntilDone:NO];
     // [vc viewDidCurrentView];
 }
 

@@ -75,10 +75,10 @@
 #define UPDATE @"http://weixin.jsptz.com/map/app/ipa_version.php"
 
 // 注册
-#define REGIST @"http://weixin.jsptz.com/map.php?action=reg&username="
+#define REGIST @"http://run.yyzhao.com/m/reg"
 
 // 登陆
-#define LOGIN @"http://weixin.jsptz.com/map.php?action=login&username="
+#define LOGIN @"http://run.yyzhao.com/m/userlogin"
 
 
 // 查询所有人的坐标

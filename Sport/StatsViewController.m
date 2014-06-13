@@ -83,15 +83,12 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 
 -(IBAction)end:(id)sender{
     NSLog(@"完成");
+    [_cs_timer pause];
     [[MyManager sharedManager] setSection:0];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"getData" object:nil userInfo:nil];
-    
-  //  [_cs_timer pause];
-//    SaveViewController* save = viewOnSb(@"save");
-//     
-//    [self presentViewController:save animated:YES completion:^{
-//        
-//    }];
+     [_myThread performSelector:@selector(finishActivity) onThread:_myThread withObject:nil waitUntilDone:NO];
+   // [[NSNotificationCenter defaultCenter] postNotificationName:@"getData" object:nil userInfo:nil];
+   // MapViewController* map = [[MapViewController alloc] init];
+    //[map.timer pause];
    
 }
 -(NSString*)fileName{
@@ -105,6 +102,11 @@ typedef NS_ENUM(NSInteger, kTTCounter){
         if (b == 0) {
             _cs_timer = [CSPausibleTimer timerWithTimeInterval:1 target:self selector:@selector(beginActivity) userInfo:nil repeats:YES];
             NSLog(@"第一次启动");
+           // _myThread.beginCollect = YES;
+           // [self performSelector:@selector(doOtherTask) onThread:(_myThread) withObject:nil waitUntilDone:NO];
+             [_myThread performSelector:@selector(startRunLoop) onThread:_myThread withObject:nil waitUntilDone:NO];
+        
+            
             NSFileManager *fileManager = [NSFileManager defaultManager];
             [fileManager removeItemAtPath:[self fileName]  error:nil];
             
@@ -116,11 +118,13 @@ typedef NS_ENUM(NSInteger, kTTCounter){
             [_cs_timer start];
             [[MyManager sharedManager] setSection:[[MyManager sharedManager] section]+1];
                NSLog(@"恢复");
+            [_myThread performSelector:@selector(resumeRunLoop) onThread:_myThread withObject:nil waitUntilDone:NO];
              [_resume_pause_time_point_array addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSDate date],@"resume", nil]];
         }
         else{
             [_cs_timer pause];
                NSLog(@"暂停");
+            [_myThread performSelector:@selector(stopRunLoop) onThread:_myThread withObject:nil waitUntilDone:NO];
              [_resume_pause_time_point_array addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSDate date],@"pause", nil]];
             // 把5秒那个定时器也关掉
             [[NSNotificationCenter defaultCenter] postNotificationName:@"stop_collectPoint" object:self userInfo:nil];
@@ -162,10 +166,15 @@ typedef NS_ENUM(NSInteger, kTTCounter){
         [[PSLocationManager sharedLocationManager] prepLocationUpdates];
         [[PSLocationManager sharedLocationManager] startLocationUpdates];
     
-    
-    
+    //_myThread = [[MyLocationThread alloc] init];
+  
 }
 
+
+-(void)initSubThread{
+    _myThread = [[KAThread alloc] init];
+    [_myThread start];
+}
 
 - (void)didReceiveMemoryWarning
 {

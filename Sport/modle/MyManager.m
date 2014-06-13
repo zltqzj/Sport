@@ -24,4 +24,10 @@
     return sharedMyManager;
 }
 
+//-(void)startTimer_in_map{
+//    CSPausibleTimer*   _timer = [CSPausibleTimer timerWithTimeInterval:5 target:self selector:@selector(goToDrawLine) userInfo:nil repeats:YES];
+//    [_timer start];
+//}
+
+
 @end

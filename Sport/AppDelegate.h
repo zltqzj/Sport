@@ -14,6 +14,7 @@
 #import "MyManager.h"
 #import "MapViewController.h"
 #import "RegistViewController.h"
+#import "LoginViewController.h"
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
@@ -22,4 +23,6 @@
 
 @property(strong,nonatomic) NetUtils* netUtil;
 
++(AppDelegate *)sharedAppDelegate;
+-(void)UPDateMainMap:(NSMutableArray* )parry;
 @end

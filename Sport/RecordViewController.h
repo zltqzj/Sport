@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "StatsViewController.h"
+
 #import "SplitsViewController.h"
 #import "MapViewController.h"
 #import "SUNSlideSwitchView.h"
 #import "MyManager.h"
+#import "StatsViewController.h"
+@class MapViewController;
 @interface RecordViewController : UIViewController<SUNSlideSwitchViewDelegate>
  
 

@@ -12,6 +12,18 @@
 @implementation AppDelegate
 @synthesize netUtil = _netUtil;
 
++(AppDelegate *)sharedAppDelegate
+{
+    static AppDelegate *thePTAppDelegate = nil;
+    @synchronized(self){
+        if (thePTAppDelegate == nil)
+        {
+            thePTAppDelegate = [[AppDelegate alloc] init];
+        }
+        return thePTAppDelegate;
+    }
+}
+
 -(void)reachabilityChanged:(NSNotification*)note{
     Reachability* curReach = [note object];
     NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
@@ -24,14 +36,17 @@
 }
 
 
-
+-(void)UPDateMainMap:(NSMutableArray* )parry{
+    NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:parry,@"parry", nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDateMainMap" object:nil userInfo:dict];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
      
     _netUtil = [[NetUtils alloc] init];
     
-    /*
+    
     TabbarViewController* tab  = viewOnSb(@"tabbar");
     [tab.tabBar setBackgroundColor:[UIColor blackColor]];
     self.window.rootViewController = tab;
@@ -42,13 +57,22 @@
     }else{
         
     }
-    */
+     
+  
+    
+    /*
     RegistViewController* regist = viewOnSb(@"regist");
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:regist];
     self.window.rootViewController  = nav;
+   */
   
+    /*
+    LoginViewController* login = viewOnSb(@"login");
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:login];
+    self.window.rootViewController  = nav;
+     
+     */
     
- 
     /*
     ViewController* view = viewOnSb(@"view");
     self.window.rootViewController = view;
@@ -130,13 +154,8 @@
     NSString* newToken = [[[NSString stringWithFormat:@"%@",deviceToken]
                            stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]] stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSLog(@"nsdata:%@\n 字符串token: %@",deviceToken, newToken);
-   // 此处修改UPLOAD_DEVICE值
-    [_netUtil requestContentWithUrl:UPLOAD_DEVICE para:nil withSuccessBlock:^(id returnData) {
-        
-    } withFailureBlock:^(NSError *error) {
-        
-    }];
-    
+   
+    [[NSUserDefaults standardUserDefaults] setValue:newToken forKey:@"token"];
     
     
 }

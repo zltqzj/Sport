@@ -23,6 +23,8 @@
 #import "MyManager.h"
 #import "CSPausibleTimer.h"
 
+#import "StatsViewController.h"
+
 double main_total_distance;
 
 @interface MapViewController : UIViewController<MKMapViewDelegate, CLLocationManagerDelegate,TSMessageViewProtocol>
@@ -48,13 +50,12 @@ double main_total_distance;
     // current location
     CLLocation* _currentLocation;
     
-
     
     
 }
 
 @property (nonatomic, retain)   MKMapView* mapView;
-@property (nonatomic, retain) NSMutableArray* points;
+
 @property (nonatomic, retain) MKPolyline* routeLine;
 @property (nonatomic, retain) MKPolylineView* routeLineView;
 @property (nonatomic, retain) CLLocationManager* locationManager;
@@ -66,12 +67,12 @@ double main_total_distance;
 @property(strong,nonatomic) CSPausibleTimer* timer;
 @property(assign,nonatomic) NSString* total_distance;
 
-@property (strong,nonatomic) NSDictionary* lastlocal_meta_data;
-@property(strong,nonatomic) NSMutableArray* pointsToDraw;
 
-
+//@property(strong,nonatomic) NSMutableArray* pointsToDraw;
+//@property(strong,nonatomic) KAThread * subThread;
+//@property(strong,nonatomic) StatsViewController * pStatusViow;
 -(void)configureRoutes;
-
+-(void)UPDateMainMap;
  
 
 

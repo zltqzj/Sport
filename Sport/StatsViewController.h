@@ -16,6 +16,7 @@
 #import "SaveViewController.h"
 #import "RecordViewController.h"
 #import "MyManager.h"
+#import "KAThread.h"
 @interface StatsViewController : UIViewController <PSLocationManagerDelegate,TTCounterLabelDelegate>
 
 @property(strong,nonatomic) IBOutlet UILabel* lblHour;
@@ -35,9 +36,11 @@
 @property(strong,nonatomic) CSPausibleTimer* cs_timer;
 @property(strong,nonatomic) NSString* whole_second;
 @property(strong,nonatomic) NSMutableArray* resume_pause_time_point_array;
+@property(strong,nonatomic) KAThread* myThread;
 
 -(IBAction)end:(id)sender;
 -(IBAction)resume:(id)sender;
+-(void)initSubThread;
 //
 
 

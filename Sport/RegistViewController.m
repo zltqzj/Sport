@@ -30,37 +30,32 @@
 
 // 注册
 -(IBAction)regist:(id)sender{
-    /*
-    ASIFormDataRequest* req = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:@"http://run.yyzhao.com/m/reg"]];
-   
-    [req setPostValue:@"zltqzj@163.com" forKey:@"email"];
-    [req setPostValue:@"111111" forKey:@"password"];
+     
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc] initWithCapacity:10];
+    [dict setValue:_email_textField.text forKey:@"email"];
+    [dict setValue:_password_textField.text forKey:@"password"];
 
-    [req setPostValue:@"zhaojian" forKey:@"username"];
+    [dict setValue:_username_textField.text forKey:@"username"];
 
-    [req setPostValue:@"ios" forKey:@"device_type"];
-
-    [req setPostValue:@"123456" forKey:@"device_token"];
-
-    
-    _request = req;
-    [_request startAsynchronous];
-    [_request setCompletionBlock:^{
-        NSLog(@"返回值%@",[_request responseString]);
-    }];
-    [_request setFailedBlock:^{
-        NSLog(@"返回值%@",[_request responseString]);
-
-    }];
-     */
-    
-  //  NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:@"zltqzj@163.com",@"email",@"password",@"111111",@"zhaojian",@"username",@"ios",@"device_type",@"device_token",@"123456", nil];
-    NSDictionary* dict = @{@"email": @"zltqzj@sina.cn",@"password":@"chengxuyuan",@"username":@"misschalk",@"device_type":@"ios",@"device_token":@"234567"};
-    [_netUtils requestContentWithUrl:@"http://run.yyzhao.com/m/reg" para:dict withSuccessBlock:^(id returnData) {
+    [dict setValue:@"ios" forKey:@"device_type"];
+    [dict setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"token"] forKey:@"device_token"];
+    [ProgressHUD show:@"正在注册"];
+    [_netUtils requestContentWithUrl:REGIST para:dict withSuccessBlock:^(id returnData) {
         NSLog(@"%@",returnData);
-        _email_textField.text = [returnData valueForKeyPath:@"msg"];
+         [ProgressHUD dismiss];
+        if ([[returnData valueForKeyPath:@"success"] isEqualToString:@"true"]) {
+            [TSMessage showNotificationWithTitle:@"注册成功" subtitle:@"正在进入主页……" type:TSMessageNotificationTypeSuccess];
+            NSString* user_id = [returnData valueForKeyPath:@"msg"];// 存储User_id
+            [[NSUserDefaults standardUserDefaults] setValue:user_id forKey:@"user_id"];
+            TabbarViewController* tab = viewOnSb(@"tabbar");
+            [self.navigationController pushViewController:tab animated:YES onCompletion:nil];
+        }
+        else if ([[returnData valueForKeyPath:@"success"] isEqualToString:@"false"]){
+            [TSMessage showNotificationWithTitle:@"注册失败" subtitle:@"此账号已存在" type:TSMessageNotificationTypeError];
+        }
     } withFailureBlock:^(NSError *error) {
-       // NSLog(@"%@",returnData);
+        [ProgressHUD dismiss];
+        [TSMessage showNotificationWithTitle:@"注册失败" subtitle:@"网络不给力啊……" type:TSMessageNotificationTypeError];
     }];
 }
 

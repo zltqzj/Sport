@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CSPausibleTimer.h"
+
 @interface MyManager : NSObject
 
 @property (nonatomic, strong) NSString* ifDrawLine;
@@ -16,5 +17,5 @@
 @property(nonatomic,strong) NSString* whole_time;
 
 + (id)sharedManager;
-
+//-(void)startTimer_in_map;
 @end

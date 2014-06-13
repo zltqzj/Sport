@@ -53,6 +53,10 @@
 		1652D02119456F300000E917 /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1652D02019456F300000E917 /* TTTAttributedLabel.m */; };
 		1652D02419456F510000E917 /* TTCounterLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1652D02319456F510000E917 /* TTCounterLabel.m */; };
 		1652D0281945B7320000E917 /* DayManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 1652D0271945B7320000E917 /* DayManagement.m */; };
+		165B73B4194AAF5B00CB2DF5 /* MyLocationThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 165B73B3194AAF5B00CB2DF5 /* MyLocationThread.m */; };
+		165B73B7194AE4B500CB2DF5 /* PTInputSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 165B73B6194AE4B500CB2DF5 /* PTInputSource.m */; };
+		165B73BD194AE6DA00CB2DF5 /* KANullInputSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 165B73BA194AE6DA00CB2DF5 /* KANullInputSource.m */; };
+		165B73BE194AE6DA00CB2DF5 /* KAThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 165B73BC194AE6DA00CB2DF5 /* KAThread.m */; };
 		16D76D4F1946F562009C8492 /* SaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D76D4E1946F562009C8492 /* SaveViewController.m */; };
 		1C7A5CE11943FD2E00E96C22 /* RecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A5CE01943FD2E00E96C22 /* RecordViewController.m */; };
 		1C7A5CE41943FD3600E96C22 /* FeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A5CE31943FD3600E96C22 /* FeedViewController.m */; };
@@ -598,6 +602,14 @@
 		1652D02319456F510000E917 /* TTCounterLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTCounterLabel.m; sourceTree = "<group>"; };
 		1652D0261945B7320000E917 /* DayManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayManagement.h; sourceTree = "<group>"; };
 		1652D0271945B7320000E917 /* DayManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayManagement.m; sourceTree = "<group>"; };
+		165B73B2194AAF5B00CB2DF5 /* MyLocationThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLocationThread.h; sourceTree = "<group>"; };
+		165B73B3194AAF5B00CB2DF5 /* MyLocationThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLocationThread.m; sourceTree = "<group>"; };
+		165B73B5194AE4B500CB2DF5 /* PTInputSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTInputSource.h; sourceTree = "<group>"; };
+		165B73B6194AE4B500CB2DF5 /* PTInputSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTInputSource.m; sourceTree = "<group>"; };
+		165B73B9194AE6DA00CB2DF5 /* KANullInputSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KANullInputSource.h; sourceTree = "<group>"; };
+		165B73BA194AE6DA00CB2DF5 /* KANullInputSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KANullInputSource.m; sourceTree = "<group>"; };
+		165B73BB194AE6DA00CB2DF5 /* KAThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KAThread.h; sourceTree = "<group>"; };
+		165B73BC194AE6DA00CB2DF5 /* KAThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KAThread.m; sourceTree = "<group>"; };
 		16D76D4D1946F562009C8492 /* SaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveViewController.h; sourceTree = "<group>"; };
 		16D76D4E1946F562009C8492 /* SaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveViewController.m; sourceTree = "<group>"; };
 		1C7A5CDF1943FD2E00E96C22 /* RecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordViewController.h; sourceTree = "<group>"; };
@@ -1245,6 +1257,8 @@
 		164D67A619419FF800F660E4 /* modle */ = {
 			isa = PBXGroup;
 			children = (
+				165B73B5194AE4B500CB2DF5 /* PTInputSource.h */,
+				165B73B6194AE4B500CB2DF5 /* PTInputSource.m */,
 				164D67AF1941A25900F660E4 /* NTPhoto.h */,
 				164D67B01941A25900F660E4 /* NTPhoto.m */,
 				164D67AD1941A0A800F660E4 /* Person.json */,
@@ -1254,6 +1268,8 @@
 				164D67A81941A00500F660E4 /* Activity.m */,
 				1CB1DC251945FFB5008FBF0B /* MyManager.h */,
 				1CB1DC261945FFB6008FBF0B /* MyManager.m */,
+				165B73B2194AAF5B00CB2DF5 /* MyLocationThread.h */,
+				165B73B3194AAF5B00CB2DF5 /* MyLocationThread.m */,
 			);
 			path = modle;
 			sourceTree = "<group>";
@@ -1340,6 +1356,17 @@
 				1652D0271945B7320000E917 /* DayManagement.m */,
 			);
 			path = DateManage;
+			sourceTree = "<group>";
+		};
+		165B73B8194AE6B800CB2DF5 /* Tmp */ = {
+			isa = PBXGroup;
+			children = (
+				165B73B9194AE6DA00CB2DF5 /* KANullInputSource.h */,
+				165B73BA194AE6DA00CB2DF5 /* KANullInputSource.m */,
+				165B73BB194AE6DA00CB2DF5 /* KAThread.h */,
+				165B73BC194AE6DA00CB2DF5 /* KAThread.m */,
+			);
+			name = Tmp;
 			sourceTree = "<group>";
 		};
 		1C7A5CDE1943FCEE00E96C22 /* FiveMainController */ = {
@@ -1449,6 +1476,7 @@
 		1CB9E242193DCEC900A90B58 /* Sport */ = {
 			isa = PBXGroup;
 			children = (
+				165B73B8194AE6B800CB2DF5 /* Tmp */,
 				1C7A5D001944003A00E96C22 /* Record4ViewController */,
 				1C7A5CDE1943FCEE00E96C22 /* FiveMainController */,
 				164D67A619419FF800F660E4 /* modle */,
@@ -2693,6 +2721,7 @@
 				1CB9E362193DFA6A00A90B58 /* TabbarViewController.m in Sources */,
 				1CB9E33E193DCF4B00A90B58 /* RegularExpression.m in Sources */,
 				1CB9E328193DCF4B00A90B58 /* ASIDataCompressor.m in Sources */,
+				165B73B7194AE4B500CB2DF5 /* PTInputSource.m in Sources */,
 				1CB9E32E193DCF4B00A90B58 /* ASINetworkQueue.m in Sources */,
 				1CB9E317193DCF4B00A90B58 /* MJRefreshHeaderView.m in Sources */,
 				1CB9E338193DCF4B00A90B58 /* HanyuPinyinOutputFormat.m in Sources */,
@@ -2737,13 +2766,16 @@
 				1CB9E31B193DCF4B00A90B58 /* MMDrawerVisualState.m in Sources */,
 				1CB9E30E193DCF4B00A90B58 /* UINavigationController+Block.m in Sources */,
 				1CB9E372193E22DC00A90B58 /* RouteSearch.m in Sources */,
+				165B73BD194AE6DA00CB2DF5 /* KANullInputSource.m in Sources */,
 				1CB9E371193E22DC00A90B58 /* PlaceLocation.m in Sources */,
 				164D67AC1941A09600F660E4 /* EMPerson.m in Sources */,
+				165B73B4194AAF5B00CB2DF5 /* MyLocationThread.m in Sources */,
 				1C7A5CE41943FD3600E96C22 /* FeedViewController.m in Sources */,
 				1CB9E311193DCF4B00A90B58 /* ZXObject.m in Sources */,
 				1CB9E330193DCF4B00A90B58 /* NetUtils.m in Sources */,
 				1C7A5CED1943FD5000E96C22 /* MoreViewController.m in Sources */,
 				1CB9E327193DCF4B00A90B58 /* ASIAuthenticationDialog.m in Sources */,
+				165B73BE194AE6DA00CB2DF5 /* KAThread.m in Sources */,
 				1652D02119456F300000E917 /* TTTAttributedLabel.m in Sources */,
 				164D6795194194F900F660E4 /* EXTScope.m in Sources */,
 				1CB9E326193DCF4B00A90B58 /* ZJSwitch.m in Sources */,

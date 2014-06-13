@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "TabbarViewController.h"
 @interface RegistViewController : UIViewController
 @property(strong,nonatomic) IBOutlet UITextField* email_textField;
 @property(strong,nonatomic) IBOutlet UITextField* password_textField;
