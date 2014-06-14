@@ -7,16 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <MapKit/MapKit.h>
+#import "CSqlite.h"
+#import "CSPausibleTimer.h"
+#import "Activity.h"
 
 @interface KAThread : NSThread<CLLocationManagerDelegate>
-
+{
+     CSqlite *m_sqlite;
+}
 
 @property(strong,nonatomic) CLLocation* currentLocation; // 我当前的位置
 
 @property(strong,nonatomic) CSPausibleTimer* timer;  // 划线定时器
 @property (nonatomic, retain) CLLocationManager* locationManager; // 定位对象
-
 @property (strong,nonatomic) CLGeocoder* myGeocoder;// 地理编码对象
 @property (nonatomic, retain) NSMutableArray* points; // 临时收集点的数组
 
@@ -36,7 +39,7 @@
 
 @property(assign,nonatomic) BOOL isCancelled; // 取消线程
 
-
+//@property (strong,nonatomic) CSqlite *m_sqlite;
 
 + (id)sharedManager; // 暂时不用，本想用作单例
 
@@ -46,7 +49,6 @@
 - (void)startRunLoop; // 收到开始消息触发的事件
 
 -(void)resumeRunLoop;  // 收到resume消息触发的事件
-
 -(void)switchMainTab; // 暂时不用
 
 -(void)finishActivity; // 点击停止按钮触发的事件

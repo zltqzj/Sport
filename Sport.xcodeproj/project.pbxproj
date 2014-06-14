@@ -58,6 +58,7 @@
 		165B73BD194AE6DA00CB2DF5 /* KANullInputSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 165B73BA194AE6DA00CB2DF5 /* KANullInputSource.m */; };
 		165B73BE194AE6DA00CB2DF5 /* KAThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 165B73BC194AE6DA00CB2DF5 /* KAThread.m */; };
 		16D76D4F1946F562009C8492 /* SaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D76D4E1946F562009C8492 /* SaveViewController.m */; };
+		1C3AE2DA194C16C10080D6D5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB9E34F193DD04400A90B58 /* MapKit.framework */; };
 		1C7A5CE11943FD2E00E96C22 /* RecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A5CE01943FD2E00E96C22 /* RecordViewController.m */; };
 		1C7A5CE41943FD3600E96C22 /* FeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A5CE31943FD3600E96C22 /* FeedViewController.m */; };
 		1C7A5CE71943FD3F00E96C22 /* ChallengeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A5CE61943FD3F00E96C22 /* ChallengeViewController.m */; };
@@ -154,7 +155,6 @@
 		1CB9E34A193DD03500A90B58 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB9E349193DD03500A90B58 /* AVFoundation.framework */; };
 		1CB9E34C193DD03900A90B58 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB9E34B193DD03900A90B58 /* CFNetwork.framework */; };
 		1CB9E34E193DD03F00A90B58 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB9E34D193DD03F00A90B58 /* QuartzCore.framework */; };
-		1CB9E350193DD04400A90B58 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB9E34F193DD04400A90B58 /* MapKit.framework */; };
 		1CB9E352193DD04900A90B58 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB9E351193DD04900A90B58 /* CoreText.framework */; };
 		1CB9E354193DD04E00A90B58 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB9E353193DD04E00A90B58 /* libxml2.2.dylib */; };
 		1CB9E358193DE1F600A90B58 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CB9E357193DE1F600A90B58 /* LoginViewController.m */; };
@@ -511,6 +511,10 @@
 		1CDD356A1944357B009279DD /* vpi__tab_unselected_pressed_holo.9.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDD34111944357B009279DD /* vpi__tab_unselected_pressed_holo.9.png */; };
 		1CDD356B1944357B009279DD /* zones_overlay_clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDD34121944357B009279DD /* zones_overlay_clock.png */; };
 		1CDD356C1944357B009279DD /* zones_overlay_pie.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDD34131944357B009279DD /* zones_overlay_pie.png */; };
+		1CF8DD6D194C8C5D0040087D /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CF8DD6C194C8C5D0040087D /* libsqlite3.0.dylib */; };
+		1CF8DD76194C8DB50040087D /* CSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CF8DD70194C8DB50040087D /* CSqlite.m */; };
+		1CF8DD77194C8DB50040087D /* gps.db in Resources */ = {isa = PBXBuildFile; fileRef = 1CF8DD71194C8DB50040087D /* gps.db */; };
+		1CF8DD79194C8DB50040087D /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 1CF8DD73194C8DB50040087D /* sqlite3.c */; };
 		EB3B4704C31C40CB9E88B71E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DEDE88CA5AE24806B2033E83 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -1157,6 +1161,13 @@
 		1CDD34111944357B009279DD /* vpi__tab_unselected_pressed_holo.9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vpi__tab_unselected_pressed_holo.9.png; sourceTree = "<group>"; };
 		1CDD34121944357B009279DD /* zones_overlay_clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zones_overlay_clock.png; sourceTree = "<group>"; };
 		1CDD34131944357B009279DD /* zones_overlay_pie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zones_overlay_pie.png; sourceTree = "<group>"; };
+		1CF8DD6C194C8C5D0040087D /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		1CF8DD6F194C8DB50040087D /* CSqlite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSqlite.h; sourceTree = "<group>"; };
+		1CF8DD70194C8DB50040087D /* CSqlite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSqlite.m; sourceTree = "<group>"; };
+		1CF8DD71194C8DB50040087D /* gps.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = gps.db; sourceTree = "<group>"; };
+		1CF8DD73194C8DB50040087D /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
+		1CF8DD74194C8DB50040087D /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
+		1CF8DD75194C8DB50040087D /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
 		1F45E875CA7C4A299E91C4C9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		DEDE88CA5AE24806B2033E83 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -1166,11 +1177,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CF8DD6D194C8C5D0040087D /* libsqlite3.0.dylib in Frameworks */,
+				1C3AE2DA194C16C10080D6D5 /* MapKit.framework in Frameworks */,
 				1CB9E241193DCEC900A90B58 /* UIKit.framework in Frameworks */,
 				1CB9E23F193DCEC900A90B58 /* CoreGraphics.framework in Frameworks */,
 				1CB9E354193DD04E00A90B58 /* libxml2.2.dylib in Frameworks */,
 				1CB9E352193DD04900A90B58 /* CoreText.framework in Frameworks */,
-				1CB9E350193DD04400A90B58 /* MapKit.framework in Frameworks */,
 				1CB9E34E193DD03F00A90B58 /* QuartzCore.framework in Frameworks */,
 				1CB9E34C193DD03900A90B58 /* CFNetwork.framework in Frameworks */,
 				1CB9E34A193DD03500A90B58 /* AVFoundation.framework in Frameworks */,
@@ -1358,7 +1370,7 @@
 			path = DateManage;
 			sourceTree = "<group>";
 		};
-		165B73B8194AE6B800CB2DF5 /* Tmp */ = {
+		165B73B8194AE6B800CB2DF5 /* CustomThread */ = {
 			isa = PBXGroup;
 			children = (
 				165B73B9194AE6DA00CB2DF5 /* KANullInputSource.h */,
@@ -1366,7 +1378,7 @@
 				165B73BB194AE6DA00CB2DF5 /* KAThread.h */,
 				165B73BC194AE6DA00CB2DF5 /* KAThread.m */,
 			);
-			name = Tmp;
+			name = CustomThread;
 			sourceTree = "<group>";
 		};
 		1C7A5CDE1943FCEE00E96C22 /* FiveMainController */ = {
@@ -1453,6 +1465,7 @@
 		1CB9E23B193DCEC900A90B58 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1CF8DD6C194C8C5D0040087D /* libsqlite3.0.dylib */,
 				1CB9E353193DD04E00A90B58 /* libxml2.2.dylib */,
 				1CB9E351193DD04900A90B58 /* CoreText.framework */,
 				1CB9E34F193DD04400A90B58 /* MapKit.framework */,
@@ -1476,7 +1489,7 @@
 		1CB9E242193DCEC900A90B58 /* Sport */ = {
 			isa = PBXGroup;
 			children = (
-				165B73B8194AE6B800CB2DF5 /* Tmp */,
+				165B73B8194AE6B800CB2DF5 /* CustomThread */,
 				1C7A5D001944003A00E96C22 /* Record4ViewController */,
 				1C7A5CDE1943FCEE00E96C22 /* FiveMainController */,
 				164D67A619419FF800F660E4 /* modle */,
@@ -1527,6 +1540,7 @@
 		1CB9E274193DCF4B00A90B58 /* ThirdKit */ = {
 			isa = PBXGroup;
 			children = (
+				1CF8DD6E194C8DB50040087D /* Sqlite */,
 				164D6773194194F900F660E4 /* Mantle */,
 				1CB9E363193E22DC00A90B58 /* Map */,
 				1CB9E275193DCF4B00A90B58 /* BlockUI */,
@@ -2197,6 +2211,19 @@
 			path = image;
 			sourceTree = "<group>";
 		};
+		1CF8DD6E194C8DB50040087D /* Sqlite */ = {
+			isa = PBXGroup;
+			children = (
+				1CF8DD6F194C8DB50040087D /* CSqlite.h */,
+				1CF8DD70194C8DB50040087D /* CSqlite.m */,
+				1CF8DD71194C8DB50040087D /* gps.db */,
+				1CF8DD73194C8DB50040087D /* sqlite3.c */,
+				1CF8DD74194C8DB50040087D /* sqlite3.h */,
+				1CF8DD75194C8DB50040087D /* sqlite3ext.h */,
+			);
+			path = Sqlite;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2570,6 +2597,7 @@
 				1CDD35661944357B009279DD /* vpi__tab_selected_holo.9.png in Resources */,
 				1CDD343B1944357B009279DD /* abs__ic_menu_share_holo_light.png in Resources */,
 				1CDD34BA1944357B009279DD /* feed_icon_comments.png in Resources */,
+				1CF8DD77194C8DB50040087D /* gps.db in Resources */,
 				1CDD35361944357B009279DD /* record_button_locked.png in Resources */,
 				1CDD35061944357B009279DD /* nav_explore_hit.png in Resources */,
 				1CDD350F1944357B009279DD /* nav_results.png in Resources */,
@@ -2706,6 +2734,7 @@
 				1CB9E322193DCF4B00A90B58 /* UIViewController+MMDrawerController.m in Sources */,
 				1C7A5D091944007600E96C22 /* MapViewController.m in Sources */,
 				1CB9E336193DCF4B00A90B58 /* SBJsonWriter.m in Sources */,
+				1CF8DD79194C8DB50040087D /* sqlite3.c in Sources */,
 				1CB9E304193DCF4B00A90B58 /* BUIControl.m in Sources */,
 				1CB9E33C193DCF4B00A90B58 /* PinyinHelper.m in Sources */,
 				1CB9E329193DCF4B00A90B58 /* ASIDataDecompressor.m in Sources */,
@@ -2761,6 +2790,7 @@
 				1CB9E36F193E22DC00A90B58 /* MapPoint.m in Sources */,
 				164D67E21941A36600F660E4 /* HexColor.m in Sources */,
 				1CB9E35C193DE21E00A90B58 /* RegistViewController.m in Sources */,
+				1CF8DD76194C8DB50040087D /* CSqlite.m in Sources */,
 				1CB9E335193DCF4B00A90B58 /* SBJsonParser.m in Sources */,
 				1CB9E32A193DCF4B00A90B58 /* ASIDownloadCache.m in Sources */,
 				1CB9E31B193DCF4B00A90B58 /* MMDrawerVisualState.m in Sources */,
@@ -2887,8 +2917,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 健 赵 (9DZ32DAM53)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 健 赵 (9DZ32DAM53)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: peng yuan (HLE9E7RHAC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: peng yuan (HLE9E7RHAC)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2906,7 +2936,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "3DB49EA4-9F89-4BFB-BF60-4DFABCE58098";
+				PROVISIONING_PROFILE = "4E788E64-027D-4FFD-84DF-3272336543F6";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2928,8 +2958,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 健 赵 (9DZ32DAM53)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 健 赵 (9DZ32DAM53)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: peng yuan (HLE9E7RHAC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: peng yuan (HLE9E7RHAC)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2940,7 +2970,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PROVISIONING_PROFILE = "3DB49EA4-9F89-4BFB-BF60-4DFABCE58098";
+				PROVISIONING_PROFILE = "4E788E64-027D-4FFD-84DF-3272336543F6";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2953,14 +2983,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 健 赵 (9DZ32DAM53)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: peng yuan (HLE9E7RHAC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: peng yuan (HLE9E7RHAC)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sport/Sport-Prefix.pch";
 				INFOPLIST_FILE = "Sport/Sport-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3DB49EA4-9F89-4BFB-BF60-4DFABCE58098";
+				PROVISIONING_PROFILE = "4E788E64-027D-4FFD-84DF-3272336543F6";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2971,14 +3001,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 健 赵 (9DZ32DAM53)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: peng yuan (HLE9E7RHAC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: peng yuan (HLE9E7RHAC)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sport/Sport-Prefix.pch";
 				INFOPLIST_FILE = "Sport/Sport-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3DB49EA4-9F89-4BFB-BF60-4DFABCE58098";
+				PROVISIONING_PROFILE = "4E788E64-027D-4FFD-84DF-3272336543F6";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

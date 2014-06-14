@@ -8,16 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "PSLocationManager.h"
-#import "NSTimer+Blocks.h"
-#import "NSTimer+Extension.h"
-#import "TTCounterLabel.h"
-#import "CSPausibleTimer.h"
-#import "config.h"
+
+
 #import "SaveViewController.h"
 #import "RecordViewController.h"
-#import "MyManager.h"
-#import "KAThread.h"
-@interface StatsViewController : UIViewController <PSLocationManagerDelegate,TTCounterLabelDelegate>
+
+@interface StatsViewController : UIViewController <PSLocationManagerDelegate>
 
 @property(strong,nonatomic) IBOutlet UILabel* lblHour;
 @property(strong,nonatomic) IBOutlet UILabel* lblMinite;
@@ -29,7 +25,7 @@
 
 
 @property(nonatomic,strong) IBOutlet UILabel* strength;
-@property(nonatomic,strong) IBOutlet TTCounterLabel* counterLabel;
+//@property(nonatomic,strong) IBOutlet TTCounterLabel* counterLabel;
 @property (strong, nonatomic) IBOutlet UIButton *startStopButton;
 @property (strong, nonatomic) IBOutlet UIButton *resetButton;
 @property(strong,nonatomic) NSTimer *timer;

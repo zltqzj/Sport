@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 
 @implementation StatsViewController
 @synthesize strength = _strength;
-@synthesize counterLabel = _counterLabel;
+
 @synthesize timer = _timer;
 @synthesize lblHour = _lblHour;
 @synthesize lblMinite = _lblMinite;
@@ -157,7 +157,7 @@ typedef NS_ENUM(NSInteger, kTTCounter){
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(show_total_distance:) name:@"_total_distance" object:nil];
     _resume_pause_time_point_array = [[NSMutableArray alloc] initWithCapacity:10];
-     [self customiseAppearance];
+    
    
         [PSLocationManager sharedLocationManager].delegate = self;
         [[PSLocationManager sharedLocationManager] prepLocationUpdates];
@@ -182,21 +182,7 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 
 #pragma mark - Private
 
-- (void)customiseAppearance {
-    [self.counterLabel setBoldFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:55]];
-    // _counterLabel.boldFont = [UIFont  fontWithName:@"HelveticaNeue-Medium" size:55];
 
-    [self.counterLabel setRegularFont:[UIFont fontWithName:@"HelveticaNeue-UltraLight" size:55]];
-    
-    // The font property of the label is used as the font for H,M,S and MS
-    [self.counterLabel setFont:[UIFont fontWithName:@"HelveticaNeue-UltraLight" size:25]];
-    
-    // Default label properties
-    self.counterLabel.textColor = [UIColor darkGrayColor];
-    
-    // After making any changes we need to call update appearance
-    [self.counterLabel updateApperance];
-}
 
 - (void)updateUIForState:(NSInteger)state {
     switch (state) {

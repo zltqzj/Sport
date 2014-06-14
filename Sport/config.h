@@ -4,7 +4,7 @@
 //
 //  Created by ZKR on 6/3/14.
 //  Copyright (c) 2014 ZKR. All rights reserved.
-//
+//  http://api.zdoz.net/interfaces.aspx  校正GPS
 
 #ifndef Sport_config_h
 #define Sport_config_h

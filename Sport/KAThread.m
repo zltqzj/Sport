@@ -11,6 +11,7 @@
 #import "MapViewController.h"
 #import "AppDelegate.h"
 @implementation KAThread
+//@synthesize m_sqlite= _m_sqlite;
 
 #pragma mark - 自定义方法 CustomFunction
 
@@ -24,6 +25,9 @@
 }
 
 - (void)main {   // 线程启动
+    m_sqlite = [[CSqlite alloc]init];
+    [m_sqlite openSqlite];
+    
     _points = [[NSMutableArray alloc] initWithCapacity:5];
     _pointsToDraw = [[NSMutableArray alloc] initWithCapacity:5];
     [[[KANullInputSource alloc] init] addToCurrentRunLoop] ;
@@ -87,13 +91,12 @@
        if (idx > 0)
        {
             if ([last_section isEqualToString: [obj objectForKey:@"section"]]) //当section有变化的时候
-          {
-                sum_sport += [[obj objectForKey:@"time_span"] doubleValue];
-           }
-           else
             {
+                sum_sport += [[obj objectForKey:@"time_span"] doubleValue];
+            }
+           else{
                sum_disactive += [[obj objectForKey:@"time_span"] doubleValue];
-           }
+            }
 
       }
        last_section = [obj objectForKey:@"section"];
@@ -154,6 +157,7 @@
     if (_beginCollect == YES) { // 定时器开启就开始收集所有的点
         NSMutableDictionary* loc_meta_data = [[NSMutableDictionary alloc] initWithCapacity:10];
         CLLocation *location = [locations lastObject];
+    
         NSLog(@"角度%f",location.course);
         NSLog(@"我的高度%f",location.altitude);
         NSLog(@"我的速度%f",location.speed);
@@ -171,10 +175,10 @@
                 inteval_time = [location.timestamp timeIntervalSinceDate:time];
             NSLog(@"%@",[NSNumber numberWithDouble:inteval_time]);
         }
+        CLLocationCoordinate2D trans = [self zzTransGPS:location.coordinate]; // 校正坐标
         
-        
-        [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.coordinate.latitude] forKey:@"latitude"];//1
-        [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.coordinate.longitude] forKey:@"logitude"];//2
+        [loc_meta_data setValue:[NSString stringWithFormat:@"%f",trans.latitude] forKey:@"latitude"];//1
+        [loc_meta_data setValue:[NSString stringWithFormat:@"%f",trans.longitude] forKey:@"logitude"];//2
         [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.speed] forKey:@"speed"];//3
         [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.altitude] forKey:@"altitude"];//4
         [loc_meta_data setValue:location.timestamp forKey:@"time"];//5
@@ -253,6 +257,30 @@
 //[myHandle seekToEndOfFile];
 //
 //[myHandle writeData:[content dataUsingEncoding:NSUTF8StringEncoding]];
+-(CLLocationCoordinate2D)zzTransGPS:(CLLocationCoordinate2D)yGps
+{
+    int TenLat=0;
+    int TenLog=0;
+    TenLat = (int)(yGps.latitude*10);
+    TenLog = (int)(yGps.longitude*10);
+    NSString *sql = [[NSString alloc]initWithFormat:@"select offLat,offLog from gpsT where lat=%d and log = %d",TenLat,TenLog];
+   
+    sqlite3_stmt* stmtL = [m_sqlite NSRunSql:sql];
+    int offLat=0;
+    int offLog=0;
+    while (sqlite3_step(stmtL)==SQLITE_ROW)
+    {
+        offLat = sqlite3_column_int(stmtL, 0);
+        offLog = sqlite3_column_int(stmtL, 1);
+        
+    }
+    
+    yGps.latitude = yGps.latitude+offLat*0.0001;
+    yGps.longitude = yGps.longitude + offLog*0.0001;
+    return yGps;
+    
+    
+}
 
 
 

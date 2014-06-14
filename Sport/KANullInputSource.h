@@ -11,6 +11,7 @@
 @interface KANullInputSource : NSObject
 
 - (id)addToCurrentRunLoop;
+
 - (void)invalidate;
 
 @end
