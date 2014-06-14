@@ -515,6 +515,7 @@
 		1CF8DD76194C8DB50040087D /* CSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CF8DD70194C8DB50040087D /* CSqlite.m */; };
 		1CF8DD77194C8DB50040087D /* gps.db in Resources */ = {isa = PBXBuildFile; fileRef = 1CF8DD71194C8DB50040087D /* gps.db */; };
 		1CF8DD79194C8DB50040087D /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 1CF8DD73194C8DB50040087D /* sqlite3.c */; };
+		1CF8DD7D194CA2830040087D /* FileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CF8DD7C194CA2830040087D /* FileManager.m */; };
 		EB3B4704C31C40CB9E88B71E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DEDE88CA5AE24806B2033E83 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -1168,6 +1169,8 @@
 		1CF8DD73194C8DB50040087D /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
 		1CF8DD74194C8DB50040087D /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		1CF8DD75194C8DB50040087D /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
+		1CF8DD7B194CA2830040087D /* FileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileManager.h; sourceTree = "<group>"; };
+		1CF8DD7C194CA2830040087D /* FileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileManager.m; sourceTree = "<group>"; };
 		1F45E875CA7C4A299E91C4C9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		DEDE88CA5AE24806B2033E83 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -1785,6 +1788,7 @@
 		1CB9E2F1193DCF4B00A90B58 /* OtherTools */ = {
 			isa = PBXGroup;
 			children = (
+				1CF8DD7A194CA2640040087D /* NSFileManager */,
 				1652D0251945B7320000E917 /* DateManage */,
 				164D676F194179F700F660E4 /* NSTimer */,
 				1CB9E2F2193DCF4B00A90B58 /* chinese4pinyin */,
@@ -2222,6 +2226,15 @@
 				1CF8DD75194C8DB50040087D /* sqlite3ext.h */,
 			);
 			path = Sqlite;
+			sourceTree = "<group>";
+		};
+		1CF8DD7A194CA2640040087D /* NSFileManager */ = {
+			isa = PBXGroup;
+			children = (
+				1CF8DD7B194CA2830040087D /* FileManager.h */,
+				1CF8DD7C194CA2830040087D /* FileManager.m */,
+			);
+			path = NSFileManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2798,6 +2811,7 @@
 				1CB9E372193E22DC00A90B58 /* RouteSearch.m in Sources */,
 				165B73BD194AE6DA00CB2DF5 /* KANullInputSource.m in Sources */,
 				1CB9E371193E22DC00A90B58 /* PlaceLocation.m in Sources */,
+				1CF8DD7D194CA2830040087D /* FileManager.m in Sources */,
 				164D67AC1941A09600F660E4 /* EMPerson.m in Sources */,
 				165B73B4194AAF5B00CB2DF5 /* MyLocationThread.m in Sources */,
 				1C7A5CE41943FD3600E96C22 /* FeedViewController.m in Sources */,

@@ -90,11 +90,11 @@
        sum_whole +=  [[obj objectForKey:@"time_span"] doubleValue];
        if (idx > 0)
        {
-            if ([last_section isEqualToString: [obj objectForKey:@"section"]]) //当section有变化的时候
+            if ([last_section isEqualToString: [obj objectForKey:@"section"]]) //当section无变化的时候，累计时间间隔
             {
                 sum_sport += [[obj objectForKey:@"time_span"] doubleValue];
             }
-           else{
+           else{   //当section有变化的时候，此时间间隔不算
                sum_disactive += [[obj objectForKey:@"time_span"] doubleValue];
             }
 

@@ -29,5 +29,5 @@
 #import "MyManager.h"
 #import "Activity.h"
 #import "PTInputSource.h"
-
+#import "DayManagement.h"
 #endif
