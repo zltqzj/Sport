@@ -25,4 +25,8 @@
 #import "TSMessageView.h"
 #import "iOSBlocks.h"
 
+#import "CSPausibleTimer.h"
+#import "MyManager.h"
+#import "Activity.h"
+#import "PTInputSource.h"
 #endif

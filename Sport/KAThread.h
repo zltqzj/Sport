@@ -7,48 +7,48 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CSPausibleTimer.h"
-#import "MyManager.h"
 #import <MapKit/MapKit.h>
-#import "Activity.h"
-#import <CoreLocation/CoreLocation.h>
-#import "PTInputSource.h"
-
 
 @interface KAThread : NSThread<CLLocationManagerDelegate>
-{
-    CLLocationManager* _locationManager;
-    
-  
-    CLLocation* _currentLocation;
-    
-    
-}
-@property(strong,nonatomic) CSPausibleTimer* timer;
-@property (nonatomic, retain) CLLocationManager* locationManager;
-@property (strong,nonatomic) CLGeocoder* myGeocoder;
-@property (nonatomic, retain) NSMutableArray* points;
-@property (strong,nonatomic) MKUserLocation* centerPoint;
-@property (strong,nonatomic) NSMutableArray* annoArray;
-@property (nonatomic, retain) Activity* activities;
 
-@property (nonatomic, readwrite, retain) RunLoopSource *source;
-@property(assign,nonatomic) NSString* total_distance;
+
+@property(strong,nonatomic) CLLocation* currentLocation; // 我当前的位置
+
+@property(strong,nonatomic) CSPausibleTimer* timer;  // 划线定时器
+@property (nonatomic, retain) CLLocationManager* locationManager; // 定位对象
+
+@property (strong,nonatomic) CLGeocoder* myGeocoder;// 地理编码对象
+@property (nonatomic, retain) NSMutableArray* points; // 临时收集点的数组
+
+
+@property (nonatomic, retain) Activity* activities; // 活动的对象
+
+@property(assign,nonatomic) NSString* total_distance; // 总公里数，要传给定时器页面显示的
 
 @property(assign,nonatomic) double main_total_distance;
-@property(assign,nonatomic) BOOL beginCollect;
-@property (strong,nonatomic) NSDictionary* lastlocal_meta_data;
-@property(strong,nonatomic) NSMutableArray* pointsToDraw;
-@property(assign,nonatomic) BOOL isCancelled;
 
--(id)init;
 
-+ (id)sharedManager;
+@property(assign,nonatomic) BOOL beginCollect;// 点击开始此值变为YES
+
+@property (strong,nonatomic) NSDictionary* lastlocal_meta_data;// 记录上一个点的信息，为求时间间隔
+
+@property(strong,nonatomic) NSMutableArray* pointsToDraw;// 实际划线的点
+
+@property(assign,nonatomic) BOOL isCancelled; // 取消线程
+
+
+
++ (id)sharedManager; // 暂时不用，本想用作单例
 
  
-- (void)stopRunLoop;
-- (void)startRunLoop;
--(void)switchMainTab;
--(void)resumeRunLoop;
--(void)finishActivity;
+- (void)stopRunLoop;  //收到暂停消息触发的事件
+
+- (void)startRunLoop; // 收到开始消息触发的事件
+
+-(void)resumeRunLoop;  // 收到resume消息触发的事件
+
+-(void)switchMainTab; // 暂时不用
+
+-(void)finishActivity; // 点击停止按钮触发的事件
+
 @end

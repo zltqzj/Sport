@@ -11,9 +11,10 @@
 #import "MapViewController.h"
 #import "AppDelegate.h"
 @implementation KAThread
-@synthesize timer = _timer;
-@synthesize locationManager = _locationManager;
-+ (id)sharedManager{
+
+#pragma mark - 自定义方法 CustomFunction
+
++ (id)sharedManager{   // 暂时不用，本想用作单例
     static KAThread *sharedMyManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -22,9 +23,10 @@
     return sharedMyManager;
 }
 
-- (void)main {
+- (void)main {   // 线程启动
     _points = [[NSMutableArray alloc] initWithCapacity:5];
-    _pointsToDraw = [[NSMutableArray alloc] initWithCapacity:5];    [[[KANullInputSource alloc] init] addToCurrentRunLoop] ;
+    _pointsToDraw = [[NSMutableArray alloc] initWithCapacity:5];
+    [[[KANullInputSource alloc] init] addToCurrentRunLoop] ;
     NSLog(@"线程启动");
  
     _timer =   [CSPausibleTimer timerWithTimeInterval:5 target:self selector:@selector(didTimer) userInfo:nil repeats:YES];
@@ -39,20 +41,20 @@
     }
 }
 
-- (void)stopRunLoop {
-   //
+- (void)stopRunLoop {   //收到暂停消息触发的事件
+   
     NSLog(@"收到暂停消息");
     _beginCollect = NO;
     [_timer pause];
 }
 
--(void)resumeRunLoop{
+-(void)resumeRunLoop{    // 收到resume消息触发的事件
     _beginCollect = YES;
     NSLog(@"收到resume消息");
     [_timer start];
 }
 
--(void)startRunLoop{
+-(void)startRunLoop{   // 收到开始消息触发的事件
     NSLog(@"收到start消息");
     _beginCollect = YES;
     
@@ -61,7 +63,7 @@
 
 }
 
--(void)finishActivity{
+-(void)finishActivity{   // 点击停止按钮触发的事件
     [_timer pause];
 
    _lastlocal_meta_data = nil;
@@ -75,7 +77,7 @@
  NSData* data =  [NSKeyedArchiver archivedDataWithRootObject:_tempArray];
    [data writeToFile:[self fileName] atomically:YES];
    __block  double sum_whole = 0;
-  __block  double sum_sport = 0;
+    __block  double sum_sport = 0;
     __block  double sum_disactive = 0;
     __block  NSString * last_section;
 
@@ -105,7 +107,7 @@
 }
 
 
--(void)didTimer{
+-(void)didTimer{   // 定时器触发的方法
     NSLog(@"定时器~~~~");
     
     if ([[[MyManager sharedManager] ifDrawLine] isEqualToString:@"YES"] && _beginCollect ==YES &&_points.count!=0) {
@@ -123,12 +125,12 @@
 }
 
 
--(void)switchMainTab{
+-(void)switchMainTab{   // 暂时不用
     NSLog(@"主页面切换");
 }
 
 
--(void)initMap{
+-(void)initMap{  // 初始化定位对象
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.delegate = self;
     _locationManager.desiredAccuracy =kCLLocationAccuracyNearestTenMeters; // 跑步和骑车区分
@@ -137,6 +139,9 @@
     [_locationManager startUpdatingLocation];
     
 }
+
+#pragma  mark - 定位的代理方法 CLLocationManagerDelegate
+
 -(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
     NSLog(@"改变权限");
 }
@@ -218,8 +223,16 @@
     
 }
 
+- (void)locationManager:(CLLocationManager *)manager
+       didFailWithError:(NSError *)error{
+    // [TSMessage showNotificationInViewController:self title:@"定位失败" subtitle:@"定位失败" type:TSMessageNotificationTypeWarning];
+    
+}
+
+
+#pragma mark - 文件的处理
 -(NSMutableArray*)searchPointFromFile{
-    //NSData* data = [NSKeyedUnarchiver unarchiveObjectWithData:data  ];
+    
     NSData *data = [NSData dataWithContentsOfFile:[self fileName]];
     if (data == nil)
         return nil;
@@ -232,6 +245,8 @@
     NSString *filename = [Path stringByAppendingPathComponent:@"point.rtf"];
     return filename;
 }
+
+
 //NSString *testPath = [documentsPath stringByAppendingPathComponent:@"test.txt"];
 //NSString *content=@"测试12123123121写入内容！";
 //NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:testPath];
@@ -240,11 +255,7 @@
 //[myHandle writeData:[content dataUsingEncoding:NSUTF8StringEncoding]];
 
 
-- (void)locationManager:(CLLocationManager *)manager
-       didFailWithError:(NSError *)error{
-    // [TSMessage showNotificationInViewController:self title:@"定位失败" subtitle:@"定位失败" type:TSMessageNotificationTypeWarning];
-    
-}
+
 
 
 

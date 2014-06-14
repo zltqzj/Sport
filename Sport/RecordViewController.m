@@ -44,18 +44,19 @@
     
     
     self.slideSwitchView.tabItemNormalColor = [SUNSlideSwitchView colorFromHexRGB:@"868686"];
-    self.slideSwitchView.tabItemSelectedColor = [SUNSlideSwitchView colorFromHexRGB:@"bb0b15"];
+   // self.slideSwitchView.tabItemSelectedColor = [SUNSlideSwitchView colorFromHexRGB:@"bb0b15"];
+    self.slideSwitchView.tabItemSelectedColor = [UIColor whiteColor];
     self.slideSwitchView.shadowImage = [[UIImage imageNamed:@"red_line_and_shadow.png"]
                                         stretchableImageWithLeftCapWidth:109.0f topCapHeight:0.0f];
     
     _stats_vc1 = viewOnSb(@"stats");
-    _stats_vc1.title = @"统计";
+    _stats_vc1.title = @"     统计    ";
     
     _split_vc2 = viewOnSb(@"splits");
-    _split_vc2.title = @"分段";
+    _split_vc2.title = @"      分段      ";
     
     _map_vc3 = viewOnSb(@"map");
-    _map_vc3.title = @"地图";
+    _map_vc3.title = @"     地图  ";
     
     
     [(StatsViewController *)_stats_vc1 initSubThread];
