@@ -14,14 +14,12 @@
 #import <CoreLocation/CoreLocation.h>
 #import "PTInputSource.h"
 
-// ランループに特化したスレッド
-// -[start]を呼ぶと新規のスレッド上でランループの走行を開始する。
-// 利用者は -[performSelector:onThread:...]を利用してスレッド上での実行を行うこと。
+
 @interface KAThread : NSThread<CLLocationManagerDelegate>
 {
     CLLocationManager* _locationManager;
     
-    // current location
+  
     CLLocation* _currentLocation;
     
     
@@ -47,9 +45,7 @@
 
 + (id)sharedManager;
 
-// カレントランループを停止する
-// すなわち、別スレッドから -[performSelector:onThread:...]経由で -[stopRunLoop]を
-// 呼び出す必要がある。そうしない場合、呼び出しスレッドのランループが停止する。
+ 
 - (void)stopRunLoop;
 - (void)startRunLoop;
 -(void)switchMainTab;

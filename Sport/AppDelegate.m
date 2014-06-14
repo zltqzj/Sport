@@ -47,16 +47,25 @@
     _netUtil = [[NetUtils alloc] init];
     
     
-    TabbarViewController* tab  = viewOnSb(@"tabbar");
-    [tab.tabBar setBackgroundColor:[UIColor blackColor]];
-    self.window.rootViewController = tab;
-    [tab.tabBar setSelectedImageTintColor:[UIColor orangeColor]];
-    if ( SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
-        [[UITabBar appearance] setBarStyle:UIBarStyleBlack];
-
-    }else{
-        
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"]) {
+        TabbarViewController* tab  = viewOnSb(@"tabbar");
+        [tab.tabBar setBackgroundColor:[UIColor blackColor]];
+        self.window.rootViewController = tab;
+        [tab.tabBar setSelectedImageTintColor:[UIColor orangeColor]];
+        if ( SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+            [[UITabBar appearance] setBarStyle:UIBarStyleBlack];
+            
+        }else{
+            //ios6导航栏的处理
+        }
     }
+    else{
+        RegistViewController* regist = viewOnSb(@"regist");
+        UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:regist];
+        self.window.rootViewController  = nav;
+    }
+    
+  
      
   
     
