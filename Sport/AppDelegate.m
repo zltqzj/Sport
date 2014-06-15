@@ -46,7 +46,7 @@
      
     _netUtil = [[NetUtils alloc] init];
     
-    /*
+ 
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"]) {
         TabbarViewController* tab  = viewOnSb(@"tabbar");
         [tab.tabBar setBackgroundColor:[UIColor blackColor]];
@@ -64,7 +64,7 @@
         UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:regist];
         self.window.rootViewController  = nav;
     }
-    */
+ 
   
      
   
@@ -116,9 +116,9 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     [[MyManager sharedManager] setIfDrawLine:@"NO"];
-    MapViewController* map = viewOnSb(@"map");
+   
     
-    [map.timer pause];
+   
     UIApplication*   app = [UIApplication sharedApplication];
     __block    UIBackgroundTaskIdentifier bgTask;
     bgTask = [app beginBackgroundTaskWithExpirationHandler:^{

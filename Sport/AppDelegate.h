@@ -22,7 +22,7 @@
 @property(strong,nonatomic) Reachability* hostReach;
 
 @property(strong,nonatomic) NetUtils* netUtil;
-
+@property(weak,nonatomic) ASIFormDataRequest* req ;
 +(AppDelegate *)sharedAppDelegate;
 -(void)UPDateMainMap:(NSMutableArray* )parry;
 @end

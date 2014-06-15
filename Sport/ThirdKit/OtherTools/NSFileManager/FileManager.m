@@ -10,6 +10,21 @@
 
 @implementation FileManager
 
+-(NSMutableArray*)searchPointFromFile{
+    
+    NSData *data = [NSData dataWithContentsOfFile:[self fileName]];
+    if (data == nil)
+        return nil;
+    NSMutableArray* point_array = [NSKeyedUnarchiver unarchiveObjectWithData:data  ];
+    return point_array;
+}
+
+-(NSString*)fileName{
+    NSString *Path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *filename = [Path stringByAppendingPathComponent:@"point.rtf"];
+    return filename;
+}
+
 -(void)initActivityObject{
     NSMutableDictionary* dic = [self activityDictWithID:@"1" user_id:@"1" flag:@"1" start_date:[DayManagement stringFromDate:[NSDate date]] start_date_local:[DayManagement stringFromDate:[NSDate date]] time_zone:@"8" location_city:@"beijing" location_province:@"beijing" location_country:@"china" start_latitude:@"1" start_longitude:@"1" moving_time:@"" elapsed_time:@"1" name:@"run" description:@"1" tag:@"2" type:@"1" total_elevation_gain:@"1" total_distance:@"1" manual:@"1" private_flag:@"1" average_speed:@"1" average_pace:@"1" max_speed:@"1" average_heartrate:@"1" max_heartrate:@"1" calories:@"1" brocast:@"1" like_count:@"1" comments_count:@"1" awards_count:@"1" device:@"1" lastsynctime:@"" list:nil];
     //Activity *person = [MTLJSONAdapter modelOfClass:[Activity class] fromJSONDictionary:dic error:nil];

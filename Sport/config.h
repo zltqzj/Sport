@@ -84,8 +84,8 @@
 // 查询所有人的坐标
 #define ALL_LOCATION @"http://weixin.jsptz.com/map.php?action=getAllUserLocaltion&userid=45"
 
-// 上传我的坐标
-#define  UPLOAD_LOCATION @"http://weixin.jsptz.com/map.php?action=uploadMyLocation"
+// 上传一次activity
+#define  UPLOAD_ACTIVITY @"http://run.yyzhao.com/m/saveactivity"
 
 
 #define IS_LOGIN @"is_login"

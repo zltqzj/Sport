@@ -8,32 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-#import <CoreLocation/CoreLocation.h>
 #import "MapPoint.h"
-#import "iOSBlocks.h"
-#import "NSTimer+Blocks.h"
-#import "TSMessageView.h"
-#import "WGS84TOGCJ02.h"
-#import "Activity.h"
 #import "Mantle.h"
-#import "ProgressHUD.h"
-#import "Activity.h"
-#import "EMPerson.h"
-#import "DayManagement.h"
-#import "MyManager.h"
-#import "CSPausibleTimer.h"
-
 #import "StatsViewController.h"
 
 double main_total_distance;
 
 @interface MapViewController : UIViewController<MKMapViewDelegate, CLLocationManagerDelegate,TSMessageViewProtocol>
 {
-	// the map view
-	MKMapView* _mapView;
-	
-    // routes points
-    NSMutableArray* _points;
+	 
     
 	// the data representing the route points.
 	MKPolyline* _routeLine;
@@ -54,24 +37,23 @@ double main_total_distance;
     
 }
 
-@property (nonatomic, retain)   MKMapView* mapView;
+@property (nonatomic, retain)   MKMapView* mapView;  // 地图控件
 
-@property (nonatomic, retain) MKPolyline* routeLine;
-@property (nonatomic, retain) MKPolylineView* routeLineView;
-@property (nonatomic, retain) CLLocationManager* locationManager;
+@property (nonatomic, retain) MKPolyline* routeLine; // 划线
+@property (nonatomic, retain) MKPolylineView* routeLineView; // 划线视图
+
+@property(strong,nonatomic) NSMutableArray* annoArray;
+
 @property (strong,nonatomic) CLGeocoder* myGeocoder;
-@property (strong,nonatomic) IBOutlet UILabel* displayLocation;
+
 @property (strong,nonatomic) MKUserLocation* centerPoint;
-@property (strong,nonatomic) NSMutableArray* annoArray;
+
 @property (nonatomic, retain) Activity* activities;
-@property(strong,nonatomic) CSPausibleTimer* timer;
+
 @property(assign,nonatomic) NSString* total_distance;
 
 
-//@property(strong,nonatomic) NSMutableArray* pointsToDraw;
-//@property(strong,nonatomic) KAThread * subThread;
-//@property(strong,nonatomic) StatsViewController * pStatusViow;
--(void)configureRoutes;
+ 
 -(void)UPDateMainMap;
  
 

@@ -30,4 +30,5 @@
 #import "Activity.h"
 #import "PTInputSource.h"
 #import "DayManagement.h"
+#import "FileManager.h"
 #endif

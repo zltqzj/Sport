@@ -15,29 +15,26 @@
 
 @interface StatsViewController : UIViewController <PSLocationManagerDelegate>
 
-@property(strong,nonatomic) IBOutlet UILabel* lblHour;
-@property(strong,nonatomic) IBOutlet UILabel* lblMinite;
-
-@property(strong,nonatomic) IBOutlet UILabel* lblSeconds;
-@property(strong,nonatomic) IBOutlet UILabel* lblTotalDistance;
-
+@property(strong,nonatomic) IBOutlet UILabel* lblHour; // 小时标签
+@property(strong,nonatomic) IBOutlet UILabel* lblMinite;// 分钟标签
+@property(strong,nonatomic) IBOutlet UILabel* lblSeconds;// 秒标签
+@property(strong,nonatomic) IBOutlet UILabel* lblTotalDistance;// 总公里数标签
 
 
+@property(nonatomic,strong) IBOutlet UILabel* strength;// gps强度标签
 
-@property(nonatomic,strong) IBOutlet UILabel* strength;
-//@property(nonatomic,strong) IBOutlet TTCounterLabel* counterLabel;
-@property (strong, nonatomic) IBOutlet UIButton *startStopButton;
-@property (strong, nonatomic) IBOutlet UIButton *resetButton;
-@property(strong,nonatomic) NSTimer *timer;
-@property(strong,nonatomic) CSPausibleTimer* cs_timer;
-@property(strong,nonatomic) NSString* whole_second;
-@property(strong,nonatomic) NSMutableArray* resume_pause_time_point_array;
-@property(strong,nonatomic) KAThread* myThread;
+@property(strong,nonatomic) CSPausibleTimer* cs_timer;// 总定时器
 
--(IBAction)end:(id)sender;
--(IBAction)resume:(id)sender;
--(void)initSubThread;
-//
+@property(strong,nonatomic) NSString* whole_second;// 总秒数-字符串类型
+
+@property(strong,nonatomic) NSMutableArray* resume_pause_time_point_array;// 点击开始（恢复）记录时间点（数组）
+@property(strong,nonatomic) KAThread* myThread; // 多线程对象
+
+-(IBAction)end:(id)sender; // 点停止按钮触发事件
+-(IBAction)resume:(id)sender;// 点击开始（恢复）按钮触发事件
+
+-(void)initSubThread; // 初始化线程对象
+
 
 
 

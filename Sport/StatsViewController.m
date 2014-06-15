@@ -7,7 +7,7 @@
 //  待解决问题：异步，地图界面右滑按钮。定时判断是否开启。 
 
 #import "StatsViewController.h"
-static int a = 1;
+
 static int b = 0;
 typedef NS_ENUM(NSInteger, kTTCounter){
     kTTCounterRunning = 0,
@@ -20,22 +20,11 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 @end
 
 @implementation StatsViewController
-@synthesize strength = _strength;
 
-@synthesize timer = _timer;
-@synthesize lblHour = _lblHour;
-@synthesize lblMinite = _lblMinite;
-@synthesize lblSeconds = _lblSeconds;
-@synthesize lblTotalDistance = _lblTotalDistance;
-@synthesize resume_pause_time_point_array = _resume_pause_time_point_array;
-@synthesize cs_timer = _cs_timer;
-@synthesize whole_second = _whole_second;
-
-
--(void)beginActivity{
+-(void)beginActivity{     // 定时器开始触发的方法
     
-        NSLog(@"cs定时器走没走%@",[NSString stringWithFormat:@"%d",b]);
-        _whole_second =[NSString stringWithFormat:@"%d",++b];
+    NSLog(@"cs定时器走没走%@",[NSString stringWithFormat:@"%d",b]);
+    _whole_second =[NSString stringWithFormat:@"%d",++b];
     [[MyManager sharedManager] setWhole_time:_whole_second];
         [self calculate_h_m_s:_whole_second];
     
@@ -49,7 +38,7 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 }
 
 
--(void)calculate_h_m_s:(NSString*)wholeSecond{
+-(void)calculate_h_m_s:(NSString*)wholeSecond{  // 显示-时-分-秒 方法
     
     int  w_second = [wholeSecond doubleValue];
     int hour = w_second / 3600;
@@ -81,23 +70,15 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 }
 
 
--(IBAction)end:(id)sender{
+-(IBAction)end:(id)sender{     // 点击停止触发的事件
     NSLog(@"完成");
     [_cs_timer pause];
     [[MyManager sharedManager] setSection:0];
      [_myThread performSelector:@selector(finishActivity) onThread:_myThread withObject:nil waitUntilDone:NO];
-   // [[NSNotificationCenter defaultCenter] postNotificationName:@"getData" object:nil userInfo:nil];
-   // MapViewController* map = [[MapViewController alloc] init];
-    //[map.timer pause];
-   
-}
--(NSString*)fileName{
-    NSString *Path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *filename = [Path stringByAppendingPathComponent:@"point.rtf"];
-    return filename;
+ 
 }
 
--(IBAction)resume:(id)sender{
+-(IBAction)resume:(id)sender{    // 点击开始（恢复）触发的事件
    
         if (b == 0) {
             _cs_timer = [CSPausibleTimer timerWithTimeInterval:1 target:self selector:@selector(beginActivity) userInfo:nil repeats:YES];
@@ -135,22 +116,17 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 }
 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+// 显示总公里数
 -(void)show_total_distance:(NSNotification*)info{
     NSLog(@"----%@",info);
     NSString* str = [info.userInfo objectForKey:@"_total_distance"];
     double  d = [str doubleValue]/1000;
-    
-    NSLog(@"%f",d);
-     _lblTotalDistance.text = [NSString stringWithFormat:@"%.2f",d];
+   
+    _lblTotalDistance.text = [NSString stringWithFormat:@"%.2f",d];
 }
+
+
+
 
 - (void)viewDidLoad
 {
@@ -159,64 +135,16 @@ typedef NS_ENUM(NSInteger, kTTCounter){
     _resume_pause_time_point_array = [[NSMutableArray alloc] initWithCapacity:10];
     
    
-        [PSLocationManager sharedLocationManager].delegate = self;
-        [[PSLocationManager sharedLocationManager] prepLocationUpdates];
-        [[PSLocationManager sharedLocationManager] startLocationUpdates];
-    
-    //_myThread = [[MyLocationThread alloc] init];
+    [PSLocationManager sharedLocationManager].delegate = self;
+    [[PSLocationManager sharedLocationManager] prepLocationUpdates];
+    [[PSLocationManager sharedLocationManager] startLocationUpdates];
   
 }
 
 
--(void)initSubThread{
+-(void)initSubThread{   // 初始化线程对象（在recordviewcontroller里调用）
     _myThread = [[KAThread alloc] init];
     [_myThread start];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-#pragma mark - Private
-
-
-
-- (void)updateUIForState:(NSInteger)state {
-    switch (state) {
-        case kTTCounterRunning:
-            [self.startStopButton setTitle:@"Stop" forState:UIControlStateNormal];
-            self.resetButton.hidden = YES;
-            break;
-            
-        case kTTCounterStopped:
-            [self.startStopButton setTitle:@"Start" forState:UIControlStateNormal];
-            self.resetButton.hidden = NO;
-            break;
-            
-        case kTTCounterReset:
-            [self.startStopButton setTitle:@"Start" forState:UIControlStateNormal];
-            self.resetButton.hidden = YES;
-            self.startStopButton.hidden = NO;
-            break;
-            
-        case kTTCounterEnded:
-            self.startStopButton.hidden = YES;
-            self.resetButton.hidden = NO;
-            break;
-            
-        default:
-            break;
-    }
-}
-
-#pragma mark - TTCounterLabelDelegate
-
-- (void)countdownDidEnd {
-    [self updateUIForState:kTTCounterEnded];
-    
 }
 
 
@@ -233,7 +161,7 @@ typedef NS_ENUM(NSInteger, kTTCounter){
     }
     
    // self.strengthLabel.text = strengthText;
-    debugLog(strengthText);
+  
      _strength.text = strengthText;
      
 }
@@ -246,7 +174,7 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 
 - (void)locationManager:(PSLocationManager *)locationManager distanceUpdated:(CLLocationDistance)distance {
    // self.distanceLabel.text = [NSString stringWithFormat:@"%.2f %@", distance, NSLocalizedString(@"meters", @"")];
-    debugLog([NSString stringWithFormat:@"%.2f %@", distance, NSLocalizedString(@"meters", @"")] );
+  
 }
 
 - (void)locationManager:(PSLocationManager *)locationManager error:(NSError *)error {
@@ -254,6 +182,20 @@ typedef NS_ENUM(NSInteger, kTTCounter){
    // self.strengthLabel.text = NSLocalizedString(@"Unable to determine location", @"");
 }
 
+#pragma mark - Others 
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
 
 @end

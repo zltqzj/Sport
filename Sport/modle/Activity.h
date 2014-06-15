@@ -31,7 +31,7 @@
 
 @property(strong,nonatomic) NSString* elapsed_time; // #目前MOVING_TIME＝ELAPSED_TIME，秒
 
-//@property(strong,nonatomic) NSString* description; // 70个字以内
+@property(strong,nonatomic) NSString* descript; // 70个字以内
 
 @property(strong,nonatomic) NSString* tag; // 标签
 @property(strong,nonatomic) NSString* type; //#RUN跑步,RIDE骑行
@@ -55,19 +55,9 @@
 @property(strong,nonatomic) NSString* lastsynctime; // 上次同步时间
 @property(strong,nonatomic) NSMutableArray* list;// 测试数组
 
-/*
-
-
-
-
-
-*/
+-(NSMutableDictionary*)activityDictWithID:(NSString*)ID user_id:(NSString*)user_id flag:(NSString*)flag start_date:(NSString*)start_date start_date_local:(NSString*)start_date_local time_zone:(NSString*)time_zone location_city:(NSString*)location_city location_province:(NSString*)location_province location_country:(NSString*)location_country start_latitude:(NSString*)start_latitude start_longitude:(NSString*)start_longitude end_latitude:(NSString*)end_latitude end_logitude:(NSString*)end_longitude  moving_time:(NSString*)moving_time elapsed_time:(NSString*)elapsed_time name:(NSString*)name description:(NSString*)descript tag:(NSString*)tag type:(NSString*)type total_elevation_gain:(NSString*)total_elevation_gain total_distance:(NSString*)total_distance manual:(NSString*)manual private_flag:(NSString*)private_flag average_speed:(NSString*)average_speed average_pace:(NSString*)average_pace max_speed:(NSString*)max_speed average_heartrate:(NSString*)average_heartrate max_heartrate:(NSString*)max_heartrate calories:(NSString*)calories brocast:(NSString*)brocast like_count:(NSString*)like_count comments_count:(NSString*)comments_count awards_count:(NSString*)awards_count device:(NSString*)device lastsynctime:(NSString*)lastsynctime list:(NSArray*)list;
 
  
-/*
-
-// 以上为test
-*/
 
 /*
 
@@ -78,29 +68,6 @@
 @property(strong,nonatomic) NSMutableArray* list_pics; //图片的URL，提交数据成功后，服务器返回对应图片的URL，再合并到对象中
 
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -10,7 +10,7 @@
 #import "CSqlite.h"
 #import "CSPausibleTimer.h"
 #import "Activity.h"
-
+#import "FileManager.h"
 @interface KAThread : NSThread<CLLocationManagerDelegate>
 {
      CSqlite *m_sqlite;
@@ -38,6 +38,8 @@
 @property(strong,nonatomic) NSMutableArray* pointsToDraw;// 实际划线的点
 
 @property(assign,nonatomic) BOOL isCancelled; // 取消线程
+
+@property (strong,nonatomic) FileManager* file_manager;  // 文件管理类
 
 //@property (strong,nonatomic) CSqlite *m_sqlite;
 

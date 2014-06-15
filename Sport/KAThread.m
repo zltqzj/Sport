@@ -11,8 +11,8 @@
 #import "MapViewController.h"
 #import "AppDelegate.h"
 @implementation KAThread
-//@synthesize m_sqlite= _m_sqlite;
 
+@synthesize file_manager = _file_manager;
 #pragma mark - 自定义方法 CustomFunction
 
 + (id)sharedManager{   // 暂时不用，本想用作单例
@@ -27,6 +27,7 @@
 - (void)main {   // 线程启动
     m_sqlite = [[CSqlite alloc]init];
     [m_sqlite openSqlite];
+    _file_manager = [[FileManager alloc] init];
     
     _points = [[NSMutableArray alloc] initWithCapacity:5];
     _pointsToDraw = [[NSMutableArray alloc] initWithCapacity:5];
@@ -63,23 +64,26 @@
     _beginCollect = YES;
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    [fileManager removeItemAtPath:[self fileName]  error:nil];
+    [fileManager removeItemAtPath:[_file_manager fileName]  error:nil];
 
 }
 
 -(void)finishActivity{   // 点击停止按钮触发的事件
     [_timer pause];
-
+    
    _lastlocal_meta_data = nil;
-  NSMutableArray*   _tempArray = [[NSMutableArray alloc] initWithCapacity:10];
-  _tempArray = [self searchPointFromFile];
+   NSMutableArray*   _tempArray = [[NSMutableArray alloc] initWithCapacity:10];
+   _tempArray = [_file_manager searchPointFromFile];
+    
+    
+    
    if (_tempArray.count == 0)
        _tempArray = [NSMutableArray arrayWithArray:_points];
    else
        [_tempArray addObjectsFromArray:_points];
 
  NSData* data =  [NSKeyedArchiver archivedDataWithRootObject:_tempArray];
-   [data writeToFile:[self fileName] atomically:YES];
+   [data writeToFile:[_file_manager fileName] atomically:YES];
    __block  double sum_whole = 0;
     __block  double sum_sport = 0;
     __block  double sum_disactive = 0;
@@ -114,7 +118,7 @@
     NSLog(@"定时器~~~~");
     
     if ([[[MyManager sharedManager] ifDrawLine] isEqualToString:@"YES"] && _beginCollect ==YES &&_points.count!=0) {
-        _pointsToDraw = [self searchPointFromFile];
+        _pointsToDraw = [_file_manager searchPointFromFile];
         if (_pointsToDraw.count == 0)
             _pointsToDraw = [NSMutableArray arrayWithArray:_points];
         else
@@ -205,14 +209,14 @@
         if (_points.count ==  MAX_POINT ) {
             
             NSMutableArray*   _tempArray = [[NSMutableArray alloc] initWithCapacity:10];
-            _tempArray = [self searchPointFromFile];
+            _tempArray = [_file_manager searchPointFromFile];
             if (_tempArray.count == 0)
                 _tempArray = [NSMutableArray arrayWithArray:_points];
             else
                 [_tempArray addObjectsFromArray:_points];
             
             NSData* data =  [NSKeyedArchiver archivedDataWithRootObject:_tempArray];
-            [data writeToFile:[self fileName] atomically:YES];
+            [data writeToFile:[_file_manager fileName] atomically:YES];
             [_tempArray removeAllObjects];
             
             [_points removeAllObjects];
@@ -227,6 +231,7 @@
     
 }
 
+// 定位失败
 - (void)locationManager:(CLLocationManager *)manager
        didFailWithError:(NSError *)error{
     // [TSMessage showNotificationInViewController:self title:@"定位失败" subtitle:@"定位失败" type:TSMessageNotificationTypeWarning];
@@ -234,29 +239,8 @@
 }
 
 
-#pragma mark - 文件的处理
--(NSMutableArray*)searchPointFromFile{
-    
-    NSData *data = [NSData dataWithContentsOfFile:[self fileName]];
-    if (data == nil)
-        return nil;
-    NSMutableArray* point_array = [NSKeyedUnarchiver unarchiveObjectWithData:data  ];
-    return point_array;
-}
 
--(NSString*)fileName{
-    NSString *Path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *filename = [Path stringByAppendingPathComponent:@"point.rtf"];
-    return filename;
-}
-
-
-//NSString *testPath = [documentsPath stringByAppendingPathComponent:@"test.txt"];
-//NSString *content=@"测试12123123121写入内容！";
-//NSFileHandle *myHandle = [NSFileHandle fileHandleForWritingAtPath:testPath];
-//[myHandle seekToEndOfFile];
-//
-//[myHandle writeData:[content dataUsingEncoding:NSUTF8StringEncoding]];
+// 火星坐标转换
 -(CLLocationCoordinate2D)zzTransGPS:(CLLocationCoordinate2D)yGps
 {
     int TenLat=0;
@@ -282,9 +266,4 @@
     
 }
 
-
-
-
-
-
-@end
+ @end

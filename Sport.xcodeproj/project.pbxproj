@@ -26,7 +26,6 @@
 		164D67A1194194F900F660E4 /* NSValueTransformer+MTLPredefinedTransformerAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D6793194194F900F660E4 /* NSValueTransformer+MTLPredefinedTransformerAdditions.m */; };
 		164D67A91941A00500F660E4 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D67A81941A00500F660E4 /* Activity.m */; };
 		164D67AC1941A09600F660E4 /* EMPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D67AB1941A09600F660E4 /* EMPerson.m */; };
-		164D67AE1941A0A800F660E4 /* Person.json in Resources */ = {isa = PBXBuildFile; fileRef = 164D67AD1941A0A800F660E4 /* Person.json */; };
 		164D67B11941A25900F660E4 /* NTPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D67B01941A25900F660E4 /* NTPhoto.m */; };
 		164D67D01941A36600F660E4 /* TSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D67B51941A36600F660E4 /* TSMessage.m */; };
 		164D67D11941A36600F660E4 /* NotificationBackgroundError.png in Resources */ = {isa = PBXBuildFile; fileRef = 164D67B81941A36600F660E4 /* NotificationBackgroundError.png */; };
@@ -571,7 +570,6 @@
 		164D67A81941A00500F660E4 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
 		164D67AA1941A09600F660E4 /* EMPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMPerson.h; sourceTree = "<group>"; };
 		164D67AB1941A09600F660E4 /* EMPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EMPerson.m; sourceTree = "<group>"; };
-		164D67AD1941A0A800F660E4 /* Person.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Person.json; sourceTree = "<group>"; };
 		164D67AF1941A25900F660E4 /* NTPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTPhoto.h; sourceTree = "<group>"; };
 		164D67B01941A25900F660E4 /* NTPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTPhoto.m; sourceTree = "<group>"; };
 		164D67B41941A36600F660E4 /* TSMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMessage.h; sourceTree = "<group>"; };
@@ -650,8 +648,8 @@
 		1CB9E246193DCEC900A90B58 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1CB9E248193DCEC900A90B58 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1CB9E24A193DCEC900A90B58 /* Sport-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sport-Prefix.pch"; sourceTree = "<group>"; };
-		1CB9E24B193DCEC900A90B58 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		1CB9E24C193DCEC900A90B58 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1CB9E24B193DCEC900A90B58 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Sport/AppDelegate.h; sourceTree = "<group>"; };
+		1CB9E24C193DCEC900A90B58 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Sport/AppDelegate.m; sourceTree = "<group>"; };
 		1CB9E24F193DCEC900A90B58 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		1CB9E252193DCEC900A90B58 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		1CB9E254193DCEC900A90B58 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -1276,7 +1274,6 @@
 				165B73B6194AE4B500CB2DF5 /* PTInputSource.m */,
 				164D67AF1941A25900F660E4 /* NTPhoto.h */,
 				164D67B01941A25900F660E4 /* NTPhoto.m */,
-				164D67AD1941A0A800F660E4 /* Person.json */,
 				164D67AA1941A09600F660E4 /* EMPerson.h */,
 				164D67AB1941A09600F660E4 /* EMPerson.m */,
 				164D67A71941A00500F660E4 /* Activity.h */,
@@ -1448,6 +1445,10 @@
 			isa = PBXGroup;
 			children = (
 				1CB9E355193DD0E000A90B58 /* config.h */,
+				1CB9E24B193DCEC900A90B58 /* AppDelegate.h */,
+				1CB9E24C193DCEC900A90B58 /* AppDelegate.m */,
+				1CB9E24E193DCEC900A90B58 /* Main_iPhone.storyboard */,
+				1CB9E251193DCEC900A90B58 /* Main_iPad.storyboard */,
 				1CB9E242193DCEC900A90B58 /* Sport */,
 				1CB9E264193DCEC900A90B58 /* SportTests */,
 				1CB9E23B193DCEC900A90B58 /* Frameworks */,
@@ -1496,10 +1497,6 @@
 				1C7A5D001944003A00E96C22 /* Record4ViewController */,
 				1C7A5CDE1943FCEE00E96C22 /* FiveMainController */,
 				164D67A619419FF800F660E4 /* modle */,
-				1CB9E24B193DCEC900A90B58 /* AppDelegate.h */,
-				1CB9E24C193DCEC900A90B58 /* AppDelegate.m */,
-				1CB9E24E193DCEC900A90B58 /* Main_iPhone.storyboard */,
-				1CB9E251193DCEC900A90B58 /* Main_iPad.storyboard */,
 				1CB9E254193DCEC900A90B58 /* ViewController.h */,
 				1CB9E255193DCEC900A90B58 /* ViewController.m */,
 				1CB9E359193DE20500A90B58 /* BaseViewController */,
@@ -2443,7 +2440,6 @@
 				1CDD34841944357B009279DD /* activity_summary_fragment_achievement_6.png in Resources */,
 				1CDD34D61944357B009279DD /* ic_launcher_logo.png in Resources */,
 				1CDD34621944357B009279DD /* achievement_8.png in Resources */,
-				164D67AE1941A0A800F660E4 /* Person.json in Resources */,
 				1CDD34D71944357B009279DD /* ic_menu_edit.png in Resources */,
 				1CDD34691944357B009279DD /* actionbar_close.png in Resources */,
 				1CDD34A21944357B009279DD /* explore_pin_f.png in Resources */,
@@ -2894,6 +2890,7 @@
 				1CB9E24F193DCEC900A90B58 /* Base */,
 			);
 			name = Main_iPhone.storyboard;
+			path = Sport;
 			sourceTree = "<group>";
 		};
 		1CB9E251193DCEC900A90B58 /* Main_iPad.storyboard */ = {
@@ -2902,6 +2899,7 @@
 				1CB9E252193DCEC900A90B58 /* Base */,
 			);
 			name = Main_iPad.storyboard;
+			path = Sport;
 			sourceTree = "<group>";
 		};
 		1CB9E267193DCEC900A90B58 /* InfoPlist.strings */ = {

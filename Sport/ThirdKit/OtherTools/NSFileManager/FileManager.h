@@ -10,6 +10,11 @@
 
 @interface FileManager : NSFileManager
 
+-(NSMutableArray*)searchPointFromFile;
+
+-(NSString*)fileName;
+
+
 -(void)initActivityObject;
 
     
