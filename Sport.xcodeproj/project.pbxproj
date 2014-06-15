@@ -58,6 +58,7 @@
 		165B73BE194AE6DA00CB2DF5 /* KAThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 165B73BC194AE6DA00CB2DF5 /* KAThread.m */; };
 		16D76D4F1946F562009C8492 /* SaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D76D4E1946F562009C8492 /* SaveViewController.m */; };
 		1C3AE2DA194C16C10080D6D5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CB9E34F193DD04400A90B58 /* MapKit.framework */; };
+		1C4EDEF0194DDA1000195185 /* NSArray+PerformSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C4EDEEF194DDA1000195185 /* NSArray+PerformSelector.m */; };
 		1C7A5CE11943FD2E00E96C22 /* RecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A5CE01943FD2E00E96C22 /* RecordViewController.m */; };
 		1C7A5CE41943FD3600E96C22 /* FeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A5CE31943FD3600E96C22 /* FeedViewController.m */; };
 		1C7A5CE71943FD3F00E96C22 /* ChallengeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C7A5CE61943FD3F00E96C22 /* ChallengeViewController.m */; };
@@ -615,6 +616,8 @@
 		165B73BC194AE6DA00CB2DF5 /* KAThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KAThread.m; sourceTree = "<group>"; };
 		16D76D4D1946F562009C8492 /* SaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveViewController.h; sourceTree = "<group>"; };
 		16D76D4E1946F562009C8492 /* SaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveViewController.m; sourceTree = "<group>"; };
+		1C4EDEEE194DDA1000195185 /* NSArray+PerformSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+PerformSelector.h"; sourceTree = "<group>"; };
+		1C4EDEEF194DDA1000195185 /* NSArray+PerformSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+PerformSelector.m"; sourceTree = "<group>"; };
 		1C7A5CDF1943FD2E00E96C22 /* RecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordViewController.h; sourceTree = "<group>"; };
 		1C7A5CE01943FD2E00E96C22 /* RecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordViewController.m; sourceTree = "<group>"; };
 		1C7A5CE21943FD3600E96C22 /* FeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedViewController.h; sourceTree = "<group>"; };
@@ -1381,6 +1384,15 @@
 			name = CustomThread;
 			sourceTree = "<group>";
 		};
+		1C4EDEED194DDA1000195185 /* CustomSegment */ = {
+			isa = PBXGroup;
+			children = (
+				1C4EDEEE194DDA1000195185 /* NSArray+PerformSelector.h */,
+				1C4EDEEF194DDA1000195185 /* NSArray+PerformSelector.m */,
+			);
+			path = CustomSegment;
+			sourceTree = "<group>";
+		};
 		1C7A5CDE1943FCEE00E96C22 /* FiveMainController */ = {
 			isa = PBXGroup;
 			children = (
@@ -1624,6 +1636,7 @@
 		1CB9E299193DCF4B00A90B58 /* CustomUi */ = {
 			isa = PBXGroup;
 			children = (
+				1C4EDEED194DDA1000195185 /* CustomSegment */,
 				1652D01E19456F230000E917 /* TimerLabel */,
 				1C7A5CEE1943FF4100E96C22 /* CustomTabbar */,
 				164D67B21941A36600F660E4 /* TSMessage */,
@@ -2854,6 +2867,7 @@
 				1CB9E332193DCF4B00A90B58 /* NSString+SBJSON.m in Sources */,
 				163C0FA1193EF61100529BA3 /* WGS84TOGCJ02.m in Sources */,
 				1CB9E308193DCF4B00A90B58 /* MFMailComposeViewController+Block.m in Sources */,
+				1C4EDEF0194DDA1000195185 /* NSArray+PerformSelector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
