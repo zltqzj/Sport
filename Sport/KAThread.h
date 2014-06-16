@@ -28,7 +28,7 @@
 @property (nonatomic, retain) Activity* activities; // 活动的对象
 
 @property(assign,nonatomic) NSString* total_distance; // 总公里数，要传给定时器页面显示的
-@property(strong,nonatomic) NSDictionary* dict_total_distance;
+@property(strong,nonatomic) NSDictionary* dict_total_distance; // 存放传到主线程的两个值：实时的总公里数和实时配速
 
 @property(assign,nonatomic) double main_total_distance;
 

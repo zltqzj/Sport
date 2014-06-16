@@ -232,7 +232,7 @@
         if (nil != self.routeLine) {
             [self.mapView addOverlay:self.routeLine]; // add the overlay to the map
             //[_routeLineArray addObject:self.routeLine];
-            NSLog(@"划线从第%d个点----->第%d个点,当前画了%d个点",_haveDrawCount,_pointsToDraw.count,nIndex+1);
+            NSLog(@"划线从第%d个点----->第%d个点,当前画了%d个点",_haveDrawCount,_pointsToDraw.count, nIndex+1);
         }
         if (pointArray2Draw)
         {
@@ -250,7 +250,7 @@
         _myGeocoder  = [[CLGeocoder alloc] init];
     }
     
-    NSLog(@"%f,%f",_currentLocation.coordinate.latitude,_currentLocation.coordinate.longitude);
+   // NSLog(@"%f,%f",_currentLocation.coordinate.latitude,_currentLocation.coordinate.longitude);
     
     [self.myGeocoder
      reverseGeocodeLocation:_currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {

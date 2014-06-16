@@ -46,6 +46,11 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"_total_distance" object:nil userInfo:pdict];
 }
 
+-(void)updateSplitData:(NSMutableArray*)split_data{
+    NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:split_data,@"split_data", nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"split_data" object:nil userInfo:dict];
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

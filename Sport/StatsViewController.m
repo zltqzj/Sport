@@ -23,7 +23,6 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 
 -(void)beginActivity{     // 定时器开始触发的方法
     
-    NSLog(@"cs定时器走没走%@",[NSString stringWithFormat:@"%d",b]);
     _whole_second =[NSString stringWithFormat:@"%d",++b];
     [[MyManager sharedManager] setWhole_time:_whole_second];
         [self calculate_h_m_s:_whole_second];
@@ -83,8 +82,7 @@ typedef NS_ENUM(NSInteger, kTTCounter){
         if (b == 0) {
             _cs_timer = [CSPausibleTimer timerWithTimeInterval:1 target:self selector:@selector(beginActivity) userInfo:nil repeats:YES];
             NSLog(@"第一次启动");
-           // _myThread.beginCollect = YES;
-           // [self performSelector:@selector(doOtherTask) onThread:(_myThread) withObject:nil waitUntilDone:NO];
+          
              [_myThread performSelector:@selector(startRunLoop) onThread:_myThread withObject:nil waitUntilDone:NO];
         
                      
@@ -111,14 +109,14 @@ typedef NS_ENUM(NSInteger, kTTCounter){
  
     
     
-    NSLog(@"****%@",_resume_pause_time_point_array);
+   // NSLog(@"****%@",_resume_pause_time_point_array);
     
 }
 
 
 // 显示总公里数
 -(void)show_total_distance:(NSNotification*)info{
-    NSLog(@"----%@",info);
+   
     NSString* str = [info.userInfo objectForKey:@"_total_distance"];
     double  d = [str doubleValue]/1000;
     _lblTotalDistance.text = [NSString stringWithFormat:@"%.2f",d];
@@ -161,8 +159,6 @@ typedef NS_ENUM(NSInteger, kTTCounter){
     } else {
         strengthText = NSLocalizedString(@"...", @"");
     }
-    
-   // self.strengthLabel.text = strengthText;
   
      _strength.text = strengthText;
      
@@ -170,7 +166,7 @@ typedef NS_ENUM(NSInteger, kTTCounter){
 
 - (void)locationManagerSignalConsistentlyWeak:(PSLocationManager *)locationManager {
     //self.strengthLabel.text = NSLocalizedString(@"Consistently Weak", @"");
-    debugLog(NSLocalizedString(@"Consistently Weak", @""));
+   
     _strength.text = @"Consistently Weak";
 }
 

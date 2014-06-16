@@ -29,6 +29,7 @@
     [m_sqlite openSqlite];
     _file_manager = [[FileManager alloc] init];
     _splist_array = [[NSMutableArray alloc] initWithCapacity:5];
+    //[_splist_array addObject:@"null"];
     _points = [[NSMutableArray alloc] initWithCapacity:5];
     _pointsToDraw = [[NSMutableArray alloc] initWithCapacity:5];
     [[[KANullInputSource alloc] init] addToCurrentRunLoop] ;
@@ -200,7 +201,7 @@
         }
         CLLocationCoordinate2D trans = [self zzTransGPS:location.coordinate]; // 校正坐标
         
-        int xsection = (int)(_main_total_distance/1000+1);
+        int xsection = (int)(_main_total_distance/1000+1);// 按每公里算段数
 
         [loc_meta_data setValue:[NSString stringWithFormat:@"%f",trans.latitude] forKey:@"latitude"];//1
         [loc_meta_data setValue:[NSString stringWithFormat:@"%f",trans.longitude] forKey:@"logitude"];//2
@@ -214,7 +215,7 @@
         if (_points.count > 0) {
             CLLocationDistance distance = [location distanceFromLocation:_currentLocation];
             NSLog(@"距离%f",distance);
-            _main_total_distance = _main_total_distance+distance;
+            _main_total_distance = _main_total_distance + distance;
             
             if (nClear >= 3)
             {
@@ -224,24 +225,38 @@
                 float total_interval  = [[[MyManager sharedManager] whole_time] floatValue];
                 float last_dis =[[lastpoint objectForKey:@"dis"] floatValue];
                 float last_interval =[[lastpoint objectForKey:@"interval"] floatValue];
-            
-                float pace = [self count_split_pace:_main_total_distance-last_dis interval:total_interval-last_interval];
+                
+                // 第xsection段的距离，第xsection段的时间
+                float n_distance = _main_total_distance-last_dis;
+                float n_time = total_interval- last_interval;
+                NSDictionary* xsection_info = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",xsection],@"xsection",[NSString stringWithFormat:@"%f",n_distance],@"n_distance",[NSString stringWithFormat:@"%f",n_time],@"n_time", nil];
+                NSLog(@"%@",xsection_info);
+                // 在数组中查找，如果第xsection项有，就replace ,如果没有则addobject（注意数组下标越界）
+                if (_splist_array.count == xsection-1) {
+                    [_splist_array addObject:xsection_info];
+                    NSLog(@"%@",_splist_array);
+                }
+                else if (_splist_array.count == xsection){
+                    [_splist_array setObject:xsection_info atIndexedSubscript:xsection-1];
+                }
+                
+                
+                float pace = [self count_split_pace:n_distance interval:n_time];// 某时刻的配速
+                
                 NSString* pace_string = [self get_pace_string:(int)pace];
-                NSLog(@"第%d段,dis %f,last dis %f,last interval %f,pace %f,pace string %@",xsection,_main_total_distance,last_dis,last_interval,pace,pace_string);
+                NSLog(@"第%d段,已走总长度：%f,第n段第一个点的总长度： %f,第n段第一个点的总时间： %f,浮点型配速： %f,字符串配速： %@",xsection,_main_total_distance,last_dis,last_interval,pace,pace_string);
         
                 _total_distance = [NSString stringWithFormat:@"%.2f",_main_total_distance];
             
-                _dict_total_distance = [NSDictionary dictionaryWithObjectsAndKeys:_total_distance,@"_total_distance",pace_string,@"current_split_pace",nil];
+                _dict_total_distance = [NSDictionary dictionaryWithObjectsAndKeys:_total_distance,@"_total_distance",pace_string,@"current_split_pace",nil];// 字典，包括要传过去的“总距离”和“配速”
                 nClear = 0;
                 
                 AppDelegate*   delegate = [AppDelegate sharedAppDelegate];
+                [delegate performSelectorOnMainThread:@selector(updateSplitData:) withObject:_splist_array waitUntilDone:NO];
                 [delegate performSelectorOnMainThread:@selector(UPMainStats:) withObject:_dict_total_distance waitUntilDone:NO];
             }
-            //[[NSNotificationCenter defaultCenter] postNotificationName:@"_total_distance" object:nil userInfo:dict_total_distance];
+          
             [loc_meta_data setValue:_total_distance forKey:@"distance"];//6
-            
-            
-            
             
         }
         
@@ -273,7 +288,7 @@
     }
     
 }
-//count pace for split
+// 返回第n段的第一个点的总距离和总时间
 - (NSMutableDictionary*) getSectionFristPoint:(int)Section{
     NSMutableDictionary* point = [[NSMutableDictionary alloc] initWithCapacity:2];
     
@@ -321,7 +336,7 @@
     
 }
 
-//count pace for split
+//计算每公里的配速
 - (float) count_split_pace:(float)dis interval:(float)interval {
     float pace_sec = (float)interval*1000/dis;
     
@@ -329,13 +344,14 @@
     
 }
 
+// 返回配速的字符串值
 - (NSString*) get_pace_string:(int)pace_interval {
     
     int hour = pace_interval / 3600;
     int minute = pace_interval % 3600 /60;
     int second = pace_interval %3600 %60;
     NSString* pace_string = nil;
-    if (hour>0 ) {
+    if (hour > 0 ) {
           pace_string =   [NSString stringWithFormat:@"%02d:%02d:%02d",hour,minute,second];
     }
     else{

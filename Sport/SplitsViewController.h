@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MTBlockTableView.h"
+@interface SplitsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
-@interface SplitsViewController : UIViewController
+@property(strong,nonatomic) UITableView *splitTable;
 
+@property(strong,nonatomic) NSMutableArray* split_data;
 @end
