@@ -4,7 +4,7 @@
 //
 //  Created by koga kazuo on 11/08/20.
 //  Copyright 2011 Kazuo Koga. All rights reserved.
-//
+//  split 卡路里，save
 
 #import "KAThread.h"
 #import "KANullInputSource.h"
