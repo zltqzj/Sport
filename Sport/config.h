@@ -26,7 +26,9 @@
 #define PATH_OF_TEMP        NSTemporaryDirectory()
 #define PATH_OF_DOCUMENT    [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
 
-#define MAX_POINT 10
+#define MAX_POINT 10  //最多点的个数
+#define MIN_DISTANCE 0.5
+
 // 数值转为字符串
 #define valueToString(_value) [@(_value) stringValue]
 

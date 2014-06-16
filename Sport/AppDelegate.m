@@ -41,12 +41,28 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDateMainMap" object:nil userInfo:dict];
 }
 
+-(void)UPMainStats:(NSDictionary* )pdict{
+   
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"_total_distance" object:nil userInfo:pdict];
+}
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
      
     _netUtil = [[NetUtils alloc] init];
     
-    
+    TabbarViewController* tab  = viewOnSb(@"tabbar");
+    [tab.tabBar setBackgroundColor:[UIColor blackColor]];
+    self.window.rootViewController = tab;
+    [tab.tabBar setSelectedImageTintColor:[UIColor orangeColor]];
+    if ( SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7")) {
+        [[UITabBar appearance] setBarStyle:UIBarStyleBlack];
+        
+    }else{
+        //ios6导航栏的处理
+    }
+    /*
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"]) {
         TabbarViewController* tab  = viewOnSb(@"tabbar");
         [tab.tabBar setBackgroundColor:[UIColor blackColor]];
@@ -64,7 +80,7 @@
         UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:regist];
         self.window.rootViewController  = nav;
     }
- 
+ */
   
      
   

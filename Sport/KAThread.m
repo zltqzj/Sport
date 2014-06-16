@@ -28,14 +28,18 @@
     m_sqlite = [[CSqlite alloc]init];
     [m_sqlite openSqlite];
     _file_manager = [[FileManager alloc] init];
-    
+    _splist_array = [[NSMutableArray alloc] initWithCapacity:5];
     _points = [[NSMutableArray alloc] initWithCapacity:5];
     _pointsToDraw = [[NSMutableArray alloc] initWithCapacity:5];
     [[[KANullInputSource alloc] init] addToCurrentRunLoop] ;
-    NSLog(@"线程启动");
+  
  
     _timer =   [CSPausibleTimer timerWithTimeInterval:5 target:self selector:@selector(didTimer) userInfo:nil repeats:YES];
     [_timer start];
+    
+    _timercal =   [CSPausibleTimer timerWithTimeInterval:2 target:self selector:@selector(didTimerCal) userInfo:nil repeats:YES];
+    [_timercal start];
+    
     [self initMap];
     [[NSRunLoop currentRunLoop] addTimer:_timer.timer forMode:NSDefaultRunLoopMode];
     //CFRunLoopRun();
@@ -105,7 +109,7 @@
       }
        last_section = [obj objectForKey:@"section"];
     }];
-  NSLog(@"*****************'%f'************'%f'****%f",sum_whole,sum_sport,sum_disactive);
+ 
    
    [_tempArray removeAllObjects];
     
@@ -115,7 +119,6 @@
 
 
 -(void)didTimer{   // 定时器触发的方法
-    NSLog(@"定时器~~~~");
     
     if ([[[MyManager sharedManager] ifDrawLine] isEqualToString:@"YES"] && _beginCollect ==YES &&_points.count!=0) {
         _pointsToDraw = [_file_manager searchPointFromFile];
@@ -123,13 +126,24 @@
             _pointsToDraw = [NSMutableArray arrayWithArray:_points];
         else
             [_pointsToDraw addObjectsFromArray:_points];
-        NSLog(@"%@",_pointsToDraw);
+       
+        
+        
         //通知主线程UpdateUI
         AppDelegate*   delegate = [AppDelegate sharedAppDelegate];
         [delegate performSelectorOnMainThread:@selector(UPDateMainMap:) withObject:_pointsToDraw waitUntilDone:NO];
+        
       
     }
 }
+
+-(void)didTimerCal{   // 定时器触发的方法
+    
+    //通知主线程UpdateUI
+//    AppDelegate*   delegate = [AppDelegate sharedAppDelegate];
+//    [delegate performSelectorOnMainThread:@selector(UPMainStats:) withObject:_dict_total_distance waitUntilDone:NO];
+}
+
 
 
 -(void)switchMainTab{   // 暂时不用
@@ -157,7 +171,8 @@
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations{
     
-    
+    static int nClear = 0;
+    nClear++;
     if (_beginCollect == YES) { // 定时器开启就开始收集所有的点
         NSMutableDictionary* loc_meta_data = [[NSMutableDictionary alloc] initWithCapacity:10];
         CLLocation *location = [locations lastObject];
@@ -170,6 +185,10 @@
         if  (location.coordinate.latitude == 0.0f ||
              location.coordinate.longitude == 0.0f)
             return;
+        if (location.speed < MIN_DISTANCE)  // 当速度小于最小值，返回
+            return;
+            
+        
         NSTimeInterval inteval_time = 0;
         if (nil != _points) { // 计算时间间隔
             NSDate* time = [_lastlocal_meta_data objectForKey:@"time"];
@@ -177,10 +196,12 @@
                 inteval_time = 0 ;
             else
                 inteval_time = [location.timestamp timeIntervalSinceDate:time];
-            NSLog(@"%@",[NSNumber numberWithDouble:inteval_time]);
+            
         }
         CLLocationCoordinate2D trans = [self zzTransGPS:location.coordinate]; // 校正坐标
         
+        int xsection = (int)(_main_total_distance/1000+1);
+
         [loc_meta_data setValue:[NSString stringWithFormat:@"%f",trans.latitude] forKey:@"latitude"];//1
         [loc_meta_data setValue:[NSString stringWithFormat:@"%f",trans.longitude] forKey:@"logitude"];//2
         [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.speed] forKey:@"speed"];//3
@@ -188,16 +209,38 @@
         [loc_meta_data setValue:location.timestamp forKey:@"time"];//5
         [loc_meta_data setValue:[[MyManager sharedManager] whole_time]  forKey:@"interval"];
         [loc_meta_data setValue:[NSString stringWithFormat:@"%ld",(long)[[MyManager sharedManager] section]] forKey:@"section"];
+        [loc_meta_data setValue:[NSString stringWithFormat:@"%d",xsection] forKey:@"section_by_distance"];
         [loc_meta_data setValue:[NSNumber numberWithDouble:inteval_time] forKey:@"time_span"];
         if (_points.count > 0) {
             CLLocationDistance distance = [location distanceFromLocation:_currentLocation];
             NSLog(@"距离%f",distance);
             _main_total_distance = _main_total_distance+distance;
-            _total_distance = [NSString stringWithFormat:@"%.2f",_main_total_distance];
             
-            NSDictionary* dict_total_distance = [NSDictionary dictionaryWithObjectsAndKeys:_total_distance,@"_total_distance", nil];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"_total_distance" object:nil userInfo:dict_total_distance];
+            if (nClear >= 3)
+            {
+            //计算分段信息
+                NSMutableDictionary* lastpoint = [self getSectionFristPoint:xsection];
+      
+                float total_interval  = [[[MyManager sharedManager] whole_time] floatValue];
+                float last_dis =[[lastpoint objectForKey:@"dis"] floatValue];
+                float last_interval =[[lastpoint objectForKey:@"interval"] floatValue];
+            
+                float pace = [self count_split_pace:_main_total_distance-last_dis interval:total_interval-last_interval];
+                NSString* pace_string = [self get_pace_string:(int)pace];
+                NSLog(@"第%d段,dis %f,last dis %f,last interval %f,pace %f,pace string %@",xsection,_main_total_distance,last_dis,last_interval,pace,pace_string);
+        
+                _total_distance = [NSString stringWithFormat:@"%.2f",_main_total_distance];
+            
+                _dict_total_distance = [NSDictionary dictionaryWithObjectsAndKeys:_total_distance,@"_total_distance",pace_string,@"current_split_pace",nil];
+                nClear = 0;
+                
+                AppDelegate*   delegate = [AppDelegate sharedAppDelegate];
+                [delegate performSelectorOnMainThread:@selector(UPMainStats:) withObject:_dict_total_distance waitUntilDone:NO];
+            }
+            //[[NSNotificationCenter defaultCenter] postNotificationName:@"_total_distance" object:nil userInfo:dict_total_distance];
             [loc_meta_data setValue:_total_distance forKey:@"distance"];//6
+            
+            
             
             
         }
@@ -225,9 +268,80 @@
         
         [_points addObject:loc_meta_data];
         _lastlocal_meta_data =  loc_meta_data;
-        NSLog(@"-------%@",_lastlocal_meta_data);
+       
         
     }
+    
+}
+//count pace for split
+- (NSMutableDictionary*) getSectionFristPoint:(int)Section{
+    NSMutableDictionary* point = [[NSMutableDictionary alloc] initWithCapacity:2];
+    
+    if(Section==1){
+        
+        [point setValue:@"0" forKey:@"dis"];
+        [point setValue:@"0" forKey:@"interval"];
+        
+    }
+    else{
+        
+        NSMutableArray* _xpoints = [[NSMutableArray alloc] initWithCapacity:5];
+        _xpoints = [_file_manager searchPointFromFile];
+        if (_xpoints.count == 0)
+            _xpoints = [NSMutableArray arrayWithArray:_points];
+        else
+            [_xpoints addObjectsFromArray:_points];
+        
+        for(int i=0;i<_xpoints.count;i++){
+        
+            NSDictionary* obj = (NSDictionary*)_xpoints[i];
+           
+            float current_distance = [[obj objectForKey:@"distance"] floatValue];
+            float current_interval = [[obj objectForKey:@"interval"] floatValue];
+            
+            if(current_distance>=(Section-1)*1000){
+               
+                
+              [point setValue:[NSString stringWithFormat:@"%f",current_distance] forKey:@"dis"];
+              [point setValue:[NSString stringWithFormat:@"%f",current_interval] forKey:@"interval"];
+              
+              return point;
+            }
+        
+        }
+        
+        [_xpoints removeAllObjects];
+        
+        
+    
+    }
+    
+    
+    return  point;
+    
+}
+
+//count pace for split
+- (float) count_split_pace:(float)dis interval:(float)interval {
+    float pace_sec = (float)interval*1000/dis;
+    
+    return pace_sec;
+    
+}
+
+- (NSString*) get_pace_string:(int)pace_interval {
+    
+    int hour = pace_interval / 3600;
+    int minute = pace_interval % 3600 /60;
+    int second = pace_interval %3600 %60;
+    NSString* pace_string = nil;
+    if (hour>0 ) {
+          pace_string =   [NSString stringWithFormat:@"%02d:%02d:%02d",hour,minute,second];
+    }
+    else{
+          pace_string =   [NSString stringWithFormat:@"%02d:%02d",minute,second];
+    }
+       return pace_string;
     
 }
 

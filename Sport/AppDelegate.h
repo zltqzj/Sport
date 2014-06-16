@@ -25,4 +25,5 @@
 @property(weak,nonatomic) ASIFormDataRequest* req ;
 +(AppDelegate *)sharedAppDelegate;
 -(void)UPDateMainMap:(NSMutableArray* )parry;
+-(void)UPMainStats:(NSDictionary* )pdict;
 @end

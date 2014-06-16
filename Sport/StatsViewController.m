@@ -121,8 +121,10 @@ typedef NS_ENUM(NSInteger, kTTCounter){
     NSLog(@"----%@",info);
     NSString* str = [info.userInfo objectForKey:@"_total_distance"];
     double  d = [str doubleValue]/1000;
-   
     _lblTotalDistance.text = [NSString stringWithFormat:@"%.2f",d];
+    str = [info.userInfo objectForKey:@"current_split_pace"];
+    _lbsplitpace.text = [NSString stringWithFormat:@"%@",str];
+
 }
 
 

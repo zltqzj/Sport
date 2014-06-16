@@ -27,7 +27,7 @@
 @synthesize myGeocoder = _myGeocoder;
 
 @synthesize mapView = _mapView;
-@synthesize routeLine = _routeLine;
+@synthesize routeLine = _routeLine; //表示当前需要更新的一个Overlay；本Overlay是每次重画的
 @synthesize routeLineView = _routeLineView;
 @synthesize activities= _activities;
 @synthesize total_distance = _total_distance;
@@ -81,6 +81,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UPDateMainMap:) name:@"UPDateMainMap" object:nil];
     main_total_distance = 0;
     _total_distance = 0;
+    _haveDrawCount = 0;
+    _routeLineArray = [[NSMutableArray alloc] initWithCapacity:10];
  
     
 }
@@ -93,7 +95,7 @@
 }
 
 
-// 划线方法（点的个数发生变化时才划线）
+// 划线方法（点的个数发生变化时才划线）(重新开始一个activity要把_routeLineArray,_haveDrawCount清零。）
 - (void)configureRoutes:(NSMutableArray *) _pointsToDraw
 {
  
@@ -112,11 +114,14 @@
     }
     else{
         if (self.routeLine) {
+            
             [self.mapView removeOverlay:self.routeLine];
+            //[_mapView removeOverlays:_routeLineArray];
+            NSLog(@"____________________%d___________________",_routeLineArray.count);
         }
 
         int nIndex = 0;
-        for(int idx = 0; idx < _pointsToDraw.count; idx++)
+        for(int idx = _haveDrawCount; idx < _pointsToDraw.count; idx++)
         {
            
             NSDictionary* d = [_pointsToDraw objectAtIndex:idx];
@@ -144,40 +149,73 @@
                 if (point.y < southWestPoint.y)
                     southWestPoint.y = point.y;
             }
-             if (idx>0){
+             if (idx > 0){
                  NSString* a =[[_pointsToDraw objectAtIndex:idx] objectForKey:@"section"];
                  NSString* b =[[_pointsToDraw objectAtIndex:idx-1] objectForKey:@"section"];
-                 if ( ![a isEqualToString:b]) {
-                     NSLog(@"不同section");
+                 if ( ![a isEqualToString:b]) { //当前是section有变化的时候，需要添加一个不重画的overlay
+                   
+                     if(nIndex > 0)
+                     {
                      
-                    if (pointArray2Draw==nil)
-                    {
-                        pointArray2Draw = malloc(sizeof(CLLocationCoordinate2D) * nIndex);
-                        memcpy(pointArray2Draw, pointArray, sizeof(CLLocationCoordinate2D) * nIndex);
-                    }
-                    self.routeLine = [MKPolyline polylineWithPoints:pointArray2Draw count:nIndex];
-                    if (nil != self.routeLine) {
-                        [self.mapView addOverlay:self.routeLine]; // add the overlay to the map
-                        NSLog(@"划线");
-                    }
-                    if (pointArray2Draw)
-                    {
-                        free(pointArray2Draw);
-                        pointArray2Draw = nil;
-                    }
-                    free(pointArray);
-                    pointArray = malloc(sizeof(CLLocationCoordinate2D) * _pointsToDraw.count);
-                    nIndex = 0;
+                         if (pointArray2Draw==nil)
+                         {
+                             pointArray2Draw = malloc(sizeof(CLLocationCoordinate2D) * nIndex);
+                             memcpy(pointArray2Draw, pointArray, sizeof(CLLocationCoordinate2D) * nIndex);
+                         }
+                         self.routeLine = [MKPolyline polylineWithPoints:pointArray2Draw count:nIndex];
+                         if (nil != self.routeLine) {
+                             [self.mapView addOverlay:self.routeLine]; // add the overlay to the map
+                             [_routeLineArray addObject:self.routeLine];
+                             NSLog(@"划线从第%d个点----->第%d个点,画了%d个点",_haveDrawCount,idx-1,nIndex);
+                            _haveDrawCount = idx;
+                         }
+                         if (pointArray2Draw)
+                         {
+                             free(pointArray2Draw);
+                             pointArray2Draw = nil;
+                         }
+                         free(pointArray);
+                         pointArray = malloc(sizeof(CLLocationCoordinate2D) * _pointsToDraw.count);
+                         nIndex = 0;
+                     }
+                     
                  }
              }
             
             pointArray[nIndex] = point;
-            NSLog(@"%d",nIndex);
-           
             nIndex ++ ;
-        
+            
+            /////////////////////判断当前的idx总数是否满足max_count,则需要生成一个不重画的overlay；
+            if (nIndex == MAX_POINT)
+            {
+                if (pointArray2Draw==nil)
+                {
+                    pointArray2Draw = malloc(sizeof(CLLocationCoordinate2D) * nIndex);
+                    memcpy(pointArray2Draw, pointArray, sizeof(CLLocationCoordinate2D) * nIndex);
+                }
+                self.routeLine = [MKPolyline polylineWithPoints:pointArray2Draw count:nIndex];
+                if (nil != self.routeLine) {
+                    [self.mapView addOverlay:self.routeLine]; // add the overlay to the map
+                    [_routeLineArray addObject:self.routeLine];
+                    NSLog(@"划线从第%d个点----->第%d个点，画了%d个点",_haveDrawCount,idx,nIndex);
+                    _haveDrawCount = idx;// 为了保证点的连续，所以必须上一个的点的数据也要参与到下一段的画线中。下一个timmer触发画线的时候用到。
+                    
+                }
+                if (pointArray2Draw)
+                {
+                    free(pointArray2Draw);
+                    pointArray2Draw = nil;
+                }
+                free(pointArray);
+                pointArray = malloc(sizeof(CLLocationCoordinate2D) * _pointsToDraw.count);
+                nIndex = 0;
+                //为了保证点的连续，所以必须上一个的点的数据也要参与到下一段的画线中。当前画线的时候用到。
+                pointArray[nIndex] = point;
+                nIndex++;
+
+            }
         }
-        //
+        
       //   NSLog(@"---------%f,%f",lo.coordinate.latitude,lo.coordinate.longitude );
         CLLocationCoordinate2D lo1 = CLLocationCoordinate2DMake(latitude,longitude);
         MapPoint* mmp = [[MapPoint alloc] initWithCoordinate:lo1 title:@"当前位置" subTitle:@""];
@@ -193,7 +231,8 @@
         
         if (nil != self.routeLine) {
             [self.mapView addOverlay:self.routeLine]; // add the overlay to the map
-            NSLog(@"划线");
+            //[_routeLineArray addObject:self.routeLine];
+            NSLog(@"划线从第%d个点----->第%d个点,当前画了%d个点",_haveDrawCount,_pointsToDraw.count,nIndex+1);
         }
         if (pointArray2Draw)
         {
@@ -337,16 +376,16 @@
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views
 {
-    NSLog(@"%@ ----- %@", self, NSStringFromSelector(_cmd));
+    
     NSLog(@"annotation views: %@", views);
 }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    NSLog(@"%@ ----- %@", self, NSStringFromSelector(_cmd));
+   
     _centerPoint = userLocation;
     CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(userLocation.coordinate.latitude, userLocation.coordinate.longitude);
-    NSLog(@"------%d",(int)(userLocation.coordinate.latitude));
+    
     int a = (int)userLocation.coordinate.latitude;
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"first"] && a!=0 ) {
         [_mapView setCenterCoordinate:coordinate zoomLevel:15 animated:YES];

@@ -40,6 +40,8 @@ double main_total_distance;
 @property (nonatomic, retain)   MKMapView* mapView;  // 地图控件
 
 @property (nonatomic, retain) MKPolyline* routeLine; // 划线
+@property(strong,nonatomic) NSMutableArray* routeLineArray;
+
 @property (nonatomic, retain) MKPolylineView* routeLineView; // 划线视图
 
 @property(strong,nonatomic) NSMutableArray* annoArray;
@@ -52,8 +54,9 @@ double main_total_distance;
 
 @property(assign,nonatomic) NSString* total_distance;
 
+@property(assign,nonatomic) NSInteger haveDrawCount;
 
- 
+
 -(void)UPDateMainMap;
  
 

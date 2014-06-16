@@ -475,7 +475,6 @@
 		1CDD35461944357B009279DD /* segment_heart_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDD33ED1944357A009279DD /* segment_heart_active.png */; };
 		1CDD35471944357B009279DD /* segment_heart_hit.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDD33EE1944357A009279DD /* segment_heart_hit.png */; };
 		1CDD35481944357B009279DD /* segment_heart_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDD33EF1944357A009279DD /* segment_heart_inactive.png */; };
-		1CDD35491944357B009279DD /* segment_leaderboard_arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDD33F01944357A009279DD /* segment_leaderboard_arrow_down.png */; };
 		1CDD354A1944357B009279DD /* segment_power_active.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDD33F11944357A009279DD /* segment_power_active.png */; };
 		1CDD354B1944357B009279DD /* segment_power_hit.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDD33F21944357A009279DD /* segment_power_hit.png */; };
 		1CDD354C1944357B009279DD /* segment_power_inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CDD33F31944357A009279DD /* segment_power_inactive.png */; };
@@ -1127,7 +1126,6 @@
 		1CDD33ED1944357A009279DD /* segment_heart_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = segment_heart_active.png; sourceTree = "<group>"; };
 		1CDD33EE1944357A009279DD /* segment_heart_hit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = segment_heart_hit.png; sourceTree = "<group>"; };
 		1CDD33EF1944357A009279DD /* segment_heart_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = segment_heart_inactive.png; sourceTree = "<group>"; };
-		1CDD33F01944357A009279DD /* segment_leaderboard_arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = segment_leaderboard_arrow_down.png; sourceTree = "<group>"; };
 		1CDD33F11944357A009279DD /* segment_power_active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = segment_power_active.png; sourceTree = "<group>"; };
 		1CDD33F21944357A009279DD /* segment_power_hit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = segment_power_hit.png; sourceTree = "<group>"; };
 		1CDD33F31944357A009279DD /* segment_power_inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = segment_power_inactive.png; sourceTree = "<group>"; };
@@ -2185,7 +2183,6 @@
 				1CDD33ED1944357A009279DD /* segment_heart_active.png */,
 				1CDD33EE1944357A009279DD /* segment_heart_hit.png */,
 				1CDD33EF1944357A009279DD /* segment_heart_inactive.png */,
-				1CDD33F01944357A009279DD /* segment_leaderboard_arrow_down.png */,
 				1CDD33F11944357A009279DD /* segment_power_active.png */,
 				1CDD33F21944357A009279DD /* segment_power_hit.png */,
 				1CDD33F31944357A009279DD /* segment_power_inactive.png */,
@@ -2297,7 +2294,7 @@
 				ORGANIZATIONNAME = ZKR;
 				TargetAttributes = {
 					1CB9E238193DCEC900A90B58 = {
-						DevelopmentTeam = SQ5LJTFH45;
+						DevelopmentTeam = 246A9D29DN;
 					};
 					1CB9E25C193DCEC900A90B58 = {
 						TestTargetID = 1CB9E238193DCEC900A90B58;
@@ -2610,7 +2607,6 @@
 				1CDD342F1944357B009279DD /* abs__cab_background_bottom_holo_light.9.png in Resources */,
 				1CDD34E71944357B009279DD /* icon_cat3.png in Resources */,
 				1CDD355E1944357B009279DD /* tab_unselected_focused_strava_actionbar.9.png in Resources */,
-				1CDD35491944357B009279DD /* segment_leaderboard_arrow_down.png in Resources */,
 				1CDD34351944357B009279DD /* abs__ic_ab_back_holo_light.png in Resources */,
 				1CDD34F41944357B009279DD /* icon_notification_upload.png in Resources */,
 				1CDD34941944357B009279DD /* click_for_info_icon.png in Resources */,
@@ -2943,8 +2939,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: peng yuan (HLE9E7RHAC)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: peng yuan (HLE9E7RHAC)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 健 赵 (9DZ32DAM53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 健 赵 (9DZ32DAM53)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2962,7 +2958,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "4E788E64-027D-4FFD-84DF-3272336543F6";
+				PROVISIONING_PROFILE = "3DB49EA4-9F89-4BFB-BF60-4DFABCE58098";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2984,8 +2980,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: peng yuan (HLE9E7RHAC)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: peng yuan (HLE9E7RHAC)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 健 赵 (9DZ32DAM53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 健 赵 (9DZ32DAM53)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2996,7 +2992,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				PROVISIONING_PROFILE = "4E788E64-027D-4FFD-84DF-3272336543F6";
+				PROVISIONING_PROFILE = "3DB49EA4-9F89-4BFB-BF60-4DFABCE58098";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -3009,14 +3005,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: peng yuan (HLE9E7RHAC)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: peng yuan (HLE9E7RHAC)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 健 赵 (9DZ32DAM53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 健 赵 (9DZ32DAM53)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sport/Sport-Prefix.pch";
 				INFOPLIST_FILE = "Sport/Sport-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4E788E64-027D-4FFD-84DF-3272336543F6";
+				PROVISIONING_PROFILE = "3DB49EA4-9F89-4BFB-BF60-4DFABCE58098";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -3027,14 +3023,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: peng yuan (HLE9E7RHAC)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: peng yuan (HLE9E7RHAC)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 健 赵 (9DZ32DAM53)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 健 赵 (9DZ32DAM53)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Sport/Sport-Prefix.pch";
 				INFOPLIST_FILE = "Sport/Sport-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4E788E64-027D-4FFD-84DF-3272336543F6";
+				PROVISIONING_PROFILE = "3DB49EA4-9F89-4BFB-BF60-4DFABCE58098";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

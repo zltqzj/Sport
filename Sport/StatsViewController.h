@@ -19,7 +19,7 @@
 @property(strong,nonatomic) IBOutlet UILabel* lblMinite;// 分钟标签
 @property(strong,nonatomic) IBOutlet UILabel* lblSeconds;// 秒标签
 @property(strong,nonatomic) IBOutlet UILabel* lblTotalDistance;// 总公里数标签
-
+@property(strong,nonatomic) IBOutlet UILabel* lbsplitpace;// 秒标签
 
 @property(nonatomic,strong) IBOutlet UILabel* strength;// gps强度标签
 

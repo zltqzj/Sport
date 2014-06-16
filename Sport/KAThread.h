@@ -19,6 +19,7 @@
 @property(strong,nonatomic) CLLocation* currentLocation; // 我当前的位置
 
 @property(strong,nonatomic) CSPausibleTimer* timer;  // 划线定时器
+@property(strong,nonatomic) CSPausibleTimer* timercal;  // 划线定时器
 @property (nonatomic, retain) CLLocationManager* locationManager; // 定位对象
 @property (strong,nonatomic) CLGeocoder* myGeocoder;// 地理编码对象
 @property (nonatomic, retain) NSMutableArray* points; // 临时收集点的数组
@@ -27,6 +28,7 @@
 @property (nonatomic, retain) Activity* activities; // 活动的对象
 
 @property(assign,nonatomic) NSString* total_distance; // 总公里数，要传给定时器页面显示的
+@property(strong,nonatomic) NSDictionary* dict_total_distance;
 
 @property(assign,nonatomic) double main_total_distance;
 
@@ -41,6 +43,8 @@
 
 @property (strong,nonatomic) FileManager* file_manager;  // 文件管理类
 
+@property(strong,nonatomic) NSMutableArray* splist_array;// 分段数据的数组
+
 //@property (strong,nonatomic) CSqlite *m_sqlite;
 
 + (id)sharedManager; // 暂时不用，本想用作单例
@@ -54,5 +58,9 @@
 -(void)switchMainTab; // 暂时不用
 
 -(void)finishActivity; // 点击停止按钮触发的事件
+
+
+// 计算卡路里的函数
+
 
 @end
