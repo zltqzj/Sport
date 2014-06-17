@@ -31,7 +31,7 @@
 @property(strong,nonatomic) NSDictionary* dict_total_distance; // 存放传到主线程的两个值：实时的总公里数和实时配速
 
 @property(assign,nonatomic) double main_total_distance;
-
+@property(assign,nonatomic) float calories;
 
 @property(assign,nonatomic) BOOL beginCollect;// 点击开始此值变为YES
 

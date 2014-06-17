@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MTBlockTableView.h"
+#import "SplitCell.h"
 @interface SplitsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
 @property(strong,nonatomic) UITableView *splitTable;

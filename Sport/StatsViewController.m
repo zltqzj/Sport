@@ -73,7 +73,10 @@ typedef NS_ENUM(NSInteger, kTTCounter){
     NSLog(@"完成");
     [_cs_timer pause];
     [[MyManager sharedManager] setSection:0];
-     [_myThread performSelector:@selector(finishActivity) onThread:_myThread withObject:nil waitUntilDone:NO];
+    // _haveDrawCount清零
+    MapViewController* map = viewOnSb(@"map");
+    [map setHaveDrawCount:0];
+    [_myThread performSelector:@selector(finishActivity) onThread:_myThread withObject:nil waitUntilDone:NO];
  
 }
 
@@ -120,6 +123,7 @@ typedef NS_ENUM(NSInteger, kTTCounter){
     _lblTotalDistance.text = [NSString stringWithFormat:@"%.2f",d];
     str = [info.userInfo objectForKey:@"current_split_pace"];
     _lbsplitpace.text = [NSString stringWithFormat:@"%@",str];
+    _lblcalories.text = [info.userInfo objectForKey:@"calories"];
 
 }
 

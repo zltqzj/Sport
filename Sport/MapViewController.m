@@ -98,7 +98,7 @@
 // 划线方法（点的个数发生变化时才划线）(重新开始一个activity要把_routeLineArray,_haveDrawCount清零。）
 - (void)configureRoutes:(NSMutableArray *) _pointsToDraw
 {
- 
+    
     [_mapView removeAnnotations:_annoArray];
        // define minimum, maximum points
 	MKMapPoint northEastPoint = MKMapPointMake(0.f, 0.f);
@@ -116,8 +116,8 @@
         if (self.routeLine) {
             
             [self.mapView removeOverlay:self.routeLine];
-            //[_mapView removeOverlays:_routeLineArray];
-            NSLog(@"____________________%d___________________",_routeLineArray.count);
+           
+          //  NSLog(@"____________________%d___________________",_routeLineArray.count);
         }
 
         int nIndex = 0;
@@ -327,8 +327,8 @@
             }
             //  customPinView.pinColor = MKPinAnnotationColorPurple;
             
-            //  customPinView.animatesDrop = YES;
-            //  customPinView.canShowCallout = YES;
+             // customPinView.animatesDrop = YES;
+              customPinView.canShowCallout = YES;
             // NSLog(@"副标题%@",[annotation subtitle]);
             
             return customPinView;

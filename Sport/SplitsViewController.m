@@ -51,6 +51,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 30;
+}
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
     
@@ -60,30 +66,40 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if(cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+    static NSString *CustomCellIdentifier = @"cell";
+    SplitCell* cell = [tableView dequeueReusableCellWithIdentifier:CustomCellIdentifier];
+    if (cell == nil) {
+        cell = [[SplitCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CustomCellIdentifier];
     }
+    UIView* split_view = [[UIView alloc] init];
+    
+    // 135,206,235
+    [split_view setBackgroundColor:[UIColor colorWithRed:0.0f/255.0f green:191.0f/255.0f blue:235.0f/255.0f alpha:0.5f]];
+    
+  
     if (_split_data.count!=0) {
-       
         NSDictionary* dict = [_split_data objectAtIndex:indexPath.row];
-        NSLog(@"%@",dict);
-      
-        cell.textLabel.text =  [dict objectForKey:@"xsection"];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[dict objectForKey:@"pace_string"]];
-     //   n_distance   n_time
-        
-        if (indexPath.row%2==0) {
-            cell.backgroundColor = [UIColor lightGrayColor];
+        cell.sectionLabel.text =[dict objectForKey:@"xsection"];
+        cell.paceLabel.text = [dict objectForKey:@"pace_string"];
+        NSLog(@"%@",[dict objectForKey:@"pace"]);
+        double pace =   [[dict objectForKey:@"pace"] doubleValue];
+        if (pace > 8*60) { // 根据实时配速设置蓝条条的宽度
+            [split_view setFrame:CGRectMake(90, 2, 200, 27)];
         }
-        
-        
-        
+        else{
+            int width = pace*20/48;
+            [split_view setFrame:CGRectMake(90, 2, width, 27)];
+        }
+        [cell.contentView addSubview:split_view];
     }
-    
+   // cell.backgroundColor = [UIColor blackColor];
+//    if (indexPath.row%2==0) {
+//        cell.backgroundColor = [UIColor scrollViewTexturedBackgroundColor];
+//    }
+//    else{
+//        cell.backgroundColor = [UIColor underPageBackgroundColor];
+//    }
     return cell;
 }
 

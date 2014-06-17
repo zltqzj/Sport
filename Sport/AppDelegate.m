@@ -131,7 +131,7 @@
 							
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-     [[MyManager sharedManager] setIfDrawLine:@"YES"];
+    NSLog(@"准备进入后台1111");
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -172,6 +172,7 @@
 //        [_netUtil getUpdate:nil];
 //    }
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"first"];
+    [[MyManager sharedManager] setIfDrawLine:@"YES"];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

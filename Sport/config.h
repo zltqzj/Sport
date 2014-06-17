@@ -94,8 +94,9 @@
 
 
 #define SHADOW_COLOR [UIColor colorWithRed:220.0f/255.0f green:220.0f/255.0f blue:220.0f/255.0f alpha:0.5f]
+#define RGB_COLOR(r,g,b) [UIColor colorWithRed:r/255 green:g/255 blue:b/255 alpha:1]
 
-#define WHAT_NEW @" 测试中 "
+#define WHAT_NEW @"测试中"
 
 #define viewOnSb(identifer)  [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:identifer]
 

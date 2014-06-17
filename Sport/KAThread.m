@@ -33,8 +33,8 @@
     _points = [[NSMutableArray alloc] initWithCapacity:5];
     _pointsToDraw = [[NSMutableArray alloc] initWithCapacity:5];
     [[[KANullInputSource alloc] init] addToCurrentRunLoop] ;
-  
- 
+    // 测试一下卡路里算法
+   
     _timer =   [CSPausibleTimer timerWithTimeInterval:5 target:self selector:@selector(didTimer) userInfo:nil repeats:YES];
     [_timer start];
     
@@ -115,7 +115,7 @@
    [_tempArray removeAllObjects];
     
     [_points removeAllObjects];
-
+    
 }
 
 
@@ -235,6 +235,11 @@
             NSLog(@"距离%f",distance);
             _main_total_distance = _main_total_distance + distance;
             
+            //算卡路里需要的两个值（两点间的距离间隔和时间间隔）
+             float cal = [self calculate_caloriesWithActivity_type:@"run" weight:@"50" distance:[NSString stringWithFormat:@"%f",distance] seconds:[NSString stringWithFormat:@"%f",inteval_time]];
+            _calories+= cal;
+            NSLog(@"%f",_calories);
+            
             if (nClear >= 3)
             {
             //计算分段信息
@@ -255,13 +260,13 @@
         
                 _total_distance = [NSString stringWithFormat:@"%.2f",_main_total_distance];
                 // 准备传到status界面的值
-                _dict_total_distance = [NSDictionary dictionaryWithObjectsAndKeys:_total_distance,@"_total_distance",pace_string,@"current_split_pace",nil];// 字典，包括要传过去的“总距离”和“配速”
+                _dict_total_distance = [NSDictionary dictionaryWithObjectsAndKeys:_total_distance,@"_total_distance",pace_string,@"current_split_pace",[NSString stringWithFormat:@"%.2f",_calories],@"calories",nil];// 字典，包括要传过去的“总距离”和“配速”
                 nClear = 0;
                 
                 
                 
                 // 准备传到split界面的值
-                NSDictionary* xsection_info = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",xsection],@"xsection",[NSString stringWithFormat:@"%@",pace_string],@"pace_string", nil];
+                NSDictionary* xsection_info = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",xsection],@"xsection",[NSString stringWithFormat:@"%@",pace_string],@"pace_string",[NSString stringWithFormat:@"%f",pace],@"pace", nil];
                 NSLog(@"%@",xsection_info);
                 // 在数组中查找，如果第xsection项有，就replace ,如果没有则addobject（注意数组下标越界）
                 if (_splist_array.count == xsection-1) {
@@ -416,5 +421,80 @@
     
     
 }
+
+
+-(float)calculate_caloriesWithActivity_type:(NSString*)activity_type weight:(NSString*)weight distance:(NSString*)distance seconds:(NSString*)seconds   { // 体重（公斤）  距离（千米） 时间间隔（秒）
+    float MET = 3.5;
+    float weight_d = [weight floatValue];
+    float distance_d = [distance floatValue];
+    float seconds_d = [seconds floatValue];
+    float hours = seconds_d / 3600;
+    float total_dis_mile = distance_d * 0.62137119;
+    float mph = total_dis_mile / hours;
+    
+    if ([seconds isEqualToString:@"0"]) {
+        return 0;
+    }
+
+    else if ([activity_type isEqualToString:@"run"]) {
+       if (mph < 2.0)
+            MET = 2.0;
+       else if (mph >= 2.0 && mph<2.5)
+            MET = 2.5;
+       else if (mph >= 2.5 && mph<3.0)
+            MET = 3.0;
+       else if (mph>=3.0 && mph<3.3)
+            MET  = 3.3;
+       else  if (mph >=3.5 && mph<4)
+            MET = 3.8;
+       else if (mph >=4 && mph<4.5)
+            MET = 5.0;
+       else if (mph >=4.5&& mph<5)
+            MET = 6.3;
+       else if (mph >=5 && mph<5.2)
+            MET = 8.0;
+       else  if (mph >=5.2 && mph<6)
+            MET = 9.0;
+       else if (mph >=6 && mph<6.7)
+            MET = 10.0;
+       else if (mph >=6.7 && mph<7)
+            MET = 11.0;
+       else if (mph >7 && mph<7.5)
+            MET = 11.5;
+       else  if (mph >=7.5 && mph<8)
+            MET = 12.5;
+       else if (mph >= 8.0 && mph<8.6)
+            MET = 13.5;
+       else if (mph >=8.6 && mph<9)
+            MET = 14;
+       else if (mph >=9 && mph<10)
+           MET = 15;
+       else if (mph >=10 && mph<10.9)
+           MET = 16;
+       else if (mph >=10.9)
+           MET = 16;
+        
+    }
+    else if ([activity_type isEqualToString:@"ride"]){
+        if (mph<10)
+            MET = 4.0;
+        else   if (mph>=10 && mph<12)
+            MET = 6.0;
+        else if (mph>=12 && mph<14)
+            MET = 8.0;
+        else if (mph>=14 && mph<16)
+            MET = 10.0;
+         else if (mph>=16 && mph<20)
+             MET = 12.0;
+        else if (mph>20)
+            MET = 16.0;
+    }
+    
+    float cal = MET * weight_d* hours;
+   // return [NSString stringWithFormat:@"%.2f",cal];
+    return cal;
+    
+}
+
 
  @end
