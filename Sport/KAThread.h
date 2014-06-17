@@ -55,10 +55,11 @@
 - (void)startRunLoop; // 收到开始消息触发的事件
 
 -(void)resumeRunLoop;  // 收到resume消息触发的事件
--(void)switchMainTab; // 暂时不用
+-(void)switchMainTab:(NSNumber*)number; // 暂时不用
 
 -(void)finishActivity; // 点击停止按钮触发的事件
 
+-(void)mapDidLoad; //用于mapview激活的时候需要看是否要画图
 
 // 计算卡路里的函数
 

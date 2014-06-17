@@ -131,7 +131,7 @@
 							
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-     
+     [[MyManager sharedManager] setIfDrawLine:@"YES"];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application

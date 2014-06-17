@@ -39,7 +39,7 @@
     [_timer start];
     
     _timercal =   [CSPausibleTimer timerWithTimeInterval:2 target:self selector:@selector(didTimerCal) userInfo:nil repeats:YES];
-    [_timercal start];
+   // [_timercal start];
     
     [self initMap];
     [[NSRunLoop currentRunLoop] addTimer:_timer.timer forMode:NSDefaultRunLoopMode];
@@ -145,10 +145,28 @@
 //    [delegate performSelectorOnMainThread:@selector(UPMainStats:) withObject:_dict_total_distance waitUntilDone:NO];
 }
 
+-(void)mapDidLoad //用于mapview激活的时候需要看是否要画图
+{
+    _pointsToDraw = [_file_manager searchPointFromFile];
+    if (_pointsToDraw.count == 0)
+        _pointsToDraw = [NSMutableArray arrayWithArray:_points];
+    else
+        [_pointsToDraw addObjectsFromArray:_points];
+    
+    
+    if (_pointsToDraw.count>0) {
+        //通知主线程UpdateUI
+        AppDelegate*   delegate = [AppDelegate sharedAppDelegate];
+        [delegate performSelectorOnMainThread:@selector(UPDateMainMap:) withObject:_pointsToDraw waitUntilDone:NO];
 
+    }
+}
 
--(void)switchMainTab{   // 暂时不用
+-(void)switchMainTab:(NSNumber*)number{   // 暂时不用
     NSLog(@"主页面切换");
+    if ([number isEqualToNumber:[NSNumber numberWithInteger:2]] ) {
+        [self mapDidLoad];
+    }
 }
 
 
@@ -229,7 +247,21 @@
                 // 第xsection段的距离，第xsection段的时间
                 float n_distance = _main_total_distance-last_dis;
                 float n_time = total_interval- last_interval;
-                NSDictionary* xsection_info = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",xsection],@"xsection",[NSString stringWithFormat:@"%f",n_distance],@"n_distance",[NSString stringWithFormat:@"%f",n_time],@"n_time", nil];
+                
+                float pace = [self count_split_pace:n_distance interval:n_time];// 某时刻的配速
+                
+                NSString* pace_string = [self get_pace_string:(int)pace];
+                NSLog(@"第%d段,已走总长度：%f,第n段第一个点的总长度： %f,第n段第一个点的总时间： %f,浮点型配速： %f,字符串配速： %@",xsection,_main_total_distance,last_dis,last_interval,pace,pace_string);
+        
+                _total_distance = [NSString stringWithFormat:@"%.2f",_main_total_distance];
+                // 准备传到status界面的值
+                _dict_total_distance = [NSDictionary dictionaryWithObjectsAndKeys:_total_distance,@"_total_distance",pace_string,@"current_split_pace",nil];// 字典，包括要传过去的“总距离”和“配速”
+                nClear = 0;
+                
+                
+                
+                // 准备传到split界面的值
+                NSDictionary* xsection_info = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",xsection],@"xsection",[NSString stringWithFormat:@"%@",pace_string],@"pace_string", nil];
                 NSLog(@"%@",xsection_info);
                 // 在数组中查找，如果第xsection项有，就replace ,如果没有则addobject（注意数组下标越界）
                 if (_splist_array.count == xsection-1) {
@@ -239,18 +271,7 @@
                 else if (_splist_array.count == xsection){
                     [_splist_array setObject:xsection_info atIndexedSubscript:xsection-1];
                 }
-                
-                
-                float pace = [self count_split_pace:n_distance interval:n_time];// 某时刻的配速
-                
-                NSString* pace_string = [self get_pace_string:(int)pace];
-                NSLog(@"第%d段,已走总长度：%f,第n段第一个点的总长度： %f,第n段第一个点的总时间： %f,浮点型配速： %f,字符串配速： %@",xsection,_main_total_distance,last_dis,last_interval,pace,pace_string);
-        
-                _total_distance = [NSString stringWithFormat:@"%.2f",_main_total_distance];
-            
-                _dict_total_distance = [NSDictionary dictionaryWithObjectsAndKeys:_total_distance,@"_total_distance",pace_string,@"current_split_pace",nil];// 字典，包括要传过去的“总距离”和“配速”
-                nClear = 0;
-                
+
                 AppDelegate*   delegate = [AppDelegate sharedAppDelegate];
                 [delegate performSelectorOnMainThread:@selector(updateSplitData:) withObject:_splist_array waitUntilDone:NO];
                 [delegate performSelectorOnMainThread:@selector(UPMainStats:) withObject:_dict_total_distance waitUntilDone:NO];

@@ -128,8 +128,9 @@
          [[MyManager sharedManager] setIfDrawLine:@"YES"];
         vc = _map_vc3;
         
+        
     }
-    [[(StatsViewController *)_stats_vc1 myThread] performSelector:@selector(switchMainTab) onThread:[(StatsViewController *)_stats_vc1 myThread] withObject:nil waitUntilDone:NO];
+    [[(StatsViewController *)_stats_vc1 myThread] performSelector:@selector(switchMainTab:) onThread:[(StatsViewController *)_stats_vc1 myThread] withObject:[NSNumber numberWithInteger:number] waitUntilDone:NO];
     // [vc viewDidCurrentView];
 }
 

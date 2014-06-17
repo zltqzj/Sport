@@ -83,8 +83,8 @@
     _total_distance = 0;
     _haveDrawCount = 0;
     _routeLineArray = [[NSMutableArray alloc] initWithCapacity:10];
- 
     
+  
 }
 
 -(void)UPDateMainMap:(NSNotification*)info{

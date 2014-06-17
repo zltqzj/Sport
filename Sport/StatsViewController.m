@@ -84,8 +84,6 @@ typedef NS_ENUM(NSInteger, kTTCounter){
             NSLog(@"第一次启动");
           
              [_myThread performSelector:@selector(startRunLoop) onThread:_myThread withObject:nil waitUntilDone:NO];
-        
-                     
             [_resume_pause_time_point_array addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSDate date],@"begin", nil]];
             [[MyManager sharedManager] setSection:[[MyManager sharedManager] section]+1];
             [_cs_timer start];
