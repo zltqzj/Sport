@@ -22,5 +22,5 @@
 @property(strong,nonatomic) UIViewController* stats_vc1;
 @property(strong,nonatomic) UIViewController* split_vc2;
 @property(strong,nonatomic) MapViewController* map_vc3;
-
+-(void)save;
 @end

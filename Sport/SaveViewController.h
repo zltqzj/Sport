@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface SaveViewController : UIViewController
-
--(IBAction)save:(id)sender;
-
+// 关于保存的
+@property(nonatomic,strong) IBOutlet UITextField* name;
+@property(strong,nonatomic) IBOutlet UITextField* sport_type;
+@property(strong,nonatomic) IBOutlet UITextField* sport_description;
+ 
+-(IBAction)save_activity:(id)sender;
 @end

@@ -57,6 +57,7 @@
      
     _netUtil = [[NetUtils alloc] init];
     
+    
     TabbarViewController* tab  = viewOnSb(@"tabbar");
     [tab.tabBar setBackgroundColor:[UIColor blackColor]];
     self.window.rootViewController = tab;
@@ -67,6 +68,9 @@
     }else{
         //ios6导航栏的处理
     }
+    
+    
+    
     /*
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"]) {
         TabbarViewController* tab  = viewOnSb(@"tabbar");

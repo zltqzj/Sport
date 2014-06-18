@@ -60,16 +60,30 @@
     
     
     [(StatsViewController *)_stats_vc1 initSubThread];
-    
-    //[(MapViewController *)_map_vc3 setSubThread:(KAThread *)[(StatsViewController *)_stats_vc1 myThread]];
  
-    
     _slideSwitchView.slideSwitchViewDelegate = self;
     [self.view addSubview:_slideSwitchView];
     [_slideSwitchView buildUI];
+    UIButton* navLeftBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    [navLeftBtn setImage:[UIImage imageNamed:@"ab_bottom_solid_strava_actionbar.9.png"] forState:UIControlStateNormal];
+   // [navLeftBtn setTitle:@"测试" forState:UIControlStateNormal];
+    [navLeftBtn handleControlEvent:UIControlEventTouchUpInside withBlock:^(id sender) {
+        NSLog(@"测试");
+    }];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:navLeftBtn];
+   // self.navigationItem.leftBarButtonItem = rightItem;
+    [self.navigationController.navigationItem setLeftBarButtonItem:leftItem];
     
-    // Do any additional setup after loading the view.
+    
+//    UIBarButtonItem *discountButton = [[UIBarButtonItem alloc]
+//                                       initWithTitle:@"折扣信息" style:UIBarButtonItemStyleBordered
+//                                       target:self action:@selector(discount:)];
+//    self.navigationItem.leftBarButtonItem = discountButton;
+    
+    
 }
+
+ 
 
 - (void)didReceiveMemoryWarning
 {
@@ -87,21 +101,12 @@
 - (UIViewController *)slideSwitchView:(SUNSlideSwitchView *)view viewOfTab:(NSUInteger)number
 {
     if (number == 0) {
-        
-       
         return _stats_vc1;
-       
     } else if (number == 1) {
-     
-       
         return _split_vc2;
         
     } else if (number == 2) {
-       
-      
         return _map_vc3;
-       
-
     }   else {
         return nil;
     }

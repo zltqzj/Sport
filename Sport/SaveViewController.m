@@ -22,10 +22,11 @@
     }
     return self;
 }
--(IBAction)save:(id)sender{
-    NSLog(@"11");
-    [self dismissViewControllerAnimated:YES completion:nil];
-   // [self.view removeFromSuperview];
+//-(IBAction)save:(id)sender{
+//    NSLog(@"%@,%@,%@",_name.text,_sport_type.text,_sport_type.text);
+//}
+-(IBAction)save_activity:(id)sender{
+    NSLog(@"%@,%@,%@",_name.text,_sport_type.text,_sport_type.text);
 }
 
 - (void)viewDidLoad
@@ -53,5 +54,9 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [_name resignFirstResponder];
+    [_sport_description resignFirstResponder];
+    [_sport_type resignFirstResponder];
+}
 @end

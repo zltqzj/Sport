@@ -13,6 +13,7 @@
 @property(strong,nonatomic) IBOutlet UITextField* password_textField;
 
 @property(strong,nonatomic) IBOutlet UITextField* username_textField;
+@property(strong,nonatomic) IBOutlet UITextField* weight_textField;
 
 @property(strong,nonatomic) NetUtils* netUtils;
 @property(weak,nonatomic) ASIFormDataRequest* request;

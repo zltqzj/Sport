@@ -34,7 +34,7 @@
     _pointsToDraw = [[NSMutableArray alloc] initWithCapacity:5];
     [[[KANullInputSource alloc] init] addToCurrentRunLoop] ;
     // 测试一下卡路里算法
-   
+    _lastpoint = [[NSMutableDictionary alloc] initWithCapacity:5];
     _timer =   [CSPausibleTimer timerWithTimeInterval:5 target:self selector:@selector(didTimer) userInfo:nil repeats:YES];
     [_timer start];
     
@@ -73,38 +73,113 @@
 
 }
 
+- (NSString*)dictionaryToJson:(NSDictionary *)dic
+{
+    NSError *parseError = nil;
+    NSData  *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+    return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+}
+
 -(void)finishActivity{   // 点击停止按钮触发的事件
-    [_timer pause];
-    
+    [self stopRunLoop];
+ 
    _lastlocal_meta_data = nil;
    NSMutableArray*   _tempArray = [[NSMutableArray alloc] initWithCapacity:10];
    _tempArray = [_file_manager searchPointFromFile];
-    
-    
-    
    if (_tempArray.count == 0)
        _tempArray = [NSMutableArray arrayWithArray:_points];
    else
        [_tempArray addObjectsFromArray:_points];
-
+    //NSArray* list_location = [NSArray arrayWithArray:_tempArray];
  NSData* data =  [NSKeyedArchiver archivedDataWithRootObject:_tempArray];
    [data writeToFile:[_file_manager fileName] atomically:YES];
-   __block  double sum_whole = 0;
-    __block  double sum_sport = 0;
-    __block  double sum_disactive = 0;
+    
+    
+    
+  //  NSDictionary* dict =[act activityDictWithID:@"1" user_id:@"1" flag:@"1" start_date:@"" start_date_local:@"" time_zone:@"" location_city:@"" location_province:@"" location_country:@"" start_latitude:@"" start_longitude:@"" end_latitude:@"" end_logitude:@"" moving_time:@"" elapsed_time:@"" name:@"" description:@"" tag:@"" type:@"" total_elevation_gain:@"" total_distance:@"" manual:@"" private_flag:@"" average_speed:@"" average_pace:@"" max_speed:@"" average_heartrate:@"" max_heartrate:@"" calories:@"" brocast:@"" like_count:@"" comments_count:@"" awards_count:@"" device:@"" lastsynctime:@"" list:list_location];
+    
+  //  NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"va",@"k", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"va",@"k", nil],nil],@"list_location", nil];
+    
+//    for (int i=0; i<2; i++) {
+//        NSDictionary* dict = [_tempArray objectAtIndex:i];
+//        
+//    }
+    
+    
+//    NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:arr,@"list_location", nil];
+//    NSLog(@"%@",dict);
+//    
+//    NSString* value = [dd JSONString];
+//    NSLog(@"%@,%@",_tempArray, value );
+    
+ 
+//    NSString *str = nil;
+//    NSArray *firstArr = [NSArray arrayWithObjects:@"first",@"second", nil];
+//    //基本数据类型转换成NSNumber类型
+//    NSArray *secondArr = [NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil],[NSNumber numberWithBool:NO], nil];
+//    //加到字典中
+//    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:firstArr,@"first",secondArr,@"second", nil];
+//    //转化成json格式
+//    NSLog(@"%@",dic);
+//    str = [dic JSONString];
+//    NSLog(@"%@",str);
+//    NSString *str2 = [NSString stringWithString:str];
+//    NSLog(@"str3:%@",str2);
+    
+    /*
+    ASIFormDataRequest* req = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:UPLOAD_ACTIVITY]];
+    _request = req;
+    [_request setResponseEncoding:NSUTF8StringEncoding];
+   // [_request setPostValue:value forKey:@"activitydata"];
+    [_request startAsynchronous];
+    [_request setCompletionBlock:^{
+        NSLog(@"返回值%@",[_request responseString]);
+    }];
+    [_request setFailedBlock:^{
+          NSLog(@"%@",[_request responseString]);
+    }];
+     */
+    
+     _netUtil  = [[NetUtils alloc] init];
+    
+    
+     // 测试一下json
+     Activity* act = [[Activity alloc] init];
+     NSDictionary* dict =[act activityDictWithID:@"1" user_id:@"1" flag:@"1" start_date:@"" start_date_local:@"" time_zone:@"" location_city:@"" location_province:@"" location_country:@"" start_latitude:@"" start_longitude:@"" end_latitude:@"" end_logitude:@"" moving_time:@"" elapsed_time:@"" name:@"" description:@"" tag:@"" type:@"" total_elevation_gain:@"" total_distance:@"" manual:@"" private_flag:@"" average_speed:@"" average_pace:@"" max_speed:@"" average_heartrate:@"" max_heartrate:@"" calories:@"" brocast:@"" like_count:@"" comments_count:@"" awards_count:@"" device:@"" lastsynctime:@"" list:_tempArray];
+     SBJsonWriter *writer = [[SBJsonWriter alloc] init];
+     NSLog(@"Start Create JSON!");
+     NSString *value = [writer stringWithObject: dict];
+     NSLog(@"%@",value);
+     
+     ASIFormDataRequest* request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:UPLOAD_ACTIVITY]];
+     [request setPostValue:value forKey:@"activitydata"];
+     _request = request;
+     [_request startAsynchronous];
+     [_request setCompletionBlock:^{
+     NSLog(@"返回值%@",[_request responseString]);
+     }];
+     [_request setFailedBlock:^{
+     NSLog(@"返回值%@",[_request responseString]);
+     }];
+    
+
+    
+   __block  int sum_whole = 0;
+    __block  int sum_sport = 0;
+    __block  int sum_disactive = 0;
     __block  NSString * last_section;
 
   [_tempArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 
-       sum_whole +=  [[obj objectForKey:@"time_span"] doubleValue];
+       sum_whole +=  [[obj objectForKey:@"time_span"] intValue];
        if (idx > 0)
        {
             if ([last_section isEqualToString: [obj objectForKey:@"section"]]) //当section无变化的时候，累计时间间隔
             {
-                sum_sport += [[obj objectForKey:@"time_span"] doubleValue];
+                sum_sport += [[obj objectForKey:@"time_span"] intValue];
             }
            else{   //当section有变化的时候，此时间间隔不算
-               sum_disactive += [[obj objectForKey:@"time_span"] doubleValue];
+               sum_disactive += [[obj objectForKey:@"time_span"] intValue];
             }
 
       }
@@ -208,46 +283,47 @@
             return;
             
         
-        NSTimeInterval inteval_time = 0;
+        int  inteval_time = 0;
         if (nil != _points) { // 计算时间间隔
-            NSDate* time = [_lastlocal_meta_data objectForKey:@"time"];
+            NSDate* time = [DayManagement dateFromeStringWithTime:[_lastlocal_meta_data objectForKey:@"time"]] ;
             if (time == nil)
                 inteval_time = 0 ;
             else
-                inteval_time = [location.timestamp timeIntervalSinceDate:time];
+                inteval_time = [location.timestamp timeIntervalSince1970] -[time timeIntervalSince1970];
             
         }
         CLLocationCoordinate2D trans = [self zzTransGPS:location.coordinate]; // 校正坐标
         
         int xsection = (int)(_main_total_distance/1000+1);// 按每公里算段数
 
-        [loc_meta_data setValue:[NSString stringWithFormat:@"%f",trans.latitude] forKey:@"latitude"];//1
-        [loc_meta_data setValue:[NSString stringWithFormat:@"%f",trans.longitude] forKey:@"logitude"];//2
-        [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.speed] forKey:@"speed"];//3
-        [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.altitude] forKey:@"altitude"];//4
-        [loc_meta_data setValue:location.timestamp forKey:@"time"];//5
-        [loc_meta_data setValue:[[MyManager sharedManager] whole_time]  forKey:@"interval"];
+        [loc_meta_data setValue:[NSString stringWithFormat:@"%f",trans.latitude] forKey:@"LATITUDE"];//1
+        [loc_meta_data setValue:[NSString stringWithFormat:@"%f",trans.longitude] forKey:@"LONGITUDE"];//2
+        [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.speed] forKey:@"SPEED"];//3
+        [loc_meta_data setValue:[NSString stringWithFormat:@"%f",location.altitude] forKey:@"ALTITUDE"];//4
+        [loc_meta_data setValue:[[MyManager sharedManager] whole_time]  forKey:@"INTERVAL"];
+       [loc_meta_data setValue:@""  forKey:@"HEARTRATE"];
         [loc_meta_data setValue:[NSString stringWithFormat:@"%ld",(long)[[MyManager sharedManager] section]] forKey:@"section"];
-        [loc_meta_data setValue:[NSString stringWithFormat:@"%d",xsection] forKey:@"section_by_distance"];
-        [loc_meta_data setValue:[NSNumber numberWithDouble:inteval_time] forKey:@"time_span"];
+        [loc_meta_data setValue:[NSString stringWithFormat:@"%d",xsection] forKey:@"SECTION"];
+        [loc_meta_data setValue:[NSString stringWithFormat:@"%d",inteval_time] forKey:@"time_span"];
+        [loc_meta_data setValue:[NSString stringWithFormat:@"%@",location.timestamp]  forKey:@"TIME"];
         if (_points.count > 0) {
             CLLocationDistance distance = [location distanceFromLocation:_currentLocation];
             NSLog(@"距离%f",distance);
             _main_total_distance = _main_total_distance + distance;
             
             //算卡路里需要的两个值（两点间的距离间隔和时间间隔）
-             float cal = [self calculate_caloriesWithActivity_type:@"run" weight:@"50" distance:[NSString stringWithFormat:@"%f",distance] seconds:[NSString stringWithFormat:@"%f",inteval_time]];
+             float cal = [self calculate_caloriesWithActivity_type:@"run" weight:@"50" distance:[NSString stringWithFormat:@"%f",distance] seconds:[NSString stringWithFormat:@"%d",inteval_time]];
             _calories+= cal;
             NSLog(@"%f",_calories);
             
             if (nClear >= 3)
             {
             //计算分段信息
-                NSMutableDictionary* lastpoint = [self getSectionFristPoint:xsection];
+                [self getSectionFristPoint:xsection];
       
                 float total_interval  = [[[MyManager sharedManager] whole_time] floatValue];
-                float last_dis =[[lastpoint objectForKey:@"dis"] floatValue];
-                float last_interval =[[lastpoint objectForKey:@"interval"] floatValue];
+                float last_dis =[[_lastpoint objectForKey:@"dis"] floatValue];
+                float last_interval =[[_lastpoint objectForKey:@"interval"] floatValue];
                 
                 // 第xsection段的距离，第xsection段的时间
                 float n_distance = _main_total_distance-last_dis;
@@ -282,10 +358,13 @@
                 [delegate performSelectorOnMainThread:@selector(UPMainStats:) withObject:_dict_total_distance waitUntilDone:NO];
             }
           
-            [loc_meta_data setValue:_total_distance forKey:@"distance"];//6
+            [loc_meta_data setValue:_total_distance forKey:@"DISTANCE"];//6
             
         }
-        
+        else{
+            [loc_meta_data setValue:@"0" forKey:@"distance"];
+             [loc_meta_data setValue:@"0"  forKey:@"interval"];
+        }
         _currentLocation = location;
         
         
@@ -315,13 +394,13 @@
     
 }
 // 返回第n段的第一个点的总距离和总时间
-- (NSMutableDictionary*) getSectionFristPoint:(int)Section{
-    NSMutableDictionary* point = [[NSMutableDictionary alloc] initWithCapacity:2];
+-(void) getSectionFristPoint:(int)Section{
     
     if(Section==1){
         
-        [point setValue:@"0" forKey:@"dis"];
-        [point setValue:@"0" forKey:@"interval"];
+        [_lastpoint setValue:@"0" forKey:@"dis"];
+        [_lastpoint setValue:@"0" forKey:@"interval"];
+        [_lastpoint setValue:@"0" forKey:@"lastIdx"];
         
     }
     else{
@@ -333,7 +412,7 @@
         else
             [_xpoints addObjectsFromArray:_points];
         
-        for(int i=0;i<_xpoints.count;i++){
+        for(int i=[[_lastpoint objectForKey:@"lastIdx"] intValue];i<_xpoints.count;i++){
         
             NSDictionary* obj = (NSDictionary*)_xpoints[i];
            
@@ -343,22 +422,18 @@
             if(current_distance>=(Section-1)*1000){
                
                 
-              [point setValue:[NSString stringWithFormat:@"%f",current_distance] forKey:@"dis"];
-              [point setValue:[NSString stringWithFormat:@"%f",current_interval] forKey:@"interval"];
-              
-              return point;
+              [_lastpoint setValue:[NSString stringWithFormat:@"%f",current_distance] forKey:@"dis"];
+              [_lastpoint setValue:[NSString stringWithFormat:@"%f",current_interval] forKey:@"interval"];
+              [_lastpoint setValue:[NSString stringWithFormat:@"%d",i]   forKey:@"lastIdx"];
+              break ;
             }
         
         }
         
         [_xpoints removeAllObjects];
-        
-        
+
     
     }
-    
-    
-    return  point;
     
 }
 

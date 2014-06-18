@@ -16,6 +16,7 @@
 @synthesize email_textField = _email_textField;
 @synthesize password_textField = _password_textField;
 @synthesize username_textField = _username_textField;
+@synthesize weight_textField = _weight_textField;
 @synthesize netUtils = _netUtils;
 @synthesize request = _request;
 
@@ -30,7 +31,8 @@
 
 // 注册
 -(IBAction)regist:(id)sender{
-     
+ 
+    
     NSMutableDictionary* dict = [[NSMutableDictionary alloc] initWithCapacity:10];
     [dict setValue:_email_textField.text forKey:@"email"];
     [dict setValue:_password_textField.text forKey:@"password"];
@@ -39,6 +41,8 @@
 
     [dict setValue:@"ios" forKey:@"device_type"];
     [dict setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"token"] forKey:@"device_token"];
+    [dict setValue:_weight_textField.text forKey:@"weight"];
+    
     [ProgressHUD show:@"正在注册"];
     [_netUtils requestContentWithUrl:REGIST para:dict withSuccessBlock:^(id returnData) {
         NSLog(@"%@",returnData);
@@ -51,12 +55,13 @@
             [self.navigationController pushViewController:tab animated:YES onCompletion:nil];
         }
         else if ([[returnData valueForKeyPath:@"success"] isEqualToString:@"false"]){
-            [TSMessage showNotificationWithTitle:@"注册失败" subtitle:@"此账号已存在" type:TSMessageNotificationTypeError];
+            [TSMessage showNotificationWithTitle:@"注册失败" subtitle:[returnData valueForKeyPath:@"msg"] type:TSMessageNotificationTypeError];
         }
     } withFailureBlock:^(NSError *error) {
         [ProgressHUD dismiss];
         [TSMessage showNotificationWithTitle:@"注册失败" subtitle:@"网络不给力啊……" type:TSMessageNotificationTypeError];
     }];
+   
 }
 
 - (void)viewDidLoad
@@ -82,5 +87,10 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [_email_textField resignFirstResponder];
+    [_password_textField resignFirstResponder];
+    [_username_textField resignFirstResponder];
+    [_weight_textField resignFirstResponder];
+}
 @end

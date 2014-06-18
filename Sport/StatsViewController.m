@@ -78,6 +78,14 @@ typedef NS_ENUM(NSInteger, kTTCounter){
     [map setHaveDrawCount:0];
     [_myThread performSelector:@selector(finishActivity) onThread:_myThread withObject:nil waitUntilDone:NO];
  
+    // 假设：name sport_type sportd_description
+    
+    /*
+    SaveViewController* save = viewOnSb(@"save");
+    [save.view setFrame:CGRectMake(50, 20,250, 290)];
+    [[KGModal sharedInstance] showWithContentView:save.view andAnimated:YES];
+     */
+ 
 }
 
 -(IBAction)resume:(id)sender{    // 点击开始（恢复）触发的事件
@@ -108,9 +116,6 @@ typedef NS_ENUM(NSInteger, kTTCounter){
             [[MyManager sharedManager] setIfDrawLine:NO];
         }
  
-    
-    
-   // NSLog(@"****%@",_resume_pause_time_point_array);
     
 }
 
@@ -197,5 +202,7 @@ typedef NS_ENUM(NSInteger, kTTCounter){
     }
     return self;
 }
-
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+}
 @end

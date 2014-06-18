@@ -11,6 +11,9 @@
 #import "CSPausibleTimer.h"
 #import "Activity.h"
 #import "FileManager.h"
+#import "NetUtils.h"
+#import "ASIFormDataRequest.h"
+#import "JSONKit.h"
 @interface KAThread : NSThread<CLLocationManagerDelegate>
 {
      CSqlite *m_sqlite;
@@ -24,7 +27,7 @@
 @property (strong,nonatomic) CLGeocoder* myGeocoder;// 地理编码对象
 @property (nonatomic, retain) NSMutableArray* points; // 临时收集点的数组
 
-
+@property(nonatomic,strong) NetUtils* netUtil ;
 @property (nonatomic, retain) Activity* activities; // 活动的对象
 
 @property(assign,nonatomic) NSString* total_distance; // 总公里数，要传给定时器页面显示的
@@ -45,7 +48,9 @@
 
 @property(strong,nonatomic) NSMutableArray* splist_array;// 分段数据的数组
 
-//@property (strong,nonatomic) CSqlite *m_sqlite;
+@property (strong,nonatomic)  NSMutableDictionary* lastpoint;// 计算配速用到的第n段的第一个点
+
+@property(weak,nonatomic) ASIFormDataRequest* request ;
 
 + (id)sharedManager; // 暂时不用，本想用作单例
 

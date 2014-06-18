@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1632687A195184060021624E /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 16326879195184060021624E /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		163C0FA1193EF61100529BA3 /* WGS84TOGCJ02.m in Sources */ = {isa = PBXBuildFile; fileRef = 163C0FA0193EF61100529BA3 /* WGS84TOGCJ02.m */; };
 		1645C0B21946A4110042AA06 /* CSPausibleTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1645C0B11946A4110042AA06 /* CSPausibleTimer.m */; };
 		164D6772194179F700F660E4 /* NSTimer+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 164D6771194179F700F660E4 /* NSTimer+Extension.m */; };
@@ -533,6 +534,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		16326878195184060021624E /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		16326879195184060021624E /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		163C0F9F193EF61100529BA3 /* WGS84TOGCJ02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WGS84TOGCJ02.h; path = ../../WGS84TOGCJ02.h; sourceTree = "<group>"; };
 		163C0FA0193EF61100529BA3 /* WGS84TOGCJ02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WGS84TOGCJ02.m; path = ../../WGS84TOGCJ02.m; sourceTree = "<group>"; };
 		1645C0B01946A4110042AA06 /* CSPausibleTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSPausibleTimer.h; sourceTree = "<group>"; };
@@ -1385,6 +1388,8 @@
 		165B73B8194AE6B800CB2DF5 /* CustomThread */ = {
 			isa = PBXGroup;
 			children = (
+				16326878195184060021624E /* JSONKit.h */,
+				16326879195184060021624E /* JSONKit.m */,
 				165B73B9194AE6DA00CB2DF5 /* KANullInputSource.h */,
 				165B73BA194AE6DA00CB2DF5 /* KANullInputSource.m */,
 				165B73BB194AE6DA00CB2DF5 /* KAThread.h */,
@@ -2861,6 +2866,7 @@
 				16D76D4F1946F562009C8492 /* SaveViewController.m in Sources */,
 				1CB9E35F193DF93900A90B58 /* FirstViewController.m in Sources */,
 				164D6796194194F900F660E4 /* MTLJSONAdapter.m in Sources */,
+				1632687A195184060021624E /* JSONKit.m in Sources */,
 				1C7A5CFC1943FFD600E96C22 /* SUNSlideSwitchView.m in Sources */,
 				1CB9E358193DE1F600A90B58 /* LoginViewController.m in Sources */,
 				1CB9E32F193DCF4B00A90B58 /* Reachability.m in Sources */,

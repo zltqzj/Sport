@@ -54,7 +54,7 @@
     
 
     _annoArray= [[NSMutableArray alloc] initWithCapacity:10];
-        self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height-50)];
+        self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 500)];
         if (IS_IPHONE5) {
             [_mapView setFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
         }

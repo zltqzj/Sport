@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PSLocationManager.h"
 
-
+#import "KGModal.h"
 #import "SaveViewController.h"
 #import "RecordViewController.h"
 
@@ -22,6 +22,8 @@
 @property(strong,nonatomic) IBOutlet UILabel* lbsplitpace;// 秒标签
 @property(strong,nonatomic) IBOutlet UILabel* lblcalories;// 卡路里标签
 @property(nonatomic,strong) IBOutlet UILabel* strength;// gps强度标签
+
+
 
 @property(strong,nonatomic) CSPausibleTimer* cs_timer;// 总定时器
 
